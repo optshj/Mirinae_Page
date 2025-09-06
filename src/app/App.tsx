@@ -23,6 +23,9 @@ export const metadata: Metadata = {
     siteName: "미리내",
     locale:"ko_KR",
     type:"website",
+  },
+  verification:{
+    google:"huSHYvBftuJFa028T6tGdShVcrWecu4qHuQWqhyKrmU"
   }
 };
 
