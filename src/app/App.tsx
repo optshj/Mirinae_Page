@@ -5,15 +5,57 @@ import './globals.css'
 
 export const metadata: Metadata = {
     title: '미리내 | 당신의 하루를 별처럼 빛나게',
-    description: '미리내는 데스크톱 캘린더 위젯입니다. 설치 후 바탕화면에서 바로 일정을 확인하고 관리할 수 있습니다. 당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
-    keywords: ['미리내', '일정 관리', '할 일 목록', '생산성', '시간 관리', '캘린더', '리마인더', '목표 설정', '집중력 향상'],
+    description:
+        '미리내는 데스크톱 캘린더 위젯입니다. 설치 후 바탕화면에서 바로 일정을 확인하고 관리할 수 있습니다. 사용자는 캘린더를 이용해 유연한 일정관리를 할 수 있습니다. 당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
+    keywords: [
+        '미리내',
+        '일정 관리',
+        '할 일 목록',
+        '생산성',
+        '시간 관리',
+        '캘린더',
+        '리마인더',
+        '목표 설정',
+        '집중력 향상',
+        '구글캘린더',
+        'mirinae',
+        'calendar',
+        'widget',
+        'desktop',
+        'productivity',
+        'schedule',
+        'task',
+        'todo',
+        'reminder',
+        'time management'
+    ],
     openGraph: {
         title: '미리내 | 당신의 하루를 별처럼 빛나게',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
         url: 'https://mirinaecalendar.vercel.app',
         siteName: '미리내',
         locale: 'ko_KR',
-        type: 'website'
+        type: 'website',
+        images: [
+            {
+                url: 'ogImage.png',
+                alt: '미리내 | 당신의 하루를 별처럼 빛나게'
+            }
+        ]
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: '미리내 | 당신의 하루를 별처럼 빛나게',
+        description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
+        images: ['ogImage.png']
+    },
+    icons: {
+        icon: '/favicon.ico'
+    },
+    viewport: {
+        width: 'device-width',
+        initialScale: 1,
+        maximumScale: 1
     },
     verification: {
         google: 'huSHYvBftuJFa028T6tGdShVcrWecu4qHuQWqhyKrmU',
