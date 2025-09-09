@@ -1,4 +1,5 @@
 'use client'
+import { sendGAEvent } from '@next/third-parties/google'
 import { useEffect, useState } from 'react'
 import { FaWindows } from 'react-icons/fa'
 
@@ -23,7 +24,12 @@ export function DownloadButton() {
     }, []) // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때 한 번만 실행되도록 함
 
     return (
-        <a href={downloadUrl} download className="bg-brand hover:bg-brand-hover flex cursor-pointer items-center rounded-lg px-4 py-2 text-white">
+        <a
+            href={downloadUrl}
+            download
+            className="bg-brand hover:bg-brand-hover flex cursor-pointer items-center rounded-lg px-4 py-2 text-white"
+            onClick={() => sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })}
+        >
             <FaWindows className="mr-2 inline-block" />
             Windows로 다운로드하기
         </a>

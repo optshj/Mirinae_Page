@@ -1,4 +1,5 @@
 'use client'
+import { sendGAEvent } from '@next/third-parties/google'
 import React, { useState, useEffect } from 'react'
 
 export function DownloadButtonHeader() {
@@ -24,7 +25,12 @@ export function DownloadButtonHeader() {
     }, []) // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때 한 번만 실행되도록 함
 
     return (
-        <a href={downloadUrl} download className="hover:bg-background-primary cursor-pointer rounded-xl px-4 py-2 text-white">
+        <a
+            href={downloadUrl}
+            download
+            className="hover:bg-background-primary cursor-pointer rounded-xl px-4 py-2 text-white"
+            onClick={() => sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })}
+        >
             다운로드
         </a>
     )
