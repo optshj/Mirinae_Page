@@ -3,8 +3,8 @@ export function PrivacyPolicyPage() {
         <div className="text-text-primary mx-auto max-w-5xl py-10">
             <h1 className="mt-10 mb-4 text-3xl font-semibold">개인정보 처리방침</h1>
             <p>
-                미리내는 사용자의 개인정보를 중요시하며, "정보통신망 이용촉진 및 정보보호"에 관한 법률을 준수하고 있습니다. 본 개인정보처리방침을 통해 사용자가 제공하는 개인정보가
-                어떠한 용도와 방식으로 이용되고 있으며, 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드립니다.
+                미리내는 사용자의 개인정보를 중요시하며, &quot;정보통신망 이용촉진 및 정보보호&quot;에 관한 법률을 준수하고 있습니다. 본 개인정보처리방침을 통해 사용자가 제공하는
+                개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드립니다.
             </p>
             <h2 className="mt-10 mb-4 text-xl font-semibold">1. 수집하는 개인정보</h2>
             <p>
@@ -31,7 +31,8 @@ export function PrivacyPolicyPage() {
             <h2 className="mt-10 mb-4 text-xl font-semibold">5. 이용자의 권리 및 행사 방법</h2>
             <p>
                 사용자는 언제든지 자신의 구글 캘린더(calendar.google.com)에서 직접 일정 정보를 조회, 수정, 삭제할 수 있습니다.
-                <br /> 사용자는 구글 계정(myaccount.google.com)의 '보안' 탭 내 '제3자 앱 액세스 관리' 메뉴를 통해 서비스의 접근 권한을 철회할 수 있습니다. <br />
+                <br /> 사용자는 구글 계정(myaccount.google.com)의 &quot;보안&quot; 탭 내 &quot;제3자 앱 액세스 관리&quot; 메뉴를 통해 서비스의 접근 권한을 철회할 수 있습니다.{' '}
+                <br />
                 권한 철회 시 서비스 이용이 제한될 수 있습니다.
             </p>
             <h2 className="mt-10 mb-4 text-xl font-semibold">6. 개인정보의 안전성 확보 조치</h2>
