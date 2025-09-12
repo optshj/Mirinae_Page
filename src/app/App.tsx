@@ -66,14 +66,22 @@ export const metadata: Metadata = {
         }
     }
 }
+
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '미리내',
+    url: 'https://mirinaecalendar.vercel.app/'
+}
 export default function RootLayout({
     children
 }: Readonly<{
     children: React.ReactNode
 }>) {
     return (
-        <html lang="kr">
+        <html lang="ko">
             <body className={`antialiased`}>
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
                 <Analytics />
                 <SpeedInsights />
                 <GoogleAnalytics gaId="G-922SR40MS9" />
