@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: '미리내 | 당신의 하루를 별처럼 빛나게',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
-        url: 'https://mirinaecalendar.vercel.app',
+        url: 'https://mirinaecalendar.store/',
         siteName: '미리내',
         locale: 'ko_KR',
         type: 'website',
@@ -71,7 +71,7 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: '미리내',
-    url: 'https://mirinaecalendar.vercel.app/'
+    url: 'https://mirinaecalendar.store/'
 }
 export default function RootLayout({
     children
