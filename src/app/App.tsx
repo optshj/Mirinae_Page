@@ -12,6 +12,7 @@ export const metadata: Metadata = {
         '미리내는 데스크톱 캘린더 위젯입니다. 설치 후 바탕화면에서 바로 일정을 확인하고 관리할 수 있습니다. 사용자는 캘린더를 이용해 유연한 일정관리를 할 수 있습니다. 당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
     keywords: [
         '미리내',
+        '캘린더',
         '일정 관리',
         '할 일 목록',
         '생산성',
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: '미리내 | 당신의 하루를 별처럼 빛나게',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
-        url: 'https://mirinaecalendar.store/',
+        url: 'https://www.mirinaecalendar.store/',
         siteName: '미리내',
         locale: 'ko_KR',
         type: 'website',
@@ -71,9 +72,9 @@ export const metadata: Metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    alternateName: ['Mirinae', '미리내 캘린더'],
+    alternateName: ['Mirinae', '미리내 캘린더', '미리내'],
     name: '미리내',
-    url: 'https://mirinaecalendar.store/'
+    url: 'https://www.mirinaecalendar.store/'
 }
 export default function RootLayout({
     children
