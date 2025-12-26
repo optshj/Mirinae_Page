@@ -23,7 +23,7 @@ export function Header() {
     }, [])
 
     return (
-        <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-background-primary shadow-md' : ''}`}>
+        <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-glass shadow-md' : ''}`}>
             <div className="mx-auto flex max-w-5xl items-center justify-between p-4">
                 <Logo />
                 <DownloadButtonHeader />

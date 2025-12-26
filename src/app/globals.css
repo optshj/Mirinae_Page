@@ -2,6 +2,16 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@layer components {
+    .bg-glass {
+        @apply bg-white/10 backdrop-blur-xs;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    .text-gradient {
+        @apply bg-linear-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent;
+    }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 body {

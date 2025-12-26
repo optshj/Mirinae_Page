@@ -9,7 +9,7 @@ export function Footer() {
                     {/* Brand Section */}
                     <div className="flex flex-col gap-4">
                         <div className="flex items-center gap-2">
-                            <Image src="/icon.png" alt="Mirinae Logo" width={32} height={32} className="opacity-90" />
+                            <Image src="/icon.svg" alt="Mirinae Logo" width={32} height={32} className="opacity-90" />
                             <span className="text-xl font-bold tracking-tight text-white">미리내</span>
                         </div>
                         <p className="text-sm text-gray-400">
