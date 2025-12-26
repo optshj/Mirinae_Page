@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+
 interface StarProps {
     id: string
     left: string
@@ -56,7 +57,7 @@ export const StarsBackground = ({ numStars = 150, numShootingStars = 10 }) => {
         setShootingStars(generatedShootingStars)
     }, [numShootingStars])
     return (
-        <div className="fixed top-0 left-0 -z-10 h-screen w-full overflow-hidden bg-gradient-to-b from-[#171C24] via-[#3D3C52] to-[#4D4254]">
+        <div className="fixed top-0 left-0 -z-10 h-screen w-full overflow-hidden bg-gradient-to-b from-[#1A1F3D] via-[#5A5475] to-[#8E7C8A]">
             {stars.map((star) => (
                 <div
                     key={star.id}
