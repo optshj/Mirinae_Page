@@ -11,7 +11,7 @@ export function DownloadButtonHeader() {
                 <a
                     href={DownloadUrl()}
                     download
-                    className="hover:bg-background-primary cursor-pointer rounded-xl px-4 py-2 text-white"
+                    className="hover:bg-glass rounded-xl px-4 py-2 text-white transition-all duration-300"
                     onClick={() => sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })}
                 >
                     다운로드
