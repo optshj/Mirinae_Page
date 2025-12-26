@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 
 export function Section3() {
     return (
-        <motion.section className={`bg-background-primary relative h-[1200px] py-20 sm:py-32`}>
+        <motion.section className={`relative h-[1200px] py-20 sm:py-32`}>
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                     <div className="lg:pt-4 lg:pr-8">
