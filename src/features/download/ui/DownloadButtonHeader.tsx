@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import { sendGAEvent } from '@next/third-parties/google'
 import { DownloadUrl } from '../lib/DownloadUrl'
 import { Dialog, DialogTrigger } from '@/shared/ui/dialog'

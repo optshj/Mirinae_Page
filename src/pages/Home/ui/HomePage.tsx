@@ -1,6 +1,6 @@
 import { Footer } from '@/widgets/Footer'
 import { Header } from '@/widgets/Header'
-import { Main, Section1, Section2, Section3 } from '@/widgets/Section'
+import { Main, Section1, Section2, Section3, Section4, Section5 } from '@/widgets/Section'
 
 export function HomePage() {
     return (
@@ -10,7 +10,8 @@ export function HomePage() {
                 <Main />
                 <Section1 />
                 <Section2 />
-                <Section3 />
+                <Section4 />
+                <Section5 />
             </main>
             <Footer />
         </>

@@ -16,7 +16,7 @@ export function DownloadButton() {
                     onClick={() => sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })}
                 >
                     <FaWindows className="mr-2 inline-block" />
-                    Windows로 다운로드하기
+                    Windows용 다운로드
                 </a>
             </DialogTrigger>
             <DownloadDescription />
