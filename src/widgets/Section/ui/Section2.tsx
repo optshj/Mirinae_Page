@@ -1,6 +1,7 @@
 'use client'
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
+import { ShortcutVisual } from '@/entities/keyboard'
 
 interface Feature {
     id: number
@@ -22,7 +23,7 @@ const features: Feature[] = [
         subTitle: '빠르게, 편하게',
         title: '단축키 지원',
         description: '마우스에 손을 뻗을 필요 없이,\n단축키로 빠르게 새 일정을 만들어보세요.',
-        visual: <span className="text-gray-400">단축키 GIF (Placeholder)</span>
+        visual: <ShortcutVisual />
     },
     {
         id: 3,
@@ -50,6 +51,16 @@ export function Section2() {
                         ))}
                     </div>
                     <div className="relative flex items-center justify-center">
+                        <motion.div
+                            className="absolute flex aspect-square h-full w-full items-center justify-center p-6"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <div className="bg-glass relative h-full w-full rounded-3xl border border-white/10 shadow-xl" />
+                        </motion.div>
+
                         {features.map((feature, index) => (
                             <FeatureVisual key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
                         ))}
@@ -59,6 +70,7 @@ export function Section2() {
         </section>
     )
 }
+
 function FeatureText({ feature, scrollYProgress, index, total }: { feature: Feature; scrollYProgress: MotionValue<number>; index: number; total: number }) {
     const start = index / total
     const end = (index + 1) / total
@@ -114,34 +126,15 @@ function FeatureText({ feature, scrollYProgress, index, total }: { feature: Feat
 function FeatureVisual({ feature, scrollYProgress, index, total }: { feature: Feature; scrollYProgress: MotionValue<number>; index: number; total: number }) {
     const start = index / total
     const end = (index + 1) / total
-
     const isFirst = index === 0
     const isLast = index === total - 1
 
-    const backgroundOpacity = useTransform(scrollYProgress, [start, start + 0.05, end - 0.05, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
-    const contentOpacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
-    const contentY = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 40, 0, 0, isLast ? 0 : -100])
+    const opacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
+    const y = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 20, 0, 0, isLast ? 0 : -20])
 
     return (
-        <div className="absolute flex aspect-square h-full w-full max-w-md items-center justify-center p-6">
-            <motion.div
-                className="relative flex h-full w-full items-center justify-center rounded-2xl bg-zinc-700"
-                style={{ opacity: backgroundOpacity }}
-                initial={isFirst ? { opacity: 0, y: 30 } : false}
-                whileInView={isFirst ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-            >
-                <motion.div
-                    className="z-50"
-                    style={{
-                        opacity: contentOpacity,
-                        y: contentY
-                    }}
-                >
-                    {feature.visual}
-                </motion.div>
-            </motion.div>
-        </div>
+        <motion.div className="pointer-events-none absolute z-50 flex aspect-square h-full w-full max-w-md items-center justify-center" style={{ opacity, y }}>
+            {feature.visual}
+        </motion.div>
     )
 }

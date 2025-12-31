@@ -1,104 +1,96 @@
-'use client'
+import React from 'react'
 import { motion } from 'framer-motion'
+import { FaWindows } from 'react-icons/fa'
 
 interface KeyProps {
-    label: string
-    subLabel?: string
+    children?: React.ReactNode
+    width?: string
     isActive?: boolean
-    width?: string // 너비를 자유롭게 조절 (기본 1u: w-14)
+    align?: 'center' | 'left'
 }
 
-const Key = ({ label, subLabel, isActive, width = 'w-14' }: KeyProps) => {
+export function Key({ children, width = 'w-24', isActive = false, align = 'center' }: KeyProps) {
     return (
         <div
-            className={`relative flex h-14 ${width} flex-shrink-0 flex-col items-center justify-center rounded-xl border transition-all duration-300 ${
-                isActive
-                    ? 'border-blue-400 bg-gradient-to-br from-blue-600/20 to-purple-600/20 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                    : 'border-white/10 bg-zinc-900/50 text-zinc-400'
-            }`}
+            className={` ${width} relative flex h-24 flex-col rounded-xl border transition-all duration-300 ${
+                align === 'center' ? 'items-center justify-center' : 'items-start justify-end p-4'
+            } ${isActive ? 'z-10 border-purple-500/60 bg-zinc-800 shadow-[0_0_50px_rgba(168,85,247,0.4)]' : 'border-white/10 bg-zinc-900/80 shadow-xl'} `}
         >
-            {subLabel && <span className="absolute top-1.5 text-[10px] uppercase opacity-50">{subLabel}</span>}
-            <span className={`text-sm font-medium ${isActive ? 'text-white' : 'text-zinc-300'}`}>{label}</span>
-            {isActive && <div className="absolute inset-0 rounded-xl bg-blue-500/10 blur-md" />}
+            <div className={`text-2xl ${isActive ? 'font-bold text-purple-400' : 'text-zinc-300'} font-medium`}>{children}</div>
         </div>
     )
 }
 
 export function VisualKeyboard() {
     return (
-        <div className="relative inline-block rounded-3xl bg-gradient-to-b from-blue-500/20 via-transparent to-purple-500/20 p-1">
-            <div className="flex flex-col gap-2 rounded-[22px] bg-zinc-950 p-6 shadow-2xl">
-                {/* Row 1: Function Keys (1u keys) */}
-                <div className="flex gap-2">
-                    <Key label="esc" />
-                    <div className="w-4" /> {/* 표준 간격 */}
-                    <Key label="F1" subLabel="🔆" />
-                    <Key label="F2" subLabel="🔅" />
-                    <Key label="F3" subLabel="□□" />
-                    <Key label="F4" subLabel="Q" />
-                    <Key label="F5" subLabel="🎤" />
-                    <Key label="F6" subLabel="🌙" />
+        <div className="flex items-center justify-center p-8 font-sans text-white">
+            <div className="flex flex-col gap-4 rounded-[3rem] p-12">
+                <div className="flex gap-3">
+                    {['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='].map((k, i) => (
+                        <Key key={i}>{k}</Key>
+                    ))}
+                    <Key width="w-52" align="left">
+                        ←
+                    </Key>
                 </div>
 
-                {/* Row 2: Numbers/QWERTY (Standard offset) */}
-                <div className="flex gap-2">
-                    <Key label="±" subLabel="§" />
-                    <Key label="1" subLabel="!" />
-                    <Key label="@" subLabel="2" />
-                    <Key label="#" subLabel="3" />
-                    <Key label="$" subLabel="4" />
-                    <Key label="%" subLabel="5" />
-                    <Key label="^" subLabel="6" />
-                    <Key label="&" subLabel="7" />
+                <div className="flex gap-3">
+                    <Key width="w-40" align="left">
+                        Tab
+                    </Key>
+                    {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']'].map((k) => (
+                        <Key key={k}>{k}</Key>
+                    ))}
+                    <Key width="w-36">\</Key>
                 </div>
 
-                {/* Row 3: QWERTY (0.5u Offset) */}
-                <div className="flex gap-2 pl-6">
-                    <Key label="Q" />
-                    <Key label="W" />
-                    <Key label="E" />
-                    <Key label="R" />
-                    <Key label="T" />
-                    <Key label="Y" />
-                    <Key label="U" />
+                <div className="flex gap-3">
+                    <Key width="w-48" align="left">
+                        Caps Lock
+                    </Key>
+                    {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'"].map((k) => (
+                        <Key key={k}>{k}</Key>
+                    ))}
+                    <motion.div initial={{ scale: 0.98 }} animate={{ scale: 1.02 }} transition={{ repeat: Infinity, duration: 1.5, repeatType: 'reverse' }}>
+                        <Key width="w-56" align="left" isActive={true}>
+                            Enter
+                        </Key>
+                    </motion.div>
                 </div>
 
-                {/* Row 4: Home Row (0.75u Offset + Active Key) */}
-                <div className="flex gap-2 pl-9">
-                    <Key label="A" />
-                    <Key label="S" />
-                    <Key label="D" />
-                    <Key label="F" />
-                    <Key label="G" />
-                    <Key label="V" isActive={true} /> {/* 강조 키 */}
+                <div className="flex gap-3">
+                    <Key width="w-64" align="left">
+                        Shift
+                    </Key>
+                    {['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/'].map((k) => (
+                        <Key key={k}>{k}</Key>
+                    ))}
+                    <Key width="w-68" align="left">
+                        Shift
+                    </Key>
                 </div>
 
-                {/* Row 5: Bottom Row (Modifiers & Space) */}
-                <div className="flex gap-2">
-                    <Key label="fn" subLabel="🌐" width="w-12" />
-                    <Key label="control" subLabel="^" width="w-16" />
-                    <Key label="option" subLabel="⌥" width="w-16" />
-                    <Key label="command" subLabel="⌘" width="w-20" isActive={true} />
-                    <div className="h-14 w-48 rounded-xl border border-white/5 bg-zinc-900/30" /> {/* Spacebar */}
-                </div>
+                <div className="flex gap-3">
+                    <motion.div initial={{ scale: 0.98 }} animate={{ scale: 1.02 }} transition={{ repeat: Infinity, duration: 1.5, repeatType: 'reverse' }}>
+                        <Key width="w-32" isActive={true}>
+                            Ctrl
+                        </Key>
+                    </motion.div>
+                    <Key width="w-32">Fn</Key>
 
-                {/* Bottom Badge (Floating Style) */}
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-8 flex items-center justify-center gap-4 self-center rounded-2xl border border-white/10 bg-zinc-900/80 px-8 py-4 shadow-xl"
-                >
-                    <div className="flex gap-1.5">
-                        <kbd className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-zinc-800 font-mono text-sm text-white shadow-inner">⌘</kbd>
-                        <kbd className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-zinc-800 font-mono text-sm text-white shadow-inner">V</kbd>
-                    </div>
-                    <div className="h-4 w-[1px] bg-white/20" /> {/* Divider */}
-                    <span className="text-sm font-bold tracking-[0.2em] text-white">FREE TIME FINDER</span>
-                </motion.div>
+                    <Key width="w-32">
+                        <FaWindows className="h-10 w-10" />
+                    </Key>
+
+                    <Key width="w-32">Alt</Key>
+
+                    <Key width="w-[40rem]" />
+
+                    <Key width="w-32">Alt</Key>
+                    <Key width="w-32">Opt</Key>
+                    <Key width="w-32">Ctrl</Key>
+                </div>
             </div>
-
-            {/* Background Glow */}
-            <div className="absolute -inset-4 -z-10 rounded-[40px] bg-blue-500/10 opacity-50 blur-3xl" />
         </div>
     )
 }

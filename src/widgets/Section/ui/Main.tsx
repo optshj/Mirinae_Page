@@ -17,9 +17,9 @@ export function Main() {
                         당신의 하루를 별처럼 빛나게
                     </motion.h1>
 
-                    <motion.div className="mt-4" variants={paragraphVariants}>
-                        <p className="text-text-secondary text-lg tracking-tighter">심플하고 아름다운 데스크톱 캘린더 위젯, 하루의 일정을 한눈에 관리하세요.</p>
-                    </motion.div>
+                    <motion.p className="text-text-secondary mt-4 text-lg tracking-tighter" variants={paragraphVariants}>
+                        심플하고 아름다운 데스크톱 캘린더 위젯, 하루의 일정을 한눈에 관리하세요.
+                    </motion.p>
 
                     <motion.div className="mt-4" variants={buttonVariants}>
                         <DownloadButton />

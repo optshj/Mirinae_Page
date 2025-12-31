@@ -53,6 +53,7 @@ body {
         opacity: 0;
     }
 }
+
 :root {
     --background-primary: #3d3c52;
     --background-secondary: #4d4254;
