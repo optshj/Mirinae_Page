@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'motion/react'
 import Image from 'next/image'
+
 export function Section1() {
     return (
         <motion.section className={`relative h-[1200px] py-20 sm:py-32`}>

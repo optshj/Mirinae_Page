@@ -7,7 +7,6 @@ interface FAQItem {
     question: string
     answer: string
 }
-
 const faqs: FAQItem[] = [
     {
         question: '미리내는 무료인가요?',

@@ -9,7 +9,6 @@ interface Feature {
     description: string
     visual: React.ReactNode
 }
-
 const features: Feature[] = [
     {
         id: 1,
@@ -60,7 +59,6 @@ export function Section2() {
         </section>
     )
 }
-
 function FeatureText({ feature, scrollYProgress, index, total }: { feature: Feature; scrollYProgress: MotionValue<number>; index: number; total: number }) {
     const start = index / total
     const end = (index + 1) / total
@@ -68,31 +66,81 @@ function FeatureText({ feature, scrollYProgress, index, total }: { feature: Feat
     const isFirst = index === 0
     const isLast = index === total - 1
 
-    const opacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
-    const y = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 50, 0, 0, isLast ? 0 : -100])
+    const scrollOpacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
+    const scrollY = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 50, 0, 0, isLast ? 0 : -100])
+
+    const initialOpacity = isFirst ? { opacity: 0, y: 30 } : false
+    const whileInView = isFirst ? { opacity: 1, y: 0 } : {}
+    const transition = isFirst ? { duration: 0.8 } : {}
+    const viewport = isFirst ? { once: true } : {}
 
     return (
-        <motion.div className="absolute inset-0 flex flex-col justify-center p-8" style={{ opacity, y }}>
-            <h2 className="text-brand text-md mb-3 font-bold">{feature.subTitle}</h2>
-            <p className="mt-2 text-5xl font-bold tracking-tight whitespace-pre-line text-white sm:text-5xl">{feature.title}</p>
-            <p className="mt-6 text-lg whitespace-pre-line text-gray-400">{feature.description}</p>
+        <motion.div className="absolute inset-0 flex flex-col justify-center p-8" style={{ opacity: scrollOpacity, y: scrollY }}>
+            <div className="lg:max-w-lg">
+                <motion.span
+                    className="pointer-events-none absolute top-1/4 left-4 -translate-y-1/2 text-[12rem] font-black text-white/[0.03] select-none"
+                    initial={initialOpacity}
+                    whileInView={whileInView}
+                    transition={transition}
+                    viewport={viewport}
+                >
+                    {feature.id}
+                </motion.span>
+                <motion.h1 className="text-brand text-base leading-7 font-semibold" initial={initialOpacity} whileInView={whileInView} transition={transition} viewport={viewport}>
+                    {feature.subTitle}
+                </motion.h1>
+                <motion.p
+                    className="mt-2 text-3xl font-bold tracking-tight whitespace-pre-line text-white sm:text-5xl"
+                    initial={initialOpacity}
+                    whileInView={whileInView}
+                    transition={{ ...transition, delay: 0.2 }}
+                    viewport={viewport}
+                >
+                    {feature.title}
+                </motion.p>
+                <motion.p
+                    className="mt-6 text-lg leading-8 whitespace-pre-line text-gray-400"
+                    initial={initialOpacity}
+                    whileInView={whileInView}
+                    transition={{ ...transition, delay: 0.4 }}
+                    viewport={viewport}
+                >
+                    {feature.description}
+                </motion.p>
+            </div>
         </motion.div>
     )
 }
-
 function FeatureVisual({ feature, scrollYProgress, index, total }: { feature: Feature; scrollYProgress: MotionValue<number>; index: number; total: number }) {
     const start = index / total
     const end = (index + 1) / total
 
-    const isLast = index === total - 1
     const isFirst = index === 0
+    const isLast = index === total - 1
 
-    const opacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
+    const backgroundOpacity = useTransform(scrollYProgress, [start, start + 0.05, end - 0.05, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
+    const contentOpacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
+    const contentY = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 40, 0, 0, isLast ? 0 : -100])
 
     return (
-        <div className="p -6 absolute flex aspect-square h-full w-full max-w-md items-center justify-center rounded-2xl bg-zinc-700">
-            <motion.div className="z-50" style={{ opacity }}>
-                {feature.visual}
+        <div className="absolute flex aspect-square h-full w-full max-w-md items-center justify-center p-6">
+            <motion.div
+                className="relative flex h-full w-full items-center justify-center rounded-2xl bg-zinc-700"
+                style={{ opacity: backgroundOpacity }}
+                initial={isFirst ? { opacity: 0, y: 30 } : false}
+                whileInView={isFirst ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+            >
+                <motion.div
+                    className="z-50"
+                    style={{
+                        opacity: contentOpacity,
+                        y: contentY
+                    }}
+                >
+                    {feature.visual}
+                </motion.div>
             </motion.div>
         </div>
     )

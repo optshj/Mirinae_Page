@@ -1,6 +1,5 @@
 export { Section1 } from './ui/Section1'
 export { Section2 } from './ui/Section2'
-export { Section3 } from './ui/Section3'
 export { Section4 } from './ui/Section4'
 export { Section5 } from './ui/Section5'
 export { Main } from './ui/Main'
