@@ -1,26 +1,34 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { Plus } from 'lucide-react'
 
 interface KeyProps {
     children: React.ReactNode
     width?: string
     isActive?: boolean
-    align?: 'center' | 'left'
 }
-export const Key = ({ children, width = 'w-24', isActive = false, align = 'center' }: KeyProps) => {
+export const Key = ({ children, width = 'w-24', isActive = false }: KeyProps) => {
     return (
-        <motion.div
-            animate={{
-                y: isActive ? 4 : 0,
-                scale: isActive ? 0.96 : 1
-            }}
-            transition={{ type: 'spring', stiffness: 600, damping: 30 }}
-            className={` ${width} relative flex h-24 flex-col rounded-xl border transition-all duration-200 ${
-                align === 'center' ? 'items-center justify-center' : 'items-start justify-end p-4'
-            } ${isActive ? 'z-10 border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'border-white/10 bg-zinc-900/80 shadow-xl'} `}
-        >
-            <div className={`text-2xl font-medium transition-colors duration-200 ${isActive ? 'text-white' : 'text-zinc-500'}`}>{children}</div>
-        </motion.div>
+        <div className="relative">
+            <motion.div
+                animate={{
+                    y: isActive ? 8 : 0,
+                    boxShadow: isActive ? 'inset 0px 4px 8px rgba(0,0,0,0.6), 0px 0px 0px rgba(0,0,0,0)' : '0px 10px 0px rgb(39, 39, 42), 0px 15px 20px rgba(0,0,0,0.5)'
+                }}
+                transition={{ type: 'spring', stiffness: 150, damping: 20 }}
+                className={` ${width} relative flex h-24 flex-col items-start justify-end rounded-xl border p-4 transition-colors duration-500 ${isActive ? 'border-white/20 bg-zinc-800' : 'border-white/10 bg-zinc-900'}`}
+            >
+                <motion.div
+                    animate={{
+                        opacity: isActive ? 1 : 0.4
+                    }}
+                    transition={{ duration: 0.4 }}
+                    className={`text-2xl font-bold text-white`}
+                >
+                    {children}
+                </motion.div>
+            </motion.div>
+        </div>
     )
 }
 
@@ -30,27 +38,27 @@ export const ShortcutVisual = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setIsPressed(true)
-            setTimeout(() => setIsPressed(false), 200)
+            setTimeout(() => setIsPressed(false), 800)
         }, 1500)
 
         return () => clearInterval(interval)
     }, [])
 
     return (
-        <div className="relative flex items-center justify-center p-20">
-            <div className="flex items-center gap-6">
+        <div className="flex items-center justify-center">
+            <div className="flex items-center gap-8">
                 <Key isActive={isPressed} width="w-32">
                     Ctrl
                 </Key>
 
                 <motion.div
                     animate={{
-                        opacity: isPressed ? 1 : 0.2,
-                        scale: isPressed ? 1.1 : 1
+                        opacity: isPressed ? 1 : 0.2
                     }}
-                    className="text-4xl font-light text-white"
+                    transition={{ duration: 0.5 }}
+                    className="mt-2 text-white"
                 >
-                    +
+                    <Plus size="32" />
                 </motion.div>
 
                 <Key isActive={isPressed} width="w-48">
