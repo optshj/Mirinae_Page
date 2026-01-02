@@ -2,14 +2,14 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MousePointer2, Check } from 'lucide-react'
+import { PALETTE } from '@/shared/const/Palette'
 
 export const ScheduleDescription = () => {
     const [step, setStep] = useState(0)
     const [title, setTitle] = useState('')
-    const [activeColor, setActiveColor] = useState('#AEC6FF')
+    const [activeColor, setActiveColor] = useState(PALETTE[0])
 
     const fullTitle = '제주도 2박 3일 여행하기'
-    const colors = ['#AEC6FF', '#74EBD5', '#D6A4FF', '#FF8A7A', '#FFD966', '#FFB385', '#57D9D9', '#E0E0E0', '#5E81F4', '#47B347', '#D11A1A']
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -31,11 +31,11 @@ export const ScheduleDescription = () => {
             }, 1200)
             return () => clearTimeout(typingTimer)
         } else if (step === 3) {
-            const colorTimer = setTimeout(() => setActiveColor('#D6A4FF'), 1200)
+            const colorTimer = setTimeout(() => setActiveColor(PALETTE[2]), 1200)
             return () => clearTimeout(colorTimer)
         } else if (step === 0) {
             setTitle('')
-            setActiveColor('#AEC6FF')
+            setActiveColor(PALETTE[0])
         }
     }, [step])
 
@@ -119,7 +119,7 @@ export const ScheduleDescription = () => {
                 </div>
 
                 <div className="mt-8 grid grid-cols-6 gap-3">
-                    {colors.map((color, i) => {
+                    {PALETTE.map((color, i) => {
                         const isSelected = activeColor === color
                         return (
                             <motion.div
