@@ -32,7 +32,7 @@ export const Key = ({ children, width = 'w-24', isActive = false }: KeyProps) =>
     )
 }
 
-export const ShortcutVisual = () => {
+export const ShortcutDescription = () => {
     const [isPressed, setIsPressed] = useState(false)
 
     useEffect(() => {

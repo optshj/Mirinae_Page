@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Sliders, Move, ChevronLeft, ChevronRight } from 'lucide-react'
 
-export const CustomizationVisual = () => {
+export const CustomizationDescription = () => {
     const [theme, setTheme] = useState<'dark' | 'light'>('dark')
     const [opacity, setOpacity] = useState(1.0)
     const [position, setPosition] = useState({ x: 0, y: 0 })
