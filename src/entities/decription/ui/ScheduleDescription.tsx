@@ -1,10 +1,12 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { MousePointer2, Check } from 'lucide-react'
 import { PALETTE } from '@/shared/const/Palette'
 
 export const ScheduleDescription = () => {
+    const containerRef = useRef(null)
+    const isInView = useInView(containerRef, { amount: 0.5 })
     const [step, setStep] = useState(0)
     const [title, setTitle] = useState('')
     const [activeColor, setActiveColor] = useState(PALETTE[0])
@@ -12,13 +14,23 @@ export const ScheduleDescription = () => {
     const fullTitle = '제주도 2박 3일 여행하기'
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            setStep((prev) => (prev + 1) % 5)
-        }, 3000)
-        return () => clearInterval(timer)
-    }, [])
+        if (isInView) {
+            setStep(1)
 
+            const timer = setInterval(() => {
+                setStep((prev) => (prev + 1) % 5)
+            }, 3000)
+
+            return () => clearInterval(timer)
+        } else {
+            setStep(0)
+            setTitle('')
+            setActiveColor(PALETTE[0])
+        }
+    }, [isInView])
     useEffect(() => {
+        if (!isInView) return
+
         if (step === 1) {
             let i = 0
             const typingTimer = setTimeout(() => {
@@ -37,26 +49,37 @@ export const ScheduleDescription = () => {
             setTitle('')
             setActiveColor(PALETTE[0])
         }
-    }, [step])
+    }, [step, isInView])
 
     return (
-        <div className="relative flex h-full w-full items-center justify-center p-4">
+        <div ref={containerRef} className="relative flex h-full w-full items-center justify-center p-4">
             <motion.div
                 className="pointer-events-none absolute z-50 flex items-center justify-center"
                 animate={{
                     x: step === 1 ? -80 : step === 2 ? 0 : step === 3 ? -20 : step === 4 ? 95 : 0,
                     y: step === 1 ? -80 : step === 2 ? 20 : step === 3 ? 90 : step === 4 ? 195 : 0,
-                    opacity: step === 0 ? 0 : 1,
-                    scale: step === 0 ? 1 : [1, 0.8, 1]
+                    opacity: step === 0 ? 0 : 1
                 }}
                 transition={{
                     x: { duration: 1, ease: 'easeInOut' },
                     y: { duration: 1, ease: 'easeInOut' },
-                    opacity: { duration: 0.5 },
-                    scale: { duration: 0.2, times: [0, 0.5, 1], delay: 1 }
+                    opacity: { duration: 0.5 }
                 }}
             >
-                <MousePointer2 size={24} fill={activeColor} className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" style={{ strokeWidth: '2' }} />
+                <motion.div
+                    key={step}
+                    initial={{ scale: 1 }}
+                    animate={{
+                        scale: step === 0 ? 1 : [1, 0.8, 1]
+                    }}
+                    transition={{
+                        duration: 0.2,
+                        times: [0, 0.5, 1],
+                        delay: step === 0 ? 0 : 1
+                    }}
+                >
+                    <MousePointer2 size={24} fill={activeColor} className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" style={{ strokeWidth: '2' }} />
+                </motion.div>
             </motion.div>
 
             <motion.div
@@ -156,7 +179,7 @@ export const ScheduleDescription = () => {
                             backgroundColor: activeColor
                         }}
                         transition={{
-                            scale: { duration: 0.2, delay: step >= 4 ? 1.2 : 0 }
+                            scale: { duration: 0.2, delay: step >= 4 ? 1.1 : 0 }
                         }}
                         className="flex-1 rounded-xl py-3 text-sm font-bold text-white shadow-lg shadow-indigo-100 transition-colors"
                     >

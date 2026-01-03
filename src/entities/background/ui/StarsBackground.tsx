@@ -14,7 +14,7 @@ interface ShootingStarProps {
     animationDelay: string
     animationDuration: string
 }
-export const StarsBackground = ({ numStars = 150, numShootingStars = 10 }) => {
+export const StarsBackground = ({ numStars = 80, numShootingStars = 10 }) => {
     const [stars, setStars] = useState<StarProps[]>([])
     const [shootingStars, setShootingStars] = useState<ShootingStarProps[]>([])
 

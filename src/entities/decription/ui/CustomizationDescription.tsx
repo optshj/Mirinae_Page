@@ -1,14 +1,28 @@
-import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+'use client'
+import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Moon, Sun, Sliders, Move, ChevronLeft, ChevronRight } from 'lucide-react'
 
 export const CustomizationDescription = () => {
+    const containerRef = useRef(null)
+    const isInView = useInView(containerRef, { amount: 0.3 })
+
     const [theme, setTheme] = useState<'dark' | 'light'>('dark')
     const [opacity, setOpacity] = useState(1.0)
     const [position, setPosition] = useState({ x: 0, y: 0 })
     const [isExpanded, setIsExpanded] = useState(true)
 
     useEffect(() => {
+        // 1. 화면에 보이지 않으면 상태를 초기화하고 인터벌 중단
+        if (!isInView) {
+            setTheme('dark')
+            setOpacity(1.0)
+            setPosition({ x: 0, y: 0 })
+            setIsExpanded(true)
+            return
+        }
+
+        // 2. 화면에 보이는 순간 즉시 로직 실행
         const interval = setInterval(() => {
             setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
             setOpacity(Math.random() * 0.3 + 0.7)
@@ -20,17 +34,18 @@ export const CustomizationDescription = () => {
         }, 2500)
 
         return () => clearInterval(interval)
-    }, [])
+    }, [isInView]) // isInView가 바뀔 때마다 실행/해제
 
     const days = Array.from({ length: 35 }, (_, i) => i - 3)
 
     return (
-        <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden p-8">
+        <div ref={containerRef} className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden p-8">
+            {/* 상단 설정 바 */}
             <div className="absolute top-20 flex w-full max-w-lg items-center justify-between px-6">
                 <div className="flex items-center gap-3">
                     <Sliders size={18} className="text-white" />
                     <div className="h-1 w-20 overflow-hidden rounded-full bg-zinc-500">
-                        <motion.div animate={{ width: `${opacity * 100}%` }} className="bg-brand h-full" />
+                        <motion.div animate={{ width: `${opacity * 100}%` }} className="bg-brand h-full transition-all" />
                     </div>
                 </div>
 
@@ -58,11 +73,15 @@ export const CustomizationDescription = () => {
             </div>
 
             <motion.div
-                animate={{ x: position.x, y: position.y, opacity: opacity }}
+                animate={{
+                    x: position.x,
+                    y: position.y,
+                    opacity: opacity
+                }}
                 transition={{ type: 'spring', stiffness: 100, damping: 20 }}
                 className="z-10 flex flex-col items-center gap-1"
             >
-                <div className={`w-72 overflow-hidden rounded-2xl p-4 shadow-lg transition-colors ${theme === 'dark' ? 'bg-zinc-900' : 'bg-white'}`}>
+                <div className={`w-72 overflow-hidden rounded-2xl p-4 shadow-lg transition-colors duration-500 ${theme === 'dark' ? 'bg-zinc-900' : 'bg-white'}`}>
                     <div className="mb-4 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <ChevronLeft size={14} className={` ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-400'}`} />
@@ -112,7 +131,7 @@ export const CustomizationDescription = () => {
                     </div>
                 </div>
 
-                {/* 하단 그리드 섹션 */}
+                {/* 하단 확장 섹션 */}
                 <AnimatePresence>
                     {isExpanded && (
                         <motion.div

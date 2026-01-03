@@ -1,6 +1,6 @@
 'use client'
-import React, { useEffect, useState, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useEffect, useState, useMemo, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { MousePointer2, ChevronLeft, ChevronRight, Settings, RotateCcw, ChevronDown, ChevronUp, FoldVertical, Check, Plus, X } from 'lucide-react'
 import { DesktopIcons } from '@/entities/icon'
 import { PALETTE } from '@/shared/const/Palette'
@@ -25,7 +25,7 @@ const EVENTS: Record<string, CalendarEvent[]> = {
 }
 
 // --- Custom Hook for Demo Logic ---
-const useCalendarDemo = () => {
+const useCalendarDemo = (isInView: boolean) => {
     const [step, setStep] = useState(0)
     const [title, setTitle] = useState('')
     const [showList, setShowList] = useState(false)
@@ -33,13 +33,29 @@ const useCalendarDemo = () => {
     const [activeColor, setActiveColor] = useState(PALETTE[0])
 
     useEffect(() => {
+        if (!isInView) {
+            setStep(0)
+            return
+        }
+
+        setStep(1)
+
         const mainTimer = setInterval(() => {
             setStep((prev) => (prev + 1) % 7)
         }, 3000)
+
         return () => clearInterval(mainTimer)
-    }, [])
+    }, [isInView])
 
     useEffect(() => {
+        if (!isInView) {
+            setTitle('')
+            setActiveColor(PALETTE[0])
+            setShowList(false)
+            setShowForm(false)
+            return
+        }
+
         let typingInterval: NodeJS.Timeout
         let subTimeout: NodeJS.Timeout
 
@@ -49,13 +65,9 @@ const useCalendarDemo = () => {
             setShowList(false)
             setShowForm(false)
         } else if (step === 1) {
-            setTimeout(() => {
-                setShowList(true)
-            }, 1000)
+            subTimeout = setTimeout(() => setShowList(true), 1000)
         } else if (step === 2) {
-            setTimeout(() => {
-                setShowForm(true)
-            }, 1000)
+            subTimeout = setTimeout(() => setShowForm(true), 1000)
         } else if (step === 3) {
             subTimeout = setTimeout(() => {
                 let i = 0
@@ -64,18 +76,16 @@ const useCalendarDemo = () => {
                     i++
                     if (i > FULL_TITLE.length) clearInterval(typingInterval)
                 }, 80)
-            }, 500)
-        } else if (step === 5) {
-            subTimeout = setTimeout(() => {
-                setActiveColor(PALETTE[2])
             }, 800)
+        } else if (step === 5) {
+            subTimeout = setTimeout(() => setActiveColor(PALETTE[2]), 800)
         }
 
         return () => {
             if (typingInterval) clearInterval(typingInterval)
             if (subTimeout) clearTimeout(subTimeout)
         }
-    }, [step])
+    }, [step, isInView])
 
     const pointerPos = useMemo(() => {
         const positions: Record<number, { x: number; y: number }> = {
@@ -117,12 +127,13 @@ const EventItem = ({ color, title, date }: { color: string; title: string; date:
         </div>
     </div>
 )
-
 export const Section1 = () => {
-    const { step, title, showList, showForm, activeColor, pointerPos } = useCalendarDemo()
+    const containerRef = useRef(null)
+    const isInView = useInView(containerRef, { amount: 0.3 })
+    const { step, title, showList, showForm, activeColor, pointerPos } = useCalendarDemo(isInView)
 
     return (
-        <div className="relative flex w-full flex-col items-center justify-center py-64">
+        <section ref={containerRef} className="relative flex w-full flex-col items-center justify-center py-64">
             {/* Header Text */}
             <header className="relative z-20 mb-16 flex flex-col items-center text-center">
                 <motion.h2
@@ -140,7 +151,7 @@ export const Section1 = () => {
                             whileInView={{ width: '100%' }}
                             transition={{ delay: 0.5, duration: 0.6 }}
                             viewport={{ once: true }}
-                            className="bg-brand/70 absolute bottom-1 left-0 -z-10 h-8 w-full"
+                            className="bg-brand/70 absolute bottom-1 left-0 -z-10 h-6 w-full"
                         />
                     </span>
                 </motion.h2>
@@ -150,8 +161,10 @@ export const Section1 = () => {
                     PC를 켜는 순간, 당신의 일정이 그 자리에서 시작됩니다.
                 </motion.p>
             </header>
+
             {/* Desktop UI Simulation */}
             <DesktopIcons />
+
             {/* Main Calendar Widget */}
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -177,18 +190,41 @@ export const Section1 = () => {
                 </div>
             </motion.div>
 
-            {/* Floating Cursor */}
-            <motion.div
-                className="pointer-events-none absolute top-1/2 left-1/2 z-[100]"
-                animate={{ x: pointerPos.x, y: pointerPos.y }}
-                transition={{ type: 'spring', stiffness: 150, damping: 25 }}
-            >
-                <MousePointer2 size={32} fill="#3B82F6" className="text-white drop-shadow-lg" />
-            </motion.div>
+            <AnimatePresence>
+                {isInView && (
+                    <motion.div
+                        key="cursor-wrapper"
+                        animate={{
+                            opacity: step === 0 ? 0 : 1,
+                            x: pointerPos.x,
+                            y: pointerPos.y
+                        }}
+                        className="pointer-events-none absolute top-1/2 left-1/2 z-[100]"
+                        transition={{
+                            x: { type: 'spring', stiffness: 150, damping: 25 },
+                            y: { type: 'spring', stiffness: 150, damping: 25 },
+                            opacity: { duration: 0.3 }
+                        }}
+                    >
+                        <motion.div
+                            key={step}
+                            initial={{ scale: 1 }}
+                            animate={{ scale: [1, 0.75, 1] }}
+                            transition={{
+                                duration: 0.4,
+                                times: [0, 0.5, 1],
+                                delay: 0.5
+                            }}
+                        >
+                            <MousePointer2 size={32} fill="#3B82F6" className="text-white drop-shadow-lg" />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Popups */}
             <AnimatePresence mode="wait">
-                {(showList || showForm) && (
+                {isInView && (showList || showForm) && (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -204,10 +240,9 @@ export const Section1 = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </section>
     )
 }
-
 // --- Internal UI Parts (Split for clarity) ---
 
 const CalendarHeader = () => (
@@ -258,7 +293,7 @@ const CalendarGrid = () => (
                                 >
                                     <div className={`absolute top-0 bottom-0 left-0 w-1 rounded-l-sm`} style={{ backgroundColor: styles }} />
                                     <span className="flex items-center gap-1 truncate">
-                                        {!ev.isFullDay && ev.time && <span className="font-normal">{ev.time}</span>}
+                                        {!ev.isFullDay && ev.time && ev.time + ' '}
                                         {ev.title}
                                     </span>
                                 </div>
@@ -276,7 +311,7 @@ const EventListPopup = () => (
         <div className="space-y-2">
             <div className="flex items-center justify-between rounded-xl bg-orange-50 p-3">
                 <div className="flex items-center gap-2">
-                    <div className="h-6 w-1 rounded-full" style={{ backgroundColor: PALETTE[5] }} />
+                    <div className="h-8 w-1 rounded-full" style={{ backgroundColor: PALETTE[5] }} />
                     <div className="flex flex-col">
                         <span className="text-sm font-medium" style={{ color: PALETTE[5] }}>
                             사이드 프로젝트 회의
@@ -310,12 +345,12 @@ const AddEventForm = ({ step, title, activeColor }: { step: number; title: strin
                 {step === 3 && (
                     <motion.div
                         animate={{ opacity: [0, 1, 0] }}
-                        transition={{ repeat: Infinity, duration: 0.8 }}
+                        transition={{ repeat: Infinity, duration: 0.8, delay: step >= 3 ? 0.4 : 0 }}
                         className="ml-0.5 h-4 w-0.5"
                         style={{ backgroundColor: activeColor }}
                     />
                 )}
-                {!title && <span className="text-sm text-zinc-300">일정을 입력해주세요</span>}
+                {title === '' && <span className="text-sm text-zinc-300">일정을 입력해주세요</span>}
             </div>
         </div>
 
@@ -349,19 +384,33 @@ const AddEventForm = ({ step, title, activeColor }: { step: number; title: strin
         </div>
 
         <div className="mt-8 grid grid-cols-6 gap-3">
-            {PALETTE.map((color, i) => (
-                <div key={i} className="relative h-6 w-6 rounded-full" style={{ backgroundColor: color, boxShadow: activeColor === color ? `0 0 10px ${color}80` : 'none' }}>
-                    {activeColor === color && (
-                        <motion.div
-                            className="absolute inset-0 flex items-center justify-center text-white"
-                            animate={{ scale: step >= 5 ? [1, 1.2, 1] : 1 }}
-                            transition={{ scale: { duration: 0.5 } }}
-                        >
-                            <Check size={12} strokeWidth={3} />
-                        </motion.div>
-                    )}
-                </div>
-            ))}
+            {PALETTE.map((color, i) => {
+                const isSelected = activeColor === color
+                return (
+                    <motion.div
+                        key={i}
+                        className={`h-6 w-6 rounded-full`}
+                        style={{
+                            backgroundColor: color,
+                            boxShadow: isSelected ? `0 0 10px ${color}80` : 'none'
+                        }}
+                        animate={{ scale: isSelected ? [1, 1.2, 1] : 1 }}
+                        transition={{ scale: { duration: 0.5 } }}
+                    >
+                        <AnimatePresence>
+                            {isSelected && (
+                                <motion.div
+                                    initial={{ scale: 0, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    className="flex h-full w-full items-center justify-center text-white"
+                                >
+                                    <Check size={12} strokeWidth={3} />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </motion.div>
+                )
+            })}
         </div>
 
         <div className="mt-8 flex gap-3">
@@ -372,7 +421,7 @@ const AddEventForm = ({ step, title, activeColor }: { step: number; title: strin
                     backgroundColor: activeColor
                 }}
                 transition={{
-                    scale: { duration: 0.2, delay: step >= 4 ? 0.8 : 0 }
+                    scale: { duration: 0.2, delay: step >= 4 ? 0.6 : 0 }
                 }}
                 className="flex-1 rounded-xl py-3 text-sm font-bold text-white shadow-lg shadow-indigo-100 transition-colors"
             >

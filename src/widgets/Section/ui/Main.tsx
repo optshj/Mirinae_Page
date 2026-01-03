@@ -8,7 +8,7 @@ const easeOutExpo = [0.22, 1, 0.36, 1] as const
 
 export function Main() {
     return (
-        <div className="relative">
+        <section className="relative">
             <div className="h-screen">
                 <StarsBackground />
             </div>
@@ -59,6 +59,6 @@ export function Main() {
                     <ChevronDown className="text-text-secondary absolute bottom-0 animate-bounce" size={48} />
                 </div>
             </motion.section>
-        </div>
+        </section>
     )
 }
