@@ -1,0 +1,1 @@
+export const PALETTE = ['#AEC6FF', '#74EBD5', '#D6A4FF', '#FF8A7A', '#FFD966', '#FFB385', '#57D9D9', '#E0E0E0', '#5E81F4', '#47B347', '#D11A1A']

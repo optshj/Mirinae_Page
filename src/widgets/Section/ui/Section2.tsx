@@ -1,47 +1,140 @@
 'use client'
-import { motion } from 'motion/react'
-import Image from 'next/image'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
+import { CustomizationDescription, ScheduleDescription, ShortcutDescription } from '@/entities/decription'
+
+interface Feature {
+    id: number
+    subTitle: string
+    title: string
+    description: string
+    visual: React.ReactNode
+}
+const features: Feature[] = [
+    {
+        id: 1,
+        subTitle: '바쁜 하루도 흐트러지지 않게',
+        title: '간편한 일정 등록',
+        description: '복잡한 과정 없이, 직관적인 폼으로 빠르게 일정을 등록하세요.\n중요한 순간을 놓치지 않도록 도와줍니다.',
+        visual: <ScheduleDescription />
+    },
+    {
+        id: 2,
+        subTitle: '빠르게, 편하게',
+        title: '단축키 지원',
+        description: '마우스에 손을 뻗을 필요 없이,\n단축키로 빠르게 새 일정을 만들어보세요.',
+        visual: <ShortcutDescription />
+    },
+    {
+        id: 3,
+        subTitle: '원하는대로 자유롭게 설정',
+        title: '다크모드 & 커스터마이징',
+        description: '눈이 편안한 다크모드부터,\n투명도와 위치 조절까지 내 스타일대로 설정하세요.',
+        visual: <CustomizationDescription />
+    }
+]
 
 export function Section2() {
+    const containerRef = useRef<HTMLDivElement>(null)
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ['start start', 'end end']
+    })
+
     return (
-        <motion.section className={`relative h-[1200px] py-20 sm:py-32`}>
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="lg:pt-4 lg:pr-8">
-                    <div className="lg:max-w-lg">
-                        <motion.h1
-                            className="text-brand text-base leading-7 font-semibold"
-                            initial={{ opacity: 0, y: 24 }}
+        <section ref={containerRef} className="relative h-[300vh]">
+            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+                <div className="mx-auto grid h-3/4 w-full max-w-7xl grid-cols-1 gap-8 px-6 lg:grid-cols-2">
+                    <div className="relative">
+                        {features.map((feature, index) => (
+                            <FeatureText key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
+                        ))}
+                    </div>
+                    <div className="relative flex items-center justify-center">
+                        <motion.div
+                            className="absolute flex aspect-square h-full w-full items-center justify-center p-6"
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
                             viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
                         >
-                            {'간편한 일정추가'}
-                        </motion.h1>
-                        <motion.p
-                            className="mt-2 text-3xl font-bold tracking-tight whitespace-pre-line text-white sm:text-4xl"
-                            initial={{ opacity: 0, y: 24 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            viewport={{ once: true }}
-                        >
-                            {'반짝였을 때 추가하세요'}
-                        </motion.p>
-                        <motion.p
-                            className="text-text-secondary mt-6 text-lg leading-8 whitespace-pre-line"
-                            initial={{ y: 24, opacity: 0 }}
-                            whileInView={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.6, delay: 0.8 }}
-                            viewport={{ once: true }}
-                        >
-                            영감이 스쳐 지나가는 순간, 중요한 약속이 떠오른 바로 그 때.
-                            <br /> 쉽고 간편하게 일정을 추가하고 관리할 수 있습니다.
-                        </motion.p>
+                            <div className="bg-glass relative h-full w-full rounded-3xl border border-white/10 shadow-xl" />
+                        </motion.div>
+
+                        {features.map((feature, index) => (
+                            <FeatureVisual key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
+                        ))}
                     </div>
                 </div>
             </div>
-            <motion.div className="abs" initial={{ opacity: 0, y: 0 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.2 }} viewport={{ once: true }}>
-                <Image src="/explain2.png" width={600} height={1200} alt="image" quality={100} className="absolute top-60 left-220" />
-            </motion.div>
-        </motion.section>
+        </section>
+    )
+}
+
+function FeatureText({ feature, scrollYProgress, index, total }: { feature: Feature; scrollYProgress: MotionValue<number>; index: number; total: number }) {
+    const start = index / total
+    const end = (index + 1) / total
+
+    const isFirst = index === 0
+    const isLast = index === total - 1
+
+    const scrollOpacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
+    const scrollY = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 50, 0, 0, isLast ? 0 : -100])
+
+    const initialOpacity = isFirst ? { opacity: 0, y: 30 } : false
+    const whileInView = isFirst ? { opacity: 1, y: 0 } : {}
+    const transition = isFirst ? { duration: 0.8 } : {}
+    const viewport = isFirst ? { once: true } : {}
+
+    return (
+        <motion.div className="absolute inset-0 flex flex-col justify-center p-8" style={{ opacity: scrollOpacity, y: scrollY }}>
+            <div className="lg:max-w-lg">
+                <motion.span
+                    className="pointer-events-none absolute top-1/4 left-4 -translate-y-1/2 text-[12rem] font-black text-white/[0.03] select-none"
+                    initial={initialOpacity}
+                    whileInView={whileInView}
+                    transition={transition}
+                    viewport={viewport}
+                >
+                    {feature.id}
+                </motion.span>
+                <motion.h1 className="text-brand text-base leading-7 font-semibold" initial={initialOpacity} whileInView={whileInView} transition={transition} viewport={viewport}>
+                    {feature.subTitle}
+                </motion.h1>
+                <motion.p
+                    className="mt-2 text-3xl font-bold tracking-tight whitespace-pre-line text-white sm:text-5xl"
+                    initial={initialOpacity}
+                    whileInView={whileInView}
+                    transition={{ ...transition, delay: 0.2 }}
+                    viewport={viewport}
+                >
+                    {feature.title}
+                </motion.p>
+                <motion.p
+                    className="mt-6 text-lg leading-8 whitespace-pre-line text-gray-400"
+                    initial={initialOpacity}
+                    whileInView={whileInView}
+                    transition={{ ...transition, delay: 0.4 }}
+                    viewport={viewport}
+                >
+                    {feature.description}
+                </motion.p>
+            </div>
+        </motion.div>
+    )
+}
+function FeatureVisual({ feature, scrollYProgress, index, total }: { feature: Feature; scrollYProgress: MotionValue<number>; index: number; total: number }) {
+    const start = index / total
+    const end = (index + 1) / total
+    const isFirst = index === 0
+    const isLast = index === total - 1
+
+    const opacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
+    const y = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 20, 0, 0, isLast ? 0 : -20])
+
+    return (
+        <motion.div className="pointer-events-none absolute z-50 flex aspect-square h-full w-full max-w-md items-center justify-center" style={{ opacity, y }}>
+            {feature.visual}
+        </motion.div>
     )
 }
