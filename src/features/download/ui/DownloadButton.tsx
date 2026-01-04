@@ -12,7 +12,7 @@ export function DownloadButton() {
                 <a
                     href={DownloadUrl()}
                     download
-                    className="bg-brand hover:bg-brand-hover flex cursor-pointer items-center rounded-lg px-4 py-2 text-white"
+                    className="bg-brand hover:bg-brand-hover flex cursor-pointer items-center rounded-lg px-4 py-2 text-white transition-colors"
                     onClick={() => sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })}
                 >
                     <FaWindows className="mr-2 inline-block" />
