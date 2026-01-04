@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+
 interface StarProps {
     id: string
     left: string
@@ -13,8 +14,7 @@ interface ShootingStarProps {
     animationDelay: string
     animationDuration: string
 }
-
-export const StarsBackground = ({ numStars = 150, numShootingStars = 10 }) => {
+export const StarsBackground = ({ numStars = 80, numShootingStars = 10 }) => {
     const [stars, setStars] = useState<StarProps[]>([])
     const [shootingStars, setShootingStars] = useState<ShootingStarProps[]>([])
 
@@ -42,21 +42,20 @@ export const StarsBackground = ({ numStars = 150, numShootingStars = 10 }) => {
                 left = `${100 + Math.random() * 5}%`
             }
 
-            // 1. 첫 3개의 별동별은 거의 즉시 떨어지도록 설정합니다.
             const animationDelay = index < 5 ? `${Math.random() * 3}s` : `${3 + Math.random() * 17}s`
 
             return {
                 id: `shooting-star-${index}`,
                 top,
                 left,
-                animationDelay, // 수정된 딜레이 값 적용
+                animationDelay,
                 animationDuration: `${3 + Math.random() * 3}s`
             }
         })
         setShootingStars(generatedShootingStars)
     }, [numShootingStars])
     return (
-        <div className="fixed top-0 left-0 -z-10 h-screen w-full overflow-hidden bg-gradient-to-b from-[#171C24] via-[#3D3C52] to-[#4D4254]">
+        <div className="fixed top-0 left-0 -z-10 h-screen w-full overflow-hidden bg-black bg-gradient-to-b from-[#1A1F3D] via-[#5A5475] to-[#8E7C8A]">
             {stars.map((star) => (
                 <div
                     key={star.id}
@@ -83,10 +82,7 @@ export const StarsBackground = ({ numStars = 150, numShootingStars = 10 }) => {
                     }}
                 >
                     <div className="absolute top-0 left-0 h-0.5 w-[150px]" style={{ transform: 'rotate(135deg)' }}>
-                        {/* 별동별의 '머리'와 '빛 번짐' 효과 */}
                         <div className="absolute right-0 h-full w-0.5 rounded-full bg-white shadow-[0_0_8px_2px_rgba(255,255,255,0.7)]" />
-
-                        {/* 꼬리 부분은 머리 뒤에 오도록 하고, 좀 더 투명하게 */}
                         <div className="absolute top-1/2 right-0 h-full w-full -translate-y-1/2 rounded-full bg-gradient-to-r from-white/0 to-white/30" />
                     </div>
                 </div>
