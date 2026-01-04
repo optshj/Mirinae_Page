@@ -74,7 +74,7 @@ const jsonLd = {
     '@type': 'WebSite',
     alternateName: ['Mirinae', '미리내 캘린더', '미리내'],
     name: '미리내',
-    url: 'https://www.mirinaecalendar.store/'
+    url: 'https://www.mirinaecalendar.store'
 }
 export default function RootLayout({
     children
@@ -83,8 +83,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
-            <body className={`antialiased`}>
+            <head>
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            </head>
+            <body className={`antialiased`}>
                 <Analytics />
                 <SpeedInsights />
                 <GoogleAnalytics gaId="G-922SR40MS9" />
