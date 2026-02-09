@@ -71,10 +71,28 @@ export const metadata: Metadata = {
 
 const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    alternateName: ['Mirinae', '미리내 캘린더', '미리내'],
-    name: '미리내',
-    url: 'https://www.mirinaecalendar.store'
+    '@graph': [
+        {
+            '@type': 'WebSite',
+            '@id': 'https://www.mirinaecalendar.store/#website',
+            url: 'https://www.mirinaecalendar.store',
+            name: '미리내',
+            alternateName: ['Mirinae', '미리내 캘린더'],
+            publisher: {
+                '@id': 'https://www.mirinaecalendar.store/#organization'
+            }
+        },
+        {
+            '@type': 'Organization',
+            '@id': 'https://www.mirinaecalendar.store/#organization',
+            name: '미리내',
+            url: 'https://www.mirinaecalendar.store',
+            logo: {
+                '@type': 'ImageObject',
+                url: 'https://www.mirinaecalendar.store/ogImage.png'
+            }
+        }
+    ]
 }
 export default function RootLayout({
     children
@@ -83,10 +101,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
-            <head>
-                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-            </head>
             <body className={`antialiased`}>
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
                 <Analytics />
                 <SpeedInsights />
                 <GoogleAnalytics gaId="G-922SR40MS9" />
