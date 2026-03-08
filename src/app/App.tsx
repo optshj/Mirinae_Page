@@ -69,31 +69,15 @@ export const metadata: Metadata = {
     }
 }
 
-const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-        {
-            '@type': 'WebSite',
-            '@id': 'https://www.mirinaecalendar.store/#website',
-            url: 'https://www.mirinaecalendar.store',
-            name: '미리내',
-            alternateName: ['Mirinae', '미리내 캘린더'],
-            publisher: {
-                '@id': 'https://www.mirinaecalendar.store/#organization'
-            }
-        },
-        {
-            '@type': 'Organization',
-            '@id': 'https://www.mirinaecalendar.store/#organization',
-            name: '미리내',
-            url: 'https://www.mirinaecalendar.store',
-            logo: {
-                '@type': 'ImageObject',
-                url: 'https://www.mirinaecalendar.store/ogImage.png'
-            }
-        }
-    ]
-}
+const jsonLd = [
+    {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Mirinae',
+        alternateName: ['Mirinae', '미리내 캘린더'],
+        url: 'https://www.mirinaecalendar.store'
+    }
+]
 export default function RootLayout({
     children
 }: Readonly<{
