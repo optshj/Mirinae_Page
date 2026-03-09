@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nobile:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+@import 'https://cdn.jsdelivr.net/gh/sun-typeface/SUITE@2/fonts/static/woff2/SUITE.css';
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
@@ -14,7 +14,7 @@
 @custom-variant dark (&:is(.dark *));
 
 body {
-    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-family: SUITE, Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
 }
