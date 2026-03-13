@@ -76,6 +76,7 @@ const jsonLd = {
     alternateName: ['Mirinae', '미리내 캘린더'],
     url: 'https://www.mirinaecalendar.store/'
 }
+
 export default function RootLayout({
     children
 }: Readonly<{
