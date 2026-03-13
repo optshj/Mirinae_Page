@@ -69,15 +69,13 @@ export const metadata: Metadata = {
     }
 }
 
-const jsonLd = [
-    {
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'Mirinae',
-        alternateName: ['Mirinae', '미리내 캘린더'],
-        url: 'https://www.mirinaecalendar.store'
-    }
-]
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '미리내 (Mirinae)',
+    alternateName: ['Mirinae', '미리내 캘린더'],
+    url: 'https://www.mirinaecalendar.store/'
+}
 export default function RootLayout({
     children
 }: Readonly<{
