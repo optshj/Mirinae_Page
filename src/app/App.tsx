@@ -17,7 +17,6 @@ export const metadata: Metadata = {
         '할 일 목록',
         '생산성',
         '시간 관리',
-        '캘린더',
         '리마인더',
         '목표 설정',
         '집중력 향상',
@@ -33,6 +32,9 @@ export const metadata: Metadata = {
         'reminder',
         'time management'
     ],
+    alternates: {
+        canonical: 'https://www.mirinaecalendar.store/'
+    },
     openGraph: {
         title: '미리내 | 당신의 하루를 별처럼 빛나게',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
@@ -42,8 +44,10 @@ export const metadata: Metadata = {
         type: 'website',
         images: [
             {
-                url: 'ogImage.png',
-                alt: '미리내 | 당신의 하루를 별처럼 빛나게'
+                url: 'https://www.mirinaecalendar.store/ogImage.png',
+                alt: '미리내 | 당신의 하루를 별처럼 빛나게',
+                width: 1200,
+                height: 630
             }
         ]
     },
@@ -51,7 +55,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: '미리내 | 당신의 하루를 별처럼 빛나게',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
-        images: ['ogImage.png']
+        images: ['https://www.mirinaecalendar.store/ogImage.png']
     },
     icons: {
         icon: '/favicon.ico'
