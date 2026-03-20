@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'motion/react'
 import { DownloadButton } from '@/features/download'
-import { ChevronDown, Star } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { StarsBackground } from '@/entities/background'
 
 const easeOutExpo = [0.22, 1, 0.36, 1] as const
@@ -17,21 +17,6 @@ export function Main() {
             <motion.section className="relative flex w-full items-center justify-center" initial="hidden" animate="show">
                 <div className="flex h-screen w-full flex-col items-center justify-center px-4 text-center">
                     <div className="flex flex-col items-center gap-4 md:gap-6">
-                        <motion.h1
-                            className="bg-gradient-to-b from-white via-[#a4bdfc] to-[#7a96e8] bg-clip-text px-1 text-6xl font-bold text-transparent drop-shadow-[0_0_12px_rgba(164,189,252,0.5)]"
-                            variants={{
-                                hidden: { y: 30, opacity: 0, filter: 'blur(10px)' },
-                                show: {
-                                    y: 0,
-                                    opacity: 1,
-                                    filter: 'blur(0px)',
-                                    transition: { duration: 1.2, ease: easeOutExpo }
-                                }
-                            }}
-                        >
-                            미리내
-                        </motion.h1>
-
                         <motion.h2
                             className="text-4xl font-semibold tracking-tighter text-white md:text-5xl"
                             variants={{
