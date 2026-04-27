@@ -157,15 +157,13 @@ export const Section1 = () => {
                 </motion.h2>
 
                 <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4 }} viewport={{ once: true }} className="text-zinc-400">
-                    찾아 들어가는 번거로움은 지우고 편리함만 남겼습니다. <br />
-                    PC를 켜는 순간, 당신의 일정이 그 자리에서 시작됩니다.
+                    찾아 들어가는 번거로움은 지우고 편리함만 남겼습니다 <br />
+                    PC를 켜는 순간, 당신의 일정이 그 자리에서 시작됩니다
                 </motion.p>
             </header>
 
-            {/* Desktop UI Simulation */}
             <DesktopIcons />
 
-            {/* Main Calendar Widget */}
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -292,7 +290,7 @@ const CalendarGrid = () => (
                                     style={{ backgroundColor: `${styles}20`, color: styles }}
                                 >
                                     <div className={`absolute top-0 bottom-0 left-0 w-1 rounded-l-sm`} style={{ backgroundColor: styles }} />
-                                    <span className="flex items-center gap-1 truncate">
+                                    <span className="flex items-center gap-1 truncate text-zinc-600">
                                         {!ev.isFullDay && ev.time && ev.time + ' '}
                                         {ev.title}
                                     </span>

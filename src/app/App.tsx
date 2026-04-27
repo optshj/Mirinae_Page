@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
-
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -76,7 +75,7 @@ export const metadata: Metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: '미리내 (Mirinae)',
+    name: '미리내',
     alternateName: ['Mirinae', '미리내 캘린더'],
     url: 'https://www.mirinaecalendar.store/'
 }
