@@ -25,7 +25,7 @@ export function Section4() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                    바탕화면 속 새로운 경험
+                    바탕화면 속 일정 관리
                     <br />
                     <span className="from-brand to-brand bg-gradient-to-r via-purple-300 bg-clip-text text-transparent">지금 시작하세요</span>
                 </motion.h3>
@@ -37,7 +37,7 @@ export function Section4() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                    복잡한 설정 없이 설치만으로 완성되는 나만의 생산성 도구.
+                    복잡한 설정 없이 설치만으로 완성되는 캘린더
                 </motion.p>
 
                 <motion.div

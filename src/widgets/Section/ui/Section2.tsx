@@ -15,21 +15,21 @@ const features: Feature[] = [
         id: 1,
         subTitle: '바쁜 하루도 흐트러지지 않게',
         title: '간편한 일정 등록',
-        description: '복잡한 과정 없이, 직관적인 폼으로 빠르게 일정을 등록하세요.\n중요한 순간을 놓치지 않도록 도와줍니다.',
+        description: '복잡한 과정 없이, 쉽게 일정을 등록하세요\n일정을 놓치지 않도록 도와줍니다',
         visual: <ScheduleDescription />
     },
     {
         id: 2,
         subTitle: '빠르게, 편하게',
         title: '단축키 지원',
-        description: '마우스에 손을 뻗을 필요 없이,\n단축키로 빠르게 새 일정을 만들어보세요.',
+        description: '마우스에 손을 뻗을 필요 없이,\n단축키로 빠르게 새 일정을 만들어보세요',
         visual: <ShortcutDescription />
     },
     {
         id: 3,
         subTitle: '원하는대로 자유롭게 설정',
         title: '다크모드 & 커스터마이징',
-        description: '눈이 편안한 다크모드부터,\n투명도와 위치 조절까지 내 스타일대로 설정하세요.',
+        description: '눈이 편안한 다크모드부터,\n투명도와 위치 조절까지 내 스타일대로 설정하세요',
         visual: <CustomizationDescription />
     }
 ]
