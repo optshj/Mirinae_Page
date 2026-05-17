@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView } from 'motion/react'
 import { MousePointer2, Check } from 'lucide-react'
 import { PALETTE } from '@/shared/const/Palette'
 

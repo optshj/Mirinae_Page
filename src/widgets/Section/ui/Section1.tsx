@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState, useMemo, useRef } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView } from 'motion/react'
 import { MousePointer2, ChevronLeft, ChevronRight, Settings, RotateCcw, ChevronDown, ChevronUp, FoldVertical, Check, Plus, X } from 'lucide-react'
 import { DesktopIcons } from '@/entities/icon'
 import { PALETTE } from '@/shared/const/Palette'
