@@ -2,6 +2,9 @@
 import { useState, useEffect } from 'react'
 import { Logo } from '@/entities/logo'
 import { DownloadButtonHeader } from '@/features/download'
+import Link from 'next/link'
+import { Mixpanel } from '@/shared/lib/mixpanel'
+import { MessageSquare } from 'lucide-react'
 
 export function Header() {
     const [isScrolled, setIsScrolled] = useState(false)
@@ -23,7 +26,17 @@ export function Header() {
                     <Logo />
                 </div>
 
-                <DownloadButtonHeader />
+                <div className="flex items-center gap-2 sm:gap-4">
+                    <Link
+                        href="/bug-report"
+                        onClick={() => Mixpanel.track('Bug Report Link Click', { location: 'header' })}
+                        className="group flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-white transition-all duration-300 hover:scale-105 hover:bg-white/10 active:scale-95"
+                    >
+                        <MessageSquare className="h-4 w-4 transition-transform group-hover:-rotate-12" />
+                        <span className="text-sm font-medium">버그 제보</span>
+                    </Link>
+                    <DownloadButtonHeader />
+                </div>
             </div>
         </header>
     )

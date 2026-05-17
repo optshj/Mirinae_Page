@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import MixpanelInit from './MixpanelInit'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -89,6 +90,7 @@ export default function RootLayout({
         <html lang="ko">
             <body className={`antialiased`}>
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+                <MixpanelInit />
                 <Analytics />
                 <SpeedInsights />
                 <GoogleAnalytics gaId="G-922SR40MS9" />
