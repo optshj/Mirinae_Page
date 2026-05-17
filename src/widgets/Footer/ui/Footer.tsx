@@ -23,9 +23,9 @@ export function Footer() {
                     <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
                         <div className="flex flex-col gap-3">
                             <h3 className="font-semibold text-white">지원</h3>
-                            <a target="_blank" rel="noopener noreferrer" className="text-sm transition-colors hover:text-white hover:underline">
+                            <Link href="/bug-report" className="text-sm transition-colors hover:text-white hover:underline">
                                 버그 및 불편사항 제보
-                            </a>
+                            </Link>
                         </div>
                         <div className="flex flex-col gap-3">
                             <h3 className="font-semibold text-white">법적 고지</h3>
