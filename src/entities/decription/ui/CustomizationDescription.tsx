@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView } from 'motion/react'
 import { Moon, Sun, Sliders, Move, ChevronLeft, ChevronRight } from 'lucide-react'
 
 export const CustomizationDescription = () => {
