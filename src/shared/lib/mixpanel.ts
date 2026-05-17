@@ -7,7 +7,9 @@ if (typeof window !== 'undefined' && MIXPANEL_TOKEN) {
     mixpanel.init(MIXPANEL_TOKEN, {
         debug: !isProd,
         track_pageview: true,
-        persistence: 'localStorage'
+        persistence: 'localStorage',
+        record_sessions_percent: 100,
+        record_mask_text_selector: ''
     })
 }
 
