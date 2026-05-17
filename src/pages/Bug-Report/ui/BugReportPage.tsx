@@ -51,7 +51,8 @@ export function BugReportPage() {
         const DISCORD_WEBHOOK_URL = process.env.NEXT_PUBLIC_DISCORD_WEBHOOK_URL
 
         if (!DISCORD_WEBHOOK_URL) {
-            console.error('Discord Webhook URL is not defined')
+            console.error('Discord Webhook URL is missing from environment variables.')
+            alert('환경 변수(NEXT_PUBLIC_DISCORD_WEBHOOK_URL)가 설정되지 않았습니다. 관리자에게 문의하세요.')
             setStatus('error')
             setIsSubmitting(false)
             return
@@ -62,7 +63,7 @@ export function BugReportPage() {
         formData.append(
             'payload_json',
             JSON.stringify({
-                content: `**[버그 및 불편사항 제보]**\n\n**내용:**\n${description}\n\n**일시:** ${new Date().toLocaleString()}`
+                content: `**[버그 및 불편사항 제보]**\n**일시:** ${new Date().toLocaleString()}\n\n**내용:**\n${description}`
             })
         )
 
@@ -71,22 +72,26 @@ export function BugReportPage() {
         })
 
         try {
+            console.log('Attempting to send bug report to Discord...')
             const response = await fetch(DISCORD_WEBHOOK_URL, {
                 method: 'POST',
                 body: formData
             })
 
             if (response.ok) {
+                console.log('Successfully sent to Discord')
                 setStatus('success')
                 setDescription('')
                 setImages([])
                 previews.forEach((url) => URL.revokeObjectURL(url))
                 setPreviews([])
             } else {
+                const errorText = await response.text()
+                console.error('Discord API Error Response:', response.status, errorText)
                 setStatus('error')
             }
         } catch (error) {
-            console.error('Error submitting bug report:', error)
+            console.error('Detailed fetch error:', error)
             setStatus('error')
         } finally {
             setIsSubmitting(false)
