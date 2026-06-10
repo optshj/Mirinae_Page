@@ -2,4 +2,4 @@ User-Agent: *
 Allow: /
 Disallow: /private/
 
-Sitemap: https://mirinaecalendar.store/sitemap.xml
+Sitemap: https://www.mirinaecalendar.store/sitemap.xml

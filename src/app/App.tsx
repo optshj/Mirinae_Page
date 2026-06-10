@@ -44,7 +44,7 @@ export const metadata: Metadata = {
         type: 'website',
         images: [
             {
-                url: 'https://www.mirinaecalendar.store/ogImage.png',
+                url: 'https://www.mirinaecalendar.store/ogImage.webp',
                 alt: '미리내 | 당신의 하루를 별처럼 빛나게',
                 width: 1200,
                 height: 630
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: '미리내 | 당신의 하루를 별처럼 빛나게',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
-        images: ['https://www.mirinaecalendar.store/ogImage.png']
+        images: ['https://www.mirinaecalendar.store/ogImage.webp']
     },
     icons: {
         icon: '/favicon.ico'
@@ -81,6 +81,15 @@ const jsonLd = {
     url: 'https://www.mirinaecalendar.store/'
 }
 
+const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: '미리내',
+    alternateName: ['Mirinae', '미리내 캘린더'],
+    url: 'https://www.mirinaecalendar.store/',
+    logo: 'https://www.mirinaecalendar.store/icon.svg'
+}
+
 export default function RootLayout({
     children
 }: Readonly<{
@@ -90,6 +99,7 @@ export default function RootLayout({
         <html lang="ko">
             <body className={`antialiased`}>
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
                 <MixpanelInit />
                 <Analytics />
                 <SpeedInsights />
