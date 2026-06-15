@@ -41,7 +41,7 @@ export const FeatureExplorer = ({ categories }: { categories: Category[] }) => {
                                     <li key={feature.title}>
                                         <button
                                             onClick={() => setSelected(idx)}
-                                            className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                                            className={`block w-full cursor-pointer rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                                                 active ? 'bg-brand/10 text-brand font-semibold' : 'text-zinc-400 hover:bg-white/5 hover:text-white'
                                             }`}
                                         >
@@ -71,13 +71,7 @@ export const FeatureExplorer = ({ categories }: { categories: Category[] }) => {
             {/* Content */}
             <motion.div layout transition={{ duration: 0.3, ease: 'easeInOut' }} className="lg:min-h-[660px]">
                 <AnimatePresence mode="wait">
-                    <motion.div
-                        key={current.title}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -12 }}
-                        transition={{ duration: 0.3 }}
-                    >
+                    <motion.div key={current.title} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.3 }}>
                         <h3 className="text-brand text-sm font-semibold">{current.subTitle}</h3>
                         <p className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">{current.title}</p>
                         <p className="mt-4 text-base leading-7 whitespace-pre-line text-gray-400">{current.description}</p>

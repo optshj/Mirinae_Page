@@ -93,9 +93,22 @@ const categories: Category[] = [
     }
 ]
 
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: '미리내',
+    alternateName: ['Mirinae', '미리내 캘린더'],
+    applicationCategory: 'DesktopApplication',
+    operatingSystem: 'Windows',
+    url: 'https://www.mirinaecalendar.store/docs',
+    description: '바탕화면에서 바로 사용하는 캘린더 위젯, 미리내의 기능 안내',
+    featureList: categories.flatMap((category) => category.features.map((feature) => feature.title))
+}
+
 export function DocsPage() {
     return (
         <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <Header />
             <main>
                 <StarsBackground />
