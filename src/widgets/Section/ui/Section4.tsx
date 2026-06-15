@@ -27,7 +27,16 @@ export function Section4() {
                 >
                     바탕화면 속 일정 관리
                     <br />
-                    <span className="from-brand to-brand bg-gradient-to-r via-purple-300 bg-clip-text text-transparent">지금 시작하세요</span>
+                    <span className="relative inline-block font-bold text-white">
+                        지금 바로 시작하세요
+                        <motion.span
+                            initial={{ width: 0 }}
+                            whileInView={{ width: '100%' }}
+                            transition={{ delay: 0.5, duration: 0.6 }}
+                            viewport={{ once: true }}
+                            className="bg-brand/70 absolute bottom-1 left-0 -z-10 h-6 w-full"
+                        />
+                    </span>
                 </motion.h3>
 
                 <motion.p

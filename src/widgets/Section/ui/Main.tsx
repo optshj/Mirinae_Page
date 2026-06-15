@@ -28,9 +28,16 @@ export function Main() {
                                 }
                             }}
                         >
-                            당신의 하루를 빛낼 캘린더,
-                            <span className="bg-gradient-to-b from-white via-[#a4bdfc] to-[#7a96e8] bg-clip-text px-1 text-transparent drop-shadow-[0_0_12px_rgba(164,189,252,0.5)]">
+                            당신의 하루를 빛낼 캘린더,{' '}
+                            <span className="relative inline-block font-bold text-white">
                                 미리내
+                                <motion.span
+                                    initial={{ width: 0 }}
+                                    whileInView={{ width: '100%' }}
+                                    transition={{ delay: 0.5, duration: 0.6 }}
+                                    viewport={{ once: true }}
+                                    className="bg-brand/70 absolute bottom-1 left-0 -z-10 h-6 w-full"
+                                />
                             </span>
                         </motion.h1>
                     </div>

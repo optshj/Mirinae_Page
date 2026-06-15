@@ -8,10 +8,12 @@ export function Footer() {
                 <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
                     {/* Brand Section */}
                     <div className="flex flex-col gap-4">
-                        <div className="flex items-center gap-2">
-                            <Image src="/icon.svg" alt="Mirinae Logo" width={32} height={32} className="opacity-90" />
-                            <span className="text-xl font-bold tracking-tight text-white">미리내</span>
-                        </div>
+                        <Link href="/" className="text-xl font-bold tracking-tight text-white">
+                            <div className="flex items-center gap-2">
+                                <Image src="/icon.svg" alt="Mirinae Logo" width={32} height={32} className="opacity-90" />
+                                미리내
+                            </div>
+                        </Link>
                         <p className="text-sm text-gray-400">
                             당신의 하루를 별처럼 빛나게
                             <br />
@@ -23,6 +25,9 @@ export function Footer() {
                     <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
                         <div className="flex flex-col gap-3">
                             <h3 className="font-semibold text-white">지원</h3>
+                            <Link href="/docs" className="text-sm transition-colors hover:text-white hover:underline">
+                                기능 소개
+                            </Link>
                             <Link href="/bug-report" className="text-sm transition-colors hover:text-white hover:underline">
                                 버그 및 불편사항 제보
                             </Link>

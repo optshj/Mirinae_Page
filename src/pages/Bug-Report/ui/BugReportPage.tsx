@@ -97,7 +97,7 @@ export function BugReportPage() {
                     className="bg-glass w-full max-w-2xl rounded-3xl border border-white/10 p-8 shadow-2xl md:p-12"
                 >
                     <div className="mb-8">
-                        <h1 className="mb-2 text-3xl font-bold text-white">버그 및 불편사항 제보</h1>
+                        <h1 className="mb-2 text-3xl font-bold text-white">제보하기</h1>
                         <p className="text-white/60">미리내를 이용하시면서 겪으신 버그나 제안하고 싶은 내용을 자유롭게 작성해주세요.</p>
                     </div>
 
