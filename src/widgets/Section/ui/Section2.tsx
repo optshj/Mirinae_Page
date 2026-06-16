@@ -42,32 +42,58 @@ export function Section2() {
     })
 
     return (
-        <section ref={containerRef} className="relative h-[300vh]">
-            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-                <div className="mx-auto grid h-3/4 w-full max-w-7xl grid-cols-1 gap-8 px-6 lg:grid-cols-2">
-                    <div className="relative">
-                        {features.map((feature, index) => (
-                            <FeatureText key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
-                        ))}
-                    </div>
-                    <div className="relative flex items-center justify-center">
-                        <motion.div
-                            className="absolute flex aspect-square h-full w-full items-center justify-center p-6"
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <div className="bg-glass relative h-full w-full rounded-3xl border border-white/10 shadow-xl" />
-                        </motion.div>
+        <>
+            {/* 모바일: 단순 세로 스택 */}
+            <section className="space-y-24 px-6 py-24 lg:hidden">
+                {features.map((feature, index) => (
+                    <motion.div
+                        key={feature.id}
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7, delay: 0.1 * index }}
+                        className="flex flex-col gap-8"
+                    >
+                        <div>
+                            <span className="text-brand text-sm font-semibold">{feature.subTitle}</span>
+                            <h2 className="mt-2 text-3xl font-bold tracking-tight text-white">{feature.title}</h2>
+                            <p className="mt-4 text-base leading-7 whitespace-pre-line text-gray-400">{feature.description}</p>
+                        </div>
+                        <div className="relative flex h-72 w-full items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-xl">
+                            {feature.visual}
+                        </div>
+                    </motion.div>
+                ))}
+            </section>
 
-                        {features.map((feature, index) => (
-                            <FeatureVisual key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
-                        ))}
+            {/* 데스크톱: 스티키 스크롤 애니메이션 */}
+            <section ref={containerRef} className="relative hidden h-[300vh] lg:block">
+                <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+                    <div className="mx-auto grid h-3/4 w-full max-w-7xl grid-cols-2 gap-8 px-6">
+                        <div className="relative">
+                            {features.map((feature, index) => (
+                                <FeatureText key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
+                            ))}
+                        </div>
+                        <div className="relative flex items-center justify-center">
+                            <motion.div
+                                className="absolute flex aspect-square h-full w-full items-center justify-center p-6"
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8 }}
+                            >
+                                <div className="bg-glass relative h-full w-full rounded-3xl border border-white/10 shadow-xl" />
+                            </motion.div>
+
+                            {features.map((feature, index) => (
+                                <FeatureVisual key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     )
 }
 

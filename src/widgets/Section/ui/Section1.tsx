@@ -90,12 +90,12 @@ const useCalendarDemo = (isInView: boolean) => {
     const pointerPos = useMemo(() => {
         const positions: Record<number, { x: number; y: number }> = {
             0: { x: 0, y: 0 },
-            1: { x: -100, y: 50 },
-            2: { x: -30, y: 60 },
-            3: { x: -50, y: 30 },
-            4: { x: 0, y: 140 },
-            5: { x: -30, y: 200 },
-            6: { x: 100, y: 300 }
+            1: { x: -100, y: -60 },
+            2: { x: -30, y: 50 },
+            3: { x: -100, y: -100 },
+            4: { x: 0, y: 15 },
+            5: { x: -30, y: 70 },
+            6: { x: 70, y: 170 }
         }
         return positions[step] || { x: 350, y: 250 }
     }, [step])
@@ -133,7 +133,7 @@ export const Section1 = () => {
     const { step, title, showList, showForm, activeColor, pointerPos } = useCalendarDemo(isInView)
 
     return (
-        <section ref={containerRef} className="relative flex w-full flex-col items-center justify-center py-64">
+        <section ref={containerRef} className="relative flex w-full flex-col items-center justify-center sm:py-64">
             {/* Header Text */}
             <header className="relative z-20 mb-16 flex flex-col items-center text-center">
                 <motion.h2
@@ -163,81 +163,81 @@ export const Section1 = () => {
             </header>
 
             <DesktopIcons />
+            <div className="relative z-10 flex items-center justify-center [zoom:0.4] sm:[zoom:1]">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true }}
+                    className="z-10 flex w-[900px] flex-col gap-2"
+                >
+                    <div className="flex w-full flex-col gap-2 overflow-hidden rounded-2xl shadow-xl">
+                        <CalendarHeader />
+                        <CalendarGrid />
+                    </div>
 
-            <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="relative z-10 flex w-[900px] flex-col gap-2"
-            >
-                <div className="flex w-full flex-col gap-2 overflow-hidden rounded-2xl shadow-xl">
-                    <CalendarHeader />
-                    <CalendarGrid />
-                </div>
+                    <div className="grid h-40 grid-cols-3 gap-2">
+                        <SummaryCard title="오늘의 일정" emptyMessage="오늘의 일정이 없습니다" />
+                        <SummaryCard title="다가오는 일정">
+                            <EventItem color="bg-red-500" title="병원가서 진료받기" date="1월 23일 (금) 오전 8:00" />
+                            <EventItem color="bg-cyan-500" title="농구 대회 결승!" date="1월 27일 (화) 오전 8:00" />
+                        </SummaryCard>
+                        <SummaryCard title="중요한 일정">
+                            <EventItem color="bg-red-500" title="병원가서 진료받기" date="1월 23일 (금) 오전 8:00" />
+                        </SummaryCard>
+                    </div>
+                </motion.div>
 
-                <div className="grid h-40 grid-cols-3 gap-2">
-                    <SummaryCard title="오늘의 일정" emptyMessage="오늘의 일정이 없습니다" />
-                    <SummaryCard title="다가오는 일정">
-                        <EventItem color="bg-red-500" title="병원가서 진료받기" date="1월 23일 (금) 오전 8:00" />
-                        <EventItem color="bg-cyan-500" title="농구 대회 결승!" date="1월 27일 (화) 오전 8:00" />
-                    </SummaryCard>
-                    <SummaryCard title="중요한 일정">
-                        <EventItem color="bg-red-500" title="병원가서 진료받기" date="1월 23일 (금) 오전 8:00" />
-                    </SummaryCard>
-                </div>
-            </motion.div>
-
-            <AnimatePresence>
-                {isInView && (
-                    <motion.div
-                        key="cursor-wrapper"
-                        animate={{
-                            opacity: step === 0 ? 0 : 1,
-                            x: pointerPos.x,
-                            y: pointerPos.y
-                        }}
-                        className="pointer-events-none absolute top-1/2 left-1/2 z-[100]"
-                        transition={{
-                            x: { type: 'spring', stiffness: 150, damping: 25 },
-                            y: { type: 'spring', stiffness: 150, damping: 25 },
-                            opacity: { duration: 0.3 }
-                        }}
-                    >
+                <AnimatePresence>
+                    {isInView && (
                         <motion.div
-                            key={step}
-                            initial={{ scale: 1 }}
-                            animate={{ scale: [1, 0.75, 1] }}
+                            key="cursor-wrapper"
+                            animate={{
+                                opacity: step === 0 ? 0 : 1,
+                                x: pointerPos.x,
+                                y: pointerPos.y
+                            }}
+                            className="pointer-events-none absolute top-1/2 left-1/2 z-[100]"
                             transition={{
-                                duration: 0.4,
-                                times: [0, 0.5, 1],
-                                delay: 0.5
+                                x: { type: 'spring', stiffness: 150, damping: 25 },
+                                y: { type: 'spring', stiffness: 150, damping: 25 },
+                                opacity: { duration: 0.3 }
                             }}
                         >
-                            <MousePointer2 size={32} fill="#3B82F6" className="text-white drop-shadow-lg" />
+                            <motion.div
+                                key={step}
+                                initial={{ scale: 1 }}
+                                animate={{ scale: [1, 0.75, 1] }}
+                                transition={{
+                                    duration: 0.4,
+                                    times: [0, 0.5, 1],
+                                    delay: 0.5
+                                }}
+                            >
+                                <MousePointer2 size={32} fill="#3B82F6" className="text-white drop-shadow-lg" />
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    )}
+                </AnimatePresence>
 
-            {/* Popups */}
-            <AnimatePresence mode="wait">
-                {isInView && (showList || showForm) && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        className="absolute z-40 w-80 rounded-2xl bg-white p-4 shadow-2xl"
-                        style={{ top: '45%' }}
-                    >
-                        <div className="mb-4 flex items-center justify-between font-bold text-slate-800">
-                            <span>1월 13일 일정</span>
-                            <X size={16} className="text-slate-400" />
-                        </div>
-                        {showForm ? <AddEventForm step={step} title={title} activeColor={activeColor} /> : <EventListPopup />}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                {/* Popups */}
+                <AnimatePresence mode="wait">
+                    {isInView && (showList || showForm) && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            className="absolute z-40 w-80 rounded-2xl bg-white p-4 shadow-2xl"
+                        >
+                            <div className="mb-4 flex items-center justify-between font-bold text-slate-800">
+                                <span>1월 13일 일정</span>
+                                <X size={16} className="text-slate-400" />
+                            </div>
+                            {showForm ? <AddEventForm step={step} title={title} activeColor={activeColor} /> : <EventListPopup />}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
         </section>
     )
 }
@@ -278,9 +278,13 @@ const CalendarGrid = () => (
                 const isToday = isCurrent && day === 16
                 return (
                     <div key={i} className={`min-h-20 border-r border-b border-slate-100 bg-white p-1`}>
-                        <span className={`ml-1 text-xs font-bold ${isCurrent ? 'text-slate-900' : 'text-slate-400'} ${isToday ? 'bg-brand rounded-full p-1 text-white' : ''}`}>
-                            {day}
-                        </span>
+                        <div className="flex h-6 w-6 items-center justify-center">
+                            <span
+                                className={`flex h-6 w-6 items-center justify-center text-xs font-bold ${isCurrent ? 'text-slate-900' : 'text-slate-400'} ${isToday ? 'bg-brand rounded-full text-white' : ''} `}
+                            >
+                                {day}
+                            </span>
+                        </div>
                         {dayEvents.map((ev, idx) => {
                             const styles = PALETTE[ev.colorClass]
                             return (
@@ -311,13 +315,11 @@ const EventListPopup = () => (
                 <div className="flex items-center gap-2">
                     <div className="h-8 w-1 rounded-full" style={{ backgroundColor: PALETTE[5] }} />
                     <div className="flex flex-col">
-                        <span className="text-sm font-medium" style={{ color: PALETTE[5] }}>
-                            사이드 프로젝트 회의
-                        </span>
+                        <span className="text-sm font-medium text-slate-800">사이드 프로젝트 회의</span>
                         <span className="text-xs text-zinc-700">오전 8:10 ~ 오전 9:10</span>
                     </div>
                 </div>
-                <div className="flex gap-1 text-slate-400">
+                <div className="flex gap-1 text-slate-800">
                     <Check size={14} />
                     <X size={14} />
                 </div>

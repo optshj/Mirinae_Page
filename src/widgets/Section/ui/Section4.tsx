@@ -19,7 +19,7 @@ export function Section4() {
                 </motion.div>
 
                 <motion.h3
-                    className="mt-4 text-5xl font-bold tracking-tight text-white"
+                    className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

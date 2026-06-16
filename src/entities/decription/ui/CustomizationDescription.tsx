@@ -41,7 +41,7 @@ export const CustomizationDescription = () => {
     return (
         <div ref={containerRef} className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden p-8">
             {/* 상단 설정 바 */}
-            <div className="absolute top-20 flex w-full max-w-lg items-center justify-between px-6">
+            <div className="absolute top-4 flex w-full scale-60 items-center justify-between gap-2 px-6 sm:top-20 sm:scale-100">
                 <div className="flex items-center gap-3">
                     <Sliders size={18} className="text-white" />
                     <div className="h-1 w-20 overflow-hidden rounded-full bg-zinc-500">
@@ -61,7 +61,7 @@ export const CustomizationDescription = () => {
                         {isExpanded && <span className="bg-brand absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>}
                         <span className={`inline-flex h-2 w-2 rounded-full ${isExpanded ? 'bg-brand' : 'bg-zinc-600'}`}></span>
                     </div>
-                    <span className="text-xs font-bold tracking-wider uppercase">{isExpanded ? 'Full View' : 'Minimal'}</span>
+                    <span className="text-xs font-bold tracking-wider">{isExpanded ? 'Full' : 'Minimal'}</span>
                 </motion.div>
 
                 <div className="flex w-[110px] items-center gap-2 text-white">
@@ -79,7 +79,7 @@ export const CustomizationDescription = () => {
                     opacity: opacity
                 }}
                 transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-                className="z-10 flex flex-col items-center gap-1"
+                className="z-10 flex scale-60 flex-col items-center gap-1 sm:scale-100"
             >
                 <div className={`w-72 overflow-hidden rounded-2xl p-4 shadow-lg transition-colors duration-500 ${theme === 'dark' ? 'bg-zinc-900' : 'bg-white'}`}>
                     <div className="mb-4 flex items-center justify-between">

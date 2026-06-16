@@ -58,7 +58,7 @@ export const ShortcutDescription = () => {
     }, [isInView])
 
     return (
-        <div ref={containerRef} className="flex items-center justify-center py-12">
+        <div ref={containerRef} className="flex scale-60 items-center justify-center py-12 sm:scale-100">
             <div className="flex items-center gap-8">
                 <Key isActive={isPressed} width="w-32">
                     Ctrl

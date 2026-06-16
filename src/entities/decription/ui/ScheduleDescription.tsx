@@ -52,7 +52,7 @@ export const ScheduleDescription = () => {
     }, [step, isInView])
 
     return (
-        <div ref={containerRef} className="relative flex h-full w-full items-center justify-center p-4">
+        <div ref={containerRef} className="relative flex h-full w-full scale-60 items-center justify-center p-4 sm:scale-100">
             <motion.div
                 className="pointer-events-none absolute z-50 flex items-center justify-center"
                 animate={{
