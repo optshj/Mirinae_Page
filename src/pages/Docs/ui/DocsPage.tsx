@@ -149,7 +149,7 @@ export function DocsPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="bg-glass relative flex flex-col items-center gap-6 overflow-hidden rounded-3xl border border-white/10 px-8 py-12 text-center shadow-xl sm:flex-row sm:justify-between sm:text-left"
+                        className="bg-glass relative flex flex-col items-center gap-6 overflow-hidden rounded-3xl px-8 py-12 text-center shadow-xl sm:flex-row sm:justify-between sm:text-left"
                     >
                         <div className="bg-brand/20 absolute -top-20 -right-20 h-56 w-56 rounded-full blur-3xl" />
 
@@ -163,7 +163,7 @@ export function DocsPage() {
                         <Link
                             href="/bug-report"
                             onClick={() => Mixpanel.track('Feature Request Link Click', { location: 'docs' })}
-                            className="bg-brand hover:bg-brand-hover relative flex shrink-0 items-center gap-2 rounded-2xl px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 active:scale-95"
+                            className="bg-brand hover:bg-brand-hover flex cursor-pointer items-center rounded-lg px-4 py-2 text-white transition-colors"
                         >
                             기능 제안하기
                         </Link>

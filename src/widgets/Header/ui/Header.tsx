@@ -58,11 +58,23 @@ export function Header() {
                 >
                     <AnimatePresence mode="wait" initial={false}>
                         {mobileMenuOpen ? (
-                            <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                            <motion.span
+                                key="close"
+                                initial={{ rotate: -90, opacity: 0 }}
+                                animate={{ rotate: 0, opacity: 1 }}
+                                exit={{ rotate: 90, opacity: 0 }}
+                                transition={{ duration: 0.15 }}
+                            >
                                 <X className="h-5 w-5" />
                             </motion.span>
                         ) : (
-                            <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                            <motion.span
+                                key="open"
+                                initial={{ rotate: 90, opacity: 0 }}
+                                animate={{ rotate: 0, opacity: 1 }}
+                                exit={{ rotate: -90, opacity: 0 }}
+                                transition={{ duration: 0.15 }}
+                            >
                                 <Menu className="h-5 w-5" />
                             </motion.span>
                         )}
@@ -78,7 +90,7 @@ export function Header() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -8, scale: 0.97 }}
                         transition={{ duration: 0.2 }}
-                        className="bg-glass mx-auto mt-2 max-w-5xl overflow-hidden rounded-2xl border border-white/10 shadow-xl md:hidden"
+                        className="bg-glass mx-auto mt-2 max-w-5xl overflow-hidden rounded-2xl shadow-xl md:hidden"
                     >
                         <div className="flex flex-col p-2">
                             <Link

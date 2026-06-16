@@ -36,7 +36,7 @@ export function Main() {
                                     whileInView={{ width: '100%' }}
                                     transition={{ delay: 0.5, duration: 0.6 }}
                                     viewport={{ once: true }}
-                                    className="bg-brand/70 absolute bottom-1 left-0 -z-10 w-full sm:h-6"
+                                    className="bg-brand/70 absolute bottom-1 left-0 -z-10 h-6 w-full"
                                 />
                             </span>
                         </motion.h1>
