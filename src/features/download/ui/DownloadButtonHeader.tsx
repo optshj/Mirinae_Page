@@ -1,12 +1,13 @@
 'use client'
 import { sendGAEvent } from '@next/third-parties/google'
-import { DownloadUrl } from '../lib/DownloadUrl'
+import { useDownloadUrl } from '../lib/useDownloadUrl'
 import { Dialog, DialogTrigger } from '@/shared/ui/dialog'
 import { Download } from 'lucide-react'
 import { DownloadDescription } from '@/entities/decription'
 import { Mixpanel } from '@/shared/lib/mixpanel'
 
 export function DownloadButtonHeader() {
+    const downloadUrl = useDownloadUrl()
     const handleDownload = () => {
         sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })
         Mixpanel.track('Download Button Click', { location: 'header' })
@@ -16,7 +17,7 @@ export function DownloadButtonHeader() {
         <Dialog>
             <DialogTrigger asChild>
                 <a
-                    href={DownloadUrl()}
+                    href={downloadUrl}
                     download
                     onClick={handleDownload}
                     className="group flex cursor-pointer items-center gap-2 rounded-xl p-2 text-white transition-all duration-300 hover:scale-105 hover:bg-white/20 active:scale-95"

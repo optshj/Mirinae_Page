@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
@@ -66,17 +66,18 @@ export const metadata: Metadata = {
     icons: {
         icon: '/favicon.ico'
     },
-    viewport: {
-        width: 'device-width',
-        initialScale: 1,
-        maximumScale: 1
-    },
     verification: {
         google: 'huSHYvBftuJFa028T6tGdShVcrWecu4qHuQWqhyKrmU',
         other: {
             'naver-site-verification': 'eb1b34008d84666681f83ab2b09ee63faea83204'
         }
     }
+}
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1
 }
 
 const jsonLd = {
