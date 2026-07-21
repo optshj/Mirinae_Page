@@ -151,8 +151,6 @@ export function DocsPage() {
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                         className="bg-glass relative flex flex-col items-center gap-6 overflow-hidden rounded-3xl px-8 py-12 text-center shadow-xl sm:flex-row sm:justify-between sm:text-left"
                     >
-                        <div className="bg-brand/20 absolute -top-20 -right-20 h-56 w-56 rounded-full blur-3xl" />
-
                         <div className="relative flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-5">
                             <div>
                                 <h2 className="text-xl font-bold text-white sm:text-2xl">원하는 기능이 있으신가요?</h2>

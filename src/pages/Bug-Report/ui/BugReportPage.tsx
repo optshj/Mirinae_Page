@@ -10,6 +10,7 @@ const easeOutExpo = [0.22, 1, 0.36, 1] as const
 
 export function BugReportPage() {
     const [description, setDescription] = useState('')
+    const [email, setEmail] = useState('')
     const [images, setImages] = useState<File[]>([])
     const [previews, setPreviews] = useState<string[]>([])
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -53,7 +54,7 @@ export function BugReportPage() {
         formData.append(
             'payload_json',
             JSON.stringify({
-                content: `**[버그 및 불편사항 제보]**\n**일시:** ${new Date().toLocaleString()}\n\n**내용:**\n${description}`
+                content: `**[버그 및 불편사항 제보]**\n**일시:** ${new Date().toLocaleString()}\n**이메일:** ${email.trim() || '미입력'}\n\n**내용:**\n${description}`
             })
         )
 
@@ -70,6 +71,7 @@ export function BugReportPage() {
             if (response.ok) {
                 setStatus('success')
                 setDescription('')
+                setEmail('')
                 setImages([])
                 previews.forEach((url) => URL.revokeObjectURL(url))
                 setPreviews([])
@@ -114,6 +116,21 @@ export function BugReportPage() {
                                 placeholder="버그가 발생한 상황이나 불편했던 점을 자세히 알려주세요."
                                 className="custom-scrollbar focus:ring-brand/50 h-40 w-full resize-none overflow-y-auto rounded-2xl border border-white/10 bg-white/5 p-4 text-white placeholder-white/30 transition-all focus:ring-2 focus:outline-none"
                             />
+                        </div>
+
+                        <div>
+                            <label htmlFor="email" className="mb-2 block text-sm font-medium text-white/80">
+                                이메일 (선택)
+                            </label>
+                            <input
+                                id="email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="답변받을 이메일을 입력해주세요 (선택사항)"
+                                className="focus:ring-brand/50 w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-white placeholder-white/30 transition-all focus:ring-2 focus:outline-none"
+                            />
+                            <p className="mt-2 text-xs text-white/40">입력하시면 제보 내용에 대해 이메일로 답변드릴 수 있습니다.</p>
                         </div>
 
                         <div>
@@ -171,7 +188,7 @@ export function BugReportPage() {
                                 className="flex items-center gap-2 rounded-xl border border-green-400/20 bg-green-400/10 p-4 text-green-400"
                             >
                                 <CheckCircle2 size={18} />
-                                <span className="text-sm">제보해주셔서 감사합니다! 소중한 의견 반영하도록 하겠습니다.</span>
+                                <span className="text-sm">제보해주셔서 감사합니다! 이메일을 남겨주신 경우 확인 후 답변드리겠습니다.</span>
                             </motion.div>
                         )}
 
