@@ -37,7 +37,6 @@ export function Footer() {
                             <Link href="/privacy-policy" className="text-sm transition-colors hover:text-white hover:underline">
                                 개인정보처리방침
                             </Link>
-                            <span className="cursor-not-allowed text-sm text-gray-500">서비스 이용약관</span>
                         </div>
                     </div>
                 </div>

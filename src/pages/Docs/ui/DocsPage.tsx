@@ -6,6 +6,7 @@ import { Header } from '@/widgets/Header'
 import { StarsBackground } from '@/entities/background'
 import { TrayAutostartDescription } from '@/entities/decription'
 import { Mixpanel } from '@/shared/lib/mixpanel'
+import { HighlightText } from '@/shared/ui/HighlightText'
 import { FeatureExplorer, type Category } from './FeatureExplorer'
 import { FeatureVideo } from './FeatureVideo'
 
@@ -120,16 +121,7 @@ export function DocsPage() {
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                     >
                         미리내의{' '}
-                        <span className="relative inline-block font-bold text-white">
-                            기능
-                            <motion.span
-                                initial={{ width: 0 }}
-                                whileInView={{ width: '100%' }}
-                                transition={{ delay: 0.5, duration: 0.6 }}
-                                viewport={{ once: true }}
-                                className="bg-brand/70 absolute bottom-1 left-0 -z-10 h-6 w-full"
-                            />
-                        </span>
+                        <HighlightText>기능</HighlightText>
                     </motion.h1>
                     <motion.p
                         className="mt-6 max-w-xl text-lg text-white/60 md:text-xl"

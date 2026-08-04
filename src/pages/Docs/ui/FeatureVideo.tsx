@@ -1,1 +1,14 @@
-export const FeatureVideo = ({ src }: { src: string }) => <video src={src} autoPlay loop muted playsInline className="w-full rounded-md object-cover sm:rounded-2xl" />
+'use client'
+import { useRef } from 'react'
+import { useInView } from 'motion/react'
+
+export const FeatureVideo = ({ src }: { src: string }) => {
+    const ref = useRef<HTMLDivElement>(null)
+    const inView = useInView(ref, { once: true, margin: '200px' })
+
+    return (
+        <div ref={ref} className="aspect-square w-full overflow-hidden rounded-md bg-white/5 sm:rounded-2xl">
+            {inView && <video src={src} autoPlay loop muted playsInline className="h-full w-full object-cover" />}
+        </div>
+    )
+}

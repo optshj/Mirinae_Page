@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useInView } from 'motion/react'
 import { MousePointer2, ChevronLeft, ChevronRight, Settings, RotateCcw, ChevronDown, ChevronUp, FoldVertical, Check, Plus, X } from 'lucide-react'
 import { DesktopIcons } from '@/entities/icon'
 import { PALETTE } from '@/shared/const/Palette'
+import { HighlightText } from '@/shared/ui/HighlightText'
 
 const FULL_TITLE = '제주도 2박 3일 여행하기'
 
@@ -144,16 +145,7 @@ export const Section1 = () => {
                     className="mb-8 text-3xl font-light tracking-tight text-zinc-100 md:text-5xl"
                 >
                     브라우저 대신 <br />
-                    <span className="relative inline-block font-bold text-white">
-                        바탕화면에서 바로
-                        <motion.span
-                            initial={{ width: 0 }}
-                            whileInView={{ width: '100%' }}
-                            transition={{ delay: 0.5, duration: 0.6 }}
-                            viewport={{ once: true }}
-                            className="bg-brand/70 absolute bottom-1 left-0 -z-10 h-6 w-full"
-                        />
-                    </span>
+                    <HighlightText>바탕화면에서 바로</HighlightText>
                 </motion.h2>
 
                 <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4 }} viewport={{ once: true }} className="text-zinc-400">
