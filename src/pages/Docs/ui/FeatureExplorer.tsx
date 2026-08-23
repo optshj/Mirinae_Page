@@ -7,7 +7,12 @@ export interface Feature {
     title: string
     description: string
     visual: React.ReactNode
+    isNew?: boolean
 }
+
+const NewTag = () => (
+    <span className="border-brand/40 rounded-full border bg-black/70 px-1.5 py-0.5 font-mono text-[10px] leading-none font-semibold whitespace-nowrap text-white">NEW</span>
+)
 
 export interface Category {
     title: string
@@ -41,11 +46,12 @@ export const FeatureExplorer = ({ categories }: { categories: Category[] }) => {
                                     <li key={feature.title}>
                                         <button
                                             onClick={() => setSelected(idx)}
-                                            className={`block w-full cursor-pointer rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                                            className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                                                 active ? 'bg-brand/10 text-brand font-semibold' : 'text-zinc-400 hover:bg-white/5 hover:text-white'
                                             }`}
                                         >
-                                            {feature.title}
+                                            <span>{feature.title}</span>
+                                            {feature.isNew && <NewTag />}
                                         </button>
                                     </li>
                                 )
@@ -67,11 +73,12 @@ export const FeatureExplorer = ({ categories }: { categories: Category[] }) => {
                                     <button
                                         key={feature.title}
                                         onClick={() => setSelected(idx)}
-                                        className={`rounded-full px-4 py-2 text-sm whitespace-nowrap transition-all duration-200 ${
+                                        className={`flex items-center gap-1.5 rounded-full px-4 py-2 text-sm whitespace-nowrap transition-all duration-200 ${
                                             idx === selected ? 'bg-brand text-white shadow-lg' : 'bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white'
                                         }`}
                                     >
                                         {feature.title}
+                                        {feature.isNew && <NewTag />}
                                     </button>
                                 )
                             })}
@@ -85,9 +92,9 @@ export const FeatureExplorer = ({ categories }: { categories: Category[] }) => {
                 <AnimatePresence mode="wait">
                     <motion.div key={current.title} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.3 }}>
                         <h3 className="text-brand text-sm font-semibold">{current.subTitle}</h3>
-                        <p className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">{current.title}</p>
+                        <p className="mt-2 flex items-center gap-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">{current.title}</p>
                         <p className="mt-4 text-base leading-7 whitespace-pre-line text-gray-400">{current.description}</p>
-                        <div className="bg-glass mt-8 flex min-h-[480px] w-full items-center justify-center rounded-3xl p-3 shadow-xl">{current.visual}</div>
+                        <div className="bg-glass mt-8 flex aspect-[940/1030] w-full max-w-[640px] items-center justify-center rounded-3xl p-3 shadow-xl">{current.visual}</div>
                     </motion.div>
                 </AnimatePresence>
             </motion.div>

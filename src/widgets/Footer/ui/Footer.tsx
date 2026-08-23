@@ -28,6 +28,9 @@ export function Footer() {
                             <Link href="/docs" className="text-sm transition-colors hover:text-white hover:underline">
                                 기능 소개
                             </Link>
+                            <Link href="/updates" className="text-sm transition-colors hover:text-white hover:underline">
+                                업데이트 내역
+                            </Link>
                             <Link href="/bug-report" className="text-sm transition-colors hover:text-white hover:underline">
                                 버그 및 불편사항 제보
                             </Link>
