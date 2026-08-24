@@ -37,7 +37,7 @@ export function Header() {
                         className="group flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-white transition-all duration-300 hover:scale-105 hover:bg-white/10 active:scale-95"
                     >
                         <Compass className="h-4 w-4 transition-transform group-hover:-rotate-12" />
-                        <span className="text-sm font-medium">기능 소개</span>
+                        <span className="text-sm font-medium">기능소개</span>
                     </Link>
                     <Link
                         href="/updates"
@@ -111,9 +111,6 @@ export function Header() {
                             >
                                 <Compass className="h-4 w-4" />
                                 <span className="text-sm font-medium">기능 소개</span>
-                                <span className="border-brand/40 rounded-full border bg-black/70 px-1.5 py-0.5 font-mono text-[10px] leading-none font-semibold whitespace-nowrap text-white">
-                                    NEW
-                                </span>
                             </Link>
                             <Link
                                 href="/updates"
@@ -137,9 +134,7 @@ export function Header() {
                                 <MessageSquare className="h-4 w-4" />
                                 <span className="text-sm font-medium">제보하기</span>
                             </Link>
-                            <div className="px-2 py-1">
-                                <DownloadButtonHeader />
-                            </div>
+                            <DownloadButtonHeader menuItem />
                         </div>
                     </motion.div>
                 )}

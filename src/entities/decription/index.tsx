@@ -1,4 +1,5 @@
 export { DownloadDescription } from './ui/DownloadDescription'
+export { PCOnlyDescription } from './ui/PCOnlyDescription'
 export { ShortcutDescription } from './ui/ShortcutDescription'
 export { CustomizationDescription } from './ui/CustomizationDescription'
 export { ScheduleDescription } from './ui/ScheduleDescription'
