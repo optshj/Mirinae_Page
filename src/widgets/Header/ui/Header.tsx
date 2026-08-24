@@ -110,7 +110,7 @@ export function Header() {
                                 className="flex items-center gap-3 rounded-xl px-4 py-3 text-white transition-colors hover:bg-white/10"
                             >
                                 <Compass className="h-4 w-4" />
-                                <span className="text-sm font-medium">기능 소개</span>
+                                <span className="text-sm font-medium">기능소개</span>
                             </Link>
                             <Link
                                 href="/updates"
