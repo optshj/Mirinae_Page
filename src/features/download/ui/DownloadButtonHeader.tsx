@@ -24,7 +24,7 @@ export function DownloadButtonHeader({ menuItem = false }: { menuItem?: boolean 
                     onClick={handleDownload}
                     className={
                         menuItem
-                            ? 'flex items-center gap-3 rounded-xl px-4 py-3 text-white transition-colors hover:bg-white/10'
+                            ? 'flex items-center gap-3 rounded-xl px-4 py-3 text-white transition-all hover:bg-white/10 active:scale-95'
                             : 'group flex cursor-pointer items-center gap-2 rounded-xl p-2 text-white transition-all duration-300 hover:scale-105 hover:bg-white/20 active:scale-95'
                     }
                 >

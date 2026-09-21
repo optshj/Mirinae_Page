@@ -68,6 +68,108 @@ body {
     }
 }
 
+@keyframes defender-cursor {
+    0%,
+    10% {
+        transform: translate(376px, 100px) scale(1);
+    }
+    20% {
+        transform: translate(48px, var(--defender-step-1-y)) scale(1);
+    }
+    24% {
+        transform: translate(48px, var(--defender-step-1-y)) scale(0.78);
+    }
+    28%,
+    38% {
+        transform: translate(48px, var(--defender-step-1-y)) scale(1);
+    }
+    48% {
+        transform: translate(272px, 284px) scale(1);
+    }
+    52% {
+        transform: translate(272px, 284px) scale(0.78);
+    }
+    56%,
+    76% {
+        transform: translate(272px, 284px) scale(1);
+    }
+    100% {
+        transform: translate(376px, 100px) scale(1);
+    }
+}
+@keyframes defender-link {
+    0%,
+    21% {
+        background: transparent;
+        box-shadow: 0 0 0 0 transparent;
+    }
+    26%,
+    40% {
+        background: color-mix(in srgb, var(--step-1-color) 45%, transparent);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--step-1-color) 25%, transparent);
+    }
+    50%,
+    100% {
+        background: transparent;
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+@keyframes defender-reveal {
+    0%,
+    25% {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    33%,
+    82% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    92%,
+    100% {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+}
+@keyframes defender-run {
+    0%,
+    49% {
+        box-shadow: 0 0 0 0 transparent;
+    }
+    55%,
+    74% {
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--step-2-color) 75%, transparent);
+    }
+    82%,
+    100% {
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+@keyframes defender-step-a {
+    0%,
+    20% {
+        opacity: 1;
+    }
+    46%,
+    100% {
+        opacity: 0.35;
+    }
+}
+@keyframes defender-step-b {
+    0%,
+    44% {
+        opacity: 0.35;
+    }
+    56%,
+    86% {
+        opacity: 1;
+    }
+    96%,
+    100% {
+        opacity: 0.35;
+    }
+}
+
 :root {
     --background-primary: #3d3c52;
     --background-secondary: #4d4254;
@@ -75,6 +177,15 @@ body {
     --text-secondary: #98a0aa;
     --brand-color: #a4bdfc;
     --brand-color-hover: #8aa2f7;
+    /* 설치 안내 스텝 색상. 앱(mirinae)의 pastel 이벤트 팔레트에서 가져왔다. */
+    /* 커서가 [추가 정보]를 찍는 높이(448x320 캔버스 기준).
+       링크 top = pt24 + 제목32 + mt24 + 20*(경고문구 줄 수) + mt8,
+       커서 y = 링크 top + 12(링크 높이 절반) - 4(커서 끝 오프셋).
+       줄 수가 바뀌면 20씩 더하거나 빼면 된다. (2줄 = 136px, 3줄 = 156px) */
+    --defender-step-1-y: 136px;
+    --step-1-color: #f7e096; /* Soft Sand */
+    --step-2-color: #b2c4f7; /* Soft Blue */
+    --safe-color: #9edfca; /* Soft Mint */
     --font-inter: 'inter', sans-serif;
     --radius: 0.625rem;
     --background: oklch(1 0 0);
@@ -94,7 +205,7 @@ body {
     --destructive: oklch(0.577 0.245 27.325);
     --border: oklch(0.929 0.013 255.508);
     --input: oklch(0.929 0.013 255.508);
-    --ring: oklch(0.704 0.04 256.788);
+    --ring: var(--step-1-color);
     --chart-1: oklch(0.646 0.222 41.116);
     --chart-2: oklch(0.6 0.118 184.704);
     --chart-3: oklch(0.398 0.07 227.392);
@@ -118,8 +229,17 @@ body {
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
     --color-brand-hover: var(--brand-color-hover);
+    --color-step-1: var(--step-1-color);
+    --color-step-2: var(--step-2-color);
+    --color-safe: var(--safe-color);
     --animate-twinkle: twinkle 1s ease-in-out infinite;
     --animate-shooting: tail 3s ease-in infinite, shooting 3s ease-in infinite;
+    --animate-defender-cursor: defender-cursor 7s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+    --animate-defender-link: defender-link 7s linear infinite;
+    --animate-defender-reveal: defender-reveal 7s ease-out infinite;
+    --animate-defender-run: defender-run 7s linear infinite;
+    --animate-defender-step-a: defender-step-a 7s linear infinite;
+    --animate-defender-step-b: defender-step-b 7s linear infinite;
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -197,5 +317,11 @@ body {
     }
     body {
         @apply bg-background text-foreground;
+    }
+    /* 키보드 포커스 활성 표시. 어두운 배경에서도, 브랜드색 버튼 위에서도 보이도록
+       스텝 1 색(Soft Sand)을 쓴다. */
+    :focus-visible {
+        outline: 2px solid var(--step-1-color);
+        outline-offset: 2px;
     }
 }

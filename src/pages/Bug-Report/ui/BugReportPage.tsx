@@ -114,7 +114,7 @@ export function BugReportPage() {
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 placeholder="버그가 발생한 상황이나 불편했던 점을 자세히 알려주세요."
-                                className="custom-scrollbar focus:ring-brand/50 h-40 w-full resize-none overflow-y-auto rounded-2xl border border-white/10 bg-white/5 p-4 text-white placeholder-white/30 transition-all focus:ring-2 focus:outline-none"
+                                className="custom-scrollbar focus:ring-step-1/60 h-40 w-full resize-none overflow-y-auto rounded-2xl border border-white/10 bg-white/5 p-4 text-white placeholder-white/30 transition-all focus:ring-2 focus:outline-none"
                             />
                         </div>
 
@@ -128,7 +128,7 @@ export function BugReportPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="답변받을 이메일을 입력해주세요 (선택사항)"
-                                className="focus:ring-brand/50 w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-white placeholder-white/30 transition-all focus:ring-2 focus:outline-none"
+                                className="focus:ring-step-1/60 w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-white placeholder-white/30 transition-all focus:ring-2 focus:outline-none"
                             />
                             <p className="mt-2 text-xs text-white/40">입력하시면 제보 내용에 대해 이메일로 답변드릴 수 있습니다.</p>
                         </div>
