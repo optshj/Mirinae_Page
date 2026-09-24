@@ -128,6 +128,13 @@ const categories: Category[] = [
                 isNew: true
             },
             {
+                subTitle: '색상마다 의미를 담아',
+                title: '색상 이름 지정',
+                description: '각 색상에 업무, 개인, 약속처럼 원하는 이름을 붙일 수 있어요\n어떤 색이 무슨 일정인지 헷갈리지 않게 관리하세요',
+                visual: <FeatureVideo src="/demo/색상이름.mp4" />,
+                isNew: true
+            },
+            {
                 subTitle: '한 번만 설정하면 끝',
                 title: '자동 실행',
                 description: '트레이 아이콘 설정에서 Windows 시작 시 자동 실행을 켜두면\nPC를 켤 때마다 미리내가 바탕화면에서 자동으로 실행돼요',
