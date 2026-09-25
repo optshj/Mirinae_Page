@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/shared/ui/dialog'
 import { Check, Copy, Monitor } from 'lucide-react'
+import { posthog } from '@/shared/lib/posthog'
 
 const SITE_URL = 'mirinae.today'
 
@@ -10,7 +11,8 @@ export function PCOnlyDescription() {
     const [copied, setCopied] = useState(false)
 
     const handleCopy = async () => {
-        await navigator.clipboard.writeText(`https://www.${SITE_URL}/`)
+        posthog.capture('pc_link_copy', { location: 'pc_only_dialog' })
+        await navigator.clipboard.writeText(`https://www.${SITE_URL}/?utm_source=mobile_handoff`)
         setCopied(true)
         setTimeout(() => setCopied(false), 1500)
     }

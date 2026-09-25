@@ -6,7 +6,7 @@ import { Footer } from '@/widgets/Footer'
 import { Header } from '@/widgets/Header'
 import { StarsBackground } from '@/entities/background'
 import { NotificationDescription, TrayAutostartDescription } from '@/entities/decription'
-import { Mixpanel } from '@/shared/lib/mixpanel'
+import { posthog } from '@/shared/lib/posthog'
 import { HighlightText } from '@/shared/ui/HighlightText'
 import { FeatureExplorer, type Category } from './FeatureExplorer'
 import { FeatureVideo } from './FeatureVideo'
@@ -201,7 +201,7 @@ export function DocsPage() {
 
                         <Link
                             href="/bug-report"
-                            onClick={() => Mixpanel.track('Feature Request Link Click', { location: 'docs' })}
+                            onClick={() => posthog.capture('feature_request_link_click', { location: 'docs' })}
                             className="bg-brand hover:bg-brand-hover flex cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-white transition-colors"
                         >
                             <Lightbulb className="h-4 w-4" />

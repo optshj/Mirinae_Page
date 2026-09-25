@@ -4,13 +4,13 @@ import { FaWindows } from 'react-icons/fa'
 import { useDownloadUrl } from '../lib/useDownloadUrl'
 import { Dialog, DialogTrigger } from '@/shared/ui/dialog'
 import { DownloadDescription } from '@/entities/decription'
-import { Mixpanel } from '@/shared/lib/mixpanel'
+import { posthog } from '@/shared/lib/posthog'
 
 export function DownloadButton() {
     const downloadUrl = useDownloadUrl()
     const handleDownload = () => {
         sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })
-        Mixpanel.track('Download Button Click', { location: 'main_section' })
+        posthog.capture('download_button_click', { location: 'main_section' })
     }
 
     return (

@@ -5,14 +5,14 @@ import { useIsMobileDevice } from '../lib/useIsMobileDevice'
 import { Dialog, DialogTrigger } from '@/shared/ui/dialog'
 import { Download } from 'lucide-react'
 import { DownloadDescription, PCOnlyDescription } from '@/entities/decription'
-import { Mixpanel } from '@/shared/lib/mixpanel'
+import { posthog } from '@/shared/lib/posthog'
 
 export function DownloadButtonHeader({ menuItem = false }: { menuItem?: boolean }) {
     const downloadUrl = useDownloadUrl()
     const isMobile = useIsMobileDevice()
     const handleDownload = () => {
         sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })
-        Mixpanel.track('Download Button Click', { location: 'header', device: isMobile ? 'mobile' : 'desktop' })
+        posthog.capture('download_button_click', { location: 'header', device: isMobile ? 'mobile' : 'desktop' })
     }
 
     return (
