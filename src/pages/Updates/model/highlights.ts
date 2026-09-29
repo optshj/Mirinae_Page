@@ -16,6 +16,22 @@ export interface UpdateHighlight {
 // 자잘한 버그 수정이나 내부 작업(로그인 로직 보강, 분석 도구 연동 등)은 제외했습니다.
 export const highlights: UpdateHighlight[] = [
     {
+        version: '1.0.1',
+        date: '2026-09-24',
+        title: '일정 색상에 이름을 붙일 수 있어요',
+        bullets: [{ type: 'new', text: '색상마다 "업무", "개인"처럼 이름을 지정해 어떤 일정인지 한눈에 구분할 수 있어요' }]
+    },
+    {
+        version: '1.0.0',
+        date: '2026-09-19',
+        title: '투명도 조절이 더 자연스러워졌어요',
+        bullets: [
+            { type: 'improve', text: '투명도를 낮춰도 글자는 선명하게, 배경만 투명해져요' },
+            { type: 'improve', text: '배경을 완전히 투명하게까지 조절할 수 있어요' },
+            { type: 'improve', text: '앱을 다시 설치하지 않아도 화면 업데이트가 더 빠르게 적용돼요' }
+        ]
+    },
+    {
         version: '0.5.1',
         date: '2026-08-24',
         title: '일정 완료와 알림 기능이 추가됐어요',

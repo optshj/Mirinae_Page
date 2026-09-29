@@ -4,7 +4,13 @@ const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY
 
 if (typeof window !== 'undefined' && POSTHOG_KEY) {
     // 모바일에서 복사한 링크(?hid=)로 PC 접속 시 같은 사람으로 이어 퍼널이 기기를 넘어가게 함
-    const handoffId = new URLSearchParams(window.location.search).get('hid')
+    const url = new URL(window.location.href)
+    const handoffId = url.searchParams.get('hid')
+    // 북마크·공유된 링크로 다른 사람이 같은 id에 합쳐지지 않도록 URL에서 제거 (init 전에 지워 첫 pageview에도 안 남게)
+    if (handoffId) {
+        url.searchParams.delete('hid')
+        window.history.replaceState(window.history.state, '', url)
+    }
     posthog.init(POSTHOG_KEY, {
         api_host: 'https://us.i.posthog.com',
         defaults: '2025-11-30',

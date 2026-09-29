@@ -1,5 +1,4 @@
 'use client'
-import { sendGAEvent } from '@next/third-parties/google'
 import { useDownloadUrl } from '../lib/useDownloadUrl'
 import { useIsMobileDevice } from '../lib/useIsMobileDevice'
 import { Dialog, DialogTrigger } from '@/shared/ui/dialog'
@@ -11,7 +10,6 @@ export function DownloadButtonHeader({ menuItem = false }: { menuItem?: boolean 
     const downloadUrl = useDownloadUrl()
     const isMobile = useIsMobileDevice()
     const handleDownload = () => {
-        sendGAEvent('event', 'download_button_click', { location: 'mirinae_page' })
         posthog.capture('download_button_click', { location: 'header', device: isMobile ? 'mobile' : 'desktop' })
     }
 
