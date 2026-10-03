@@ -58,36 +58,39 @@ export function Header() {
                     <DownloadButtonHeader />
                 </div>
 
-                {/* 모바일 햄버거 버튼 */}
-                <button
-                    className="flex items-center justify-center rounded-xl p-2 text-white transition-colors hover:bg-white/10 md:hidden"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    aria-label="메뉴"
-                >
-                    <AnimatePresence mode="wait" initial={false}>
-                        {mobileMenuOpen ? (
-                            <motion.span
-                                key="close"
-                                initial={{ rotate: -90, opacity: 0 }}
-                                animate={{ rotate: 0, opacity: 1 }}
-                                exit={{ rotate: 90, opacity: 0 }}
-                                transition={{ duration: 0.15 }}
-                            >
-                                <X className="h-5 w-5" />
-                            </motion.span>
-                        ) : (
-                            <motion.span
-                                key="open"
-                                initial={{ rotate: 90, opacity: 0 }}
-                                animate={{ rotate: 0, opacity: 1 }}
-                                exit={{ rotate: -90, opacity: 0 }}
-                                transition={{ duration: 0.15 }}
-                            >
-                                <Menu className="h-5 w-5" />
-                            </motion.span>
-                        )}
-                    </AnimatePresence>
-                </button>
+                {/* 모바일: 다운로드는 햄버거에 숨기지 않고 항상 노출 */}
+                <div className="flex items-center gap-1 md:hidden">
+                    <DownloadButtonHeader />
+                    <button
+                        className="flex items-center justify-center rounded-xl p-2 text-white transition-colors hover:bg-white/10 md:hidden"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        aria-label="메뉴"
+                    >
+                        <AnimatePresence mode="wait" initial={false}>
+                            {mobileMenuOpen ? (
+                                <motion.span
+                                    key="close"
+                                    initial={{ rotate: -90, opacity: 0 }}
+                                    animate={{ rotate: 0, opacity: 1 }}
+                                    exit={{ rotate: 90, opacity: 0 }}
+                                    transition={{ duration: 0.15 }}
+                                >
+                                    <X className="h-5 w-5" />
+                                </motion.span>
+                            ) : (
+                                <motion.span
+                                    key="open"
+                                    initial={{ rotate: 90, opacity: 0 }}
+                                    animate={{ rotate: 0, opacity: 1 }}
+                                    exit={{ rotate: -90, opacity: 0 }}
+                                    transition={{ duration: 0.15 }}
+                                >
+                                    <Menu className="h-5 w-5" />
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
+                    </button>
+                </div>
             </div>
 
             {/* 모바일 메뉴 드롭다운 */}
@@ -134,7 +137,6 @@ export function Header() {
                                 <MessageSquare className="h-4 w-4" />
                                 <span className="text-sm font-medium">제보하기</span>
                             </Link>
-                            <DownloadButtonHeader menuItem />
                         </div>
                     </motion.div>
                 )}
