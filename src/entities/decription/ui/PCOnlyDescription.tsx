@@ -12,7 +12,8 @@ export function PCOnlyDescription() {
 
     const handleCopy = async () => {
         posthog.capture('pc_link_copy', { location: 'pc_only_dialog' })
-        await navigator.clipboard.writeText(`https://www.${SITE_URL}/?utm_source=mobile_handoff&hid=${posthog.get_distinct_id()}`)
+        const distinctId = posthog.get_distinct_id()
+        await navigator.clipboard.writeText(`https://www.${SITE_URL}/${distinctId ? `?hid=${distinctId}` : ''}`)
         setCopied(true)
         setTimeout(() => setCopied(false), 1500)
     }
