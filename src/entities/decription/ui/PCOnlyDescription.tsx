@@ -24,11 +24,11 @@ export function PCOnlyDescription() {
                 <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
                     <Monitor className="h-8 w-8 text-blue-300" />
                 </div>
-                <DialogTitle className="text-center text-2xl font-bold tracking-tight text-white">PC에서 다운로드해주세요</DialogTitle>
+                <DialogTitle className="text-center text-2xl font-bold tracking-tight text-white">Windows PC에서 다운로드해주세요</DialogTitle>
                 <DialogDescription className="text-center text-slate-300">
-                    미리내는 Windows PC에서 실행되는 데스크톱 앱이에요.
+                    미리내는 현재 Windows 10 이상에서만 실행돼요.
                     <br />
-                    아래 주소를 복사해서 PC로 옮겨 접속해주세요.
+                    아래 주소를 복사해서 Windows PC로 옮겨 접속해주세요.
                 </DialogDescription>
             </DialogHeader>
 

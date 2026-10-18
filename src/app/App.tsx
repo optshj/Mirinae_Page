@@ -37,18 +37,18 @@ export const metadata: Metadata = {
         'time management'
     ],
     alternates: {
-        canonical: 'https://www.mirinaecalendar.store/'
+        canonical: 'https://www.mirinae.today/'
     },
     openGraph: {
         title: '미리내 | 당신의 하루를 별처럼 빛나게',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
-        url: 'https://www.mirinaecalendar.store/',
+        url: 'https://www.mirinae.today/',
         siteName: '미리내',
         locale: 'ko_KR',
         type: 'website',
         images: [
             {
-                url: 'https://www.mirinaecalendar.store/ogImage.webp',
+                url: 'https://www.mirinae.today/ogImage.webp',
                 alt: '미리내 | 당신의 하루를 별처럼 빛나게',
                 width: 1200,
                 height: 630
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: '미리내 | 당신의 하루를 별처럼 빛나게',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
-        images: ['https://www.mirinaecalendar.store/ogImage.webp']
+        images: ['https://www.mirinae.today/ogImage.webp']
     },
     icons: {
         icon: '/favicon.ico'
@@ -83,7 +83,7 @@ const jsonLd = {
     '@type': 'WebSite',
     name: '미리내',
     alternateName: ['Mirinae', '미리내 캘린더'],
-    url: 'https://www.mirinaecalendar.store/'
+    url: 'https://www.mirinae.today/'
 }
 
 const organizationJsonLd = {
@@ -91,8 +91,8 @@ const organizationJsonLd = {
     '@type': 'Organization',
     name: '미리내',
     alternateName: ['Mirinae', '미리내 캘린더'],
-    url: 'https://www.mirinaecalendar.store/',
-    logo: 'https://www.mirinaecalendar.store/icon.svg'
+    url: 'https://www.mirinae.today/',
+    logo: 'https://www.mirinae.today/icon.svg'
 }
 
 export default function RootLayout({

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+const RELEASES_PAGE = 'https://github.com/optshj/Mirinae/releases/latest'
+
 let cache: Promise<string | null> | null = null
 
 function fetchDownloadUrl() {
@@ -22,7 +24,8 @@ function fetchDownloadUrl() {
 }
 
 export function useDownloadUrl() {
-    const [downloadUrl, setDownloadUrl] = useState('#')
+    // API 응답 전·실패 시에도 클릭이 헛돌지 않게 릴리스 페이지로 폴백 ('#'이면 download 속성 때문에 페이지 HTML이 받아진다)
+    const [downloadUrl, setDownloadUrl] = useState(RELEASES_PAGE)
 
     useEffect(() => {
         fetchDownloadUrl().then((url) => {

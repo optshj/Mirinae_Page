@@ -1,24 +1,26 @@
 'use client'
 import { FaWindows } from 'react-icons/fa'
 import { useDownloadUrl } from '../lib/useDownloadUrl'
-import { useIsMobileDevice } from '../lib/useIsMobileDevice'
+import { useDeviceOs } from '../lib/useDeviceOs'
 import { Dialog, DialogTrigger } from '@/shared/ui/dialog'
 import { DownloadDescription, PCOnlyDescription } from '@/entities/decription'
 import { posthog } from '@/shared/lib/posthog'
 
 export function DownloadButton() {
     const downloadUrl = useDownloadUrl()
-    const isMobile = useIsMobileDevice()
+    const os = useDeviceOs()
+    const canInstall = os === 'windows'
     const handleDownload = () => {
-        posthog.capture('download_button_click', { location: 'main_section', device: isMobile ? 'mobile' : 'desktop' })
+        posthog.capture('download_button_click', { location: 'main_section', device: os === 'mobile' ? 'mobile' : 'desktop' })
+        if (!canInstall && os !== 'mobile') posthog.capture('unsupported_os_download_click', { location: 'main_section', os })
     }
 
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <a
-                    href={isMobile ? undefined : downloadUrl}
-                    download={isMobile ? undefined : true}
+                    href={canInstall ? downloadUrl : undefined}
+                    download={canInstall ? true : undefined}
                     className="bg-brand hover:bg-brand-hover flex cursor-pointer items-center rounded-lg px-4 py-2 text-white transition-all active:scale-95"
                     onClick={handleDownload}
                 >
@@ -26,7 +28,7 @@ export function DownloadButton() {
                     Windows용 다운로드
                 </a>
             </DialogTrigger>
-            {isMobile ? <PCOnlyDescription /> : <DownloadDescription />}
+            {canInstall ? <DownloadDescription /> : <PCOnlyDescription />}
         </Dialog>
     )
 }

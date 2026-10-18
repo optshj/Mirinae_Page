@@ -151,7 +151,7 @@ const jsonLd = {
     alternateName: ['Mirinae', '미리내 캘린더'],
     applicationCategory: 'DesktopApplication',
     operatingSystem: 'Windows',
-    url: 'https://www.mirinaecalendar.store/docs',
+    url: 'https://www.mirinae.today/docs',
     description: '바탕화면에서 바로 사용하는 캘린더 위젯, 미리내의 기능 안내',
     featureList: categories.flatMap((category) => category.features.map((feature) => feature.title))
 }

@@ -1,6 +1,6 @@
 'use client'
 import { useDownloadUrl } from '../lib/useDownloadUrl'
-import { useIsMobileDevice } from '../lib/useIsMobileDevice'
+import { useDeviceOs } from '../lib/useDeviceOs'
 import { Dialog, DialogTrigger } from '@/shared/ui/dialog'
 import { Download } from 'lucide-react'
 import { DownloadDescription, PCOnlyDescription } from '@/entities/decription'
@@ -8,17 +8,19 @@ import { posthog } from '@/shared/lib/posthog'
 
 export function DownloadButtonHeader() {
     const downloadUrl = useDownloadUrl()
-    const isMobile = useIsMobileDevice()
+    const os = useDeviceOs()
+    const canInstall = os === 'windows'
     const handleDownload = () => {
-        posthog.capture('download_button_click', { location: 'header', device: isMobile ? 'mobile' : 'desktop' })
+        posthog.capture('download_button_click', { location: 'header', device: os === 'mobile' ? 'mobile' : 'desktop' })
+        if (!canInstall && os !== 'mobile') posthog.capture('unsupported_os_download_click', { location: 'header', os })
     }
 
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <a
-                    href={isMobile ? undefined : downloadUrl}
-                    download={isMobile ? undefined : true}
+                    href={canInstall ? downloadUrl : undefined}
+                    download={canInstall ? true : undefined}
                     onClick={handleDownload}
                     className="group flex cursor-pointer items-center gap-2 rounded-xl p-2 text-white transition-all duration-300 hover:scale-105 hover:bg-white/20 active:scale-95"
                 >
@@ -26,7 +28,7 @@ export function DownloadButtonHeader() {
                     <span className="text-sm font-medium">다운로드</span>
                 </a>
             </DialogTrigger>
-            {isMobile ? <PCOnlyDescription /> : <DownloadDescription />}
+            {canInstall ? <DownloadDescription /> : <PCOnlyDescription />}
         </Dialog>
     )
 }
