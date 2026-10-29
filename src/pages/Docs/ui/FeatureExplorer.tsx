@@ -92,9 +92,9 @@ export const FeatureExplorer = ({ categories }: { categories: Category[] }) => {
                 <AnimatePresence mode="wait">
                     <motion.div key={current.title} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.3 }}>
                         <h3 className="text-brand text-sm font-semibold">{current.subTitle}</h3>
-                        <p className="mt-2 flex items-center gap-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">{current.title}</p>
-                        <p className="mt-4 text-base leading-7 whitespace-pre-line text-gray-400">{current.description}</p>
-                        <div className="bg-glass mt-8 flex aspect-[940/1030] w-full max-w-[640px] items-center justify-center rounded-3xl p-3 shadow-xl">{current.visual}</div>
+                        <p className="mt-1 flex items-center gap-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">{current.title}</p>
+                        <p className="mt-2 text-base leading-7 whitespace-pre-line text-gray-400">{current.description}</p>
+                        <div className="bg-glass mt-4 flex aspect-[1200/1032] w-full max-w-[760px] items-center justify-center rounded-3xl p-3 shadow-xl">{current.visual}</div>
                     </motion.div>
                 </AnimatePresence>
             </motion.div>

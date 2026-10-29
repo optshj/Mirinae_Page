@@ -18,7 +18,7 @@ const categories: Category[] = [
             {
                 subTitle: '빠르게 기록하기',
                 title: '일정 추가',
-                description: '날짜를 클릭하고 제목, 시간, 색상만 정하면 끝\n복잡한 메뉴 없이 바로 일정을 등록할 수 있어요',
+                description: '날짜를 클릭하고 제목, 시작·종료 시간, 색상만 정하면 끝\n복잡한 메뉴 없이 바로 일정을 등록할 수 있어요',
                 visual: <FeatureVideo src="/demo/일정추가.mp4" />
             },
             {
@@ -31,15 +31,13 @@ const categories: Category[] = [
                 subTitle: '날짜만 바꾸고 싶을 때',
                 title: '일정 드래그로 옮기기',
                 description: '일정을 드래그해서 원하는 날짜로 바로 옮길 수 있어요\n다시 입력할 필요 없이 위치만 바꾸면 돼요',
-                visual: <FeatureVideo src="/demo/일정드래그로옮기기.mp4" />,
-                isNew: true
+                visual: <FeatureVideo src="/demo/일정드래그로옮기기.mp4" />
             },
             {
                 subTitle: '성취감은 덤',
                 title: '일정 완료',
                 description: '끝낸 일정은 체크 한 번으로 완료 표시\n오늘 무엇을 해냈는지 한눈에 확인하세요',
-                visual: <FeatureVideo src="/demo/일정완료.mp4" />,
-                isNew: true
+                visual: <FeatureVideo src="/demo/일정완료.mp4" />
             },
             {
                 subTitle: '깔끔하게 정리하기',
@@ -49,16 +47,15 @@ const categories: Category[] = [
             },
             {
                 subTitle: '원하는 일정만 모아보기',
-                title: '일정 색상 필터링',
+                title: '색상 필터',
                 description: '색상별로 분류한 일정을 필터링해서\n업무, 개인, 약속 등 원하는 카테고리만 모아볼 수 있어요',
                 visual: <FeatureVideo src="/demo/색상필터.mp4" />
             },
             {
                 subTitle: '실수해도 괜찮아요',
-                title: '행동 되돌리기',
-                description: '일정을 완료하거나 삭제한 직후엔 바로 되돌릴 수 있어요\n실수로 눌러도 걱정 없이 원래대로 돌아갑니다',
-                visual: <FeatureVideo src="/demo/행동되돌리기.mp4" />,
-                isNew: true
+                title: '실행 취소',
+                description: '일정을 완료, 삭제, 수정하거나 옮긴 직후엔 바로 되돌릴 수 있어요\n실수로 눌러도 걱정 없이 원래대로 돌아갑니다',
+                visual: <FeatureVideo src="/demo/행동되돌리기.mp4" />
             }
         ]
     },
@@ -73,16 +70,22 @@ const categories: Category[] = [
             },
             {
                 subTitle: '필요한 만큼만 작게',
-                title: '캘린더 축소',
-                description: '캘린더를 작게 접어두고 간결하게 확인할 수 있어요\n필요할 때 한 번 더 누르면 원래 크기로 돌아와요',
-                visual: <FeatureVideo src="/demo/캘린더축소.mp4" />,
-                isNew: true
+                title: '미니뷰',
+                description: '캘린더를 작게 줄여 바탕화면 한쪽에 둘 수 있어요\n날짜에 마우스를 올리면 그날 일정을 바로 볼 수 있어요',
+                visual: <FeatureVideo src="/demo/캘린더축소.mp4" />
             },
             {
-                subTitle: '심플함이 필요할 때',
-                title: '달력만 보기',
-                description: '일정 목록을 숨기고\n달력 그리드만 깔끔하게 표시할 수 있어요',
+                subTitle: '오늘 할 일을 한눈에',
+                title: '요약 패널 보기',
+                description: '달력 아래에 오늘 일정과 다가오는 일정을 모아서 보여줘요\n아래 접기 버튼을 누르면 요약을 숨기고 달력만 깔끔하게 볼 수 있어요',
                 visual: <FeatureVideo src="/demo/캘린더요약보기.mp4" />
+            },
+            {
+                subTitle: '다른 달을 보다가도',
+                title: '오늘로 돌아가기',
+                description: '다른 달로 넘겨 보고 있을 때만 버튼이 나타나요\n한 번 누르면 바로 이번 달로 돌아와요',
+                visual: <FeatureVideo src="/demo/오늘로돌아가기.mp4" />,
+                isNew: true
             },
             {
                 subTitle: '눈이 편안하게',
@@ -97,10 +100,11 @@ const categories: Category[] = [
                 visual: <FeatureVideo src="/demo/투명도.mp4" />
             },
             {
-                subTitle: '쉬는 날도 놓치지 않게',
-                title: '공휴일 표시',
-                description: '공휴일을 표시할지 여부를 설정에서 선택할 수 있어요\n중요한 휴일을 놓치지 않고 확인하세요',
-                visual: <FeatureVideo src="/demo/공휴일표시.mp4" />
+                subTitle: '보고 싶은 캘린더만',
+                title: '표시할 캘린더 선택',
+                description: '구글 캘린더에 있는 캘린더 중 바탕화면에 띄울 것만 고를 수 있어요\n대한민국 공휴일처럼 구독 중인 캘린더도 함께 볼 수 있어요',
+                visual: <FeatureVideo src="/demo/표시할캘린더.mp4" />,
+                isNew: true
             }
         ]
     },
@@ -108,31 +112,22 @@ const categories: Category[] = [
         title: '설정',
         features: [
             {
-                subTitle: '한눈에 보기 좋게',
-                title: '일정 표시 개수 설정',
-                description: '하루에 표시할 일정 개수를 직접 정할 수 있습니다.\n 원하는 개수로 설정해서 깔끔하게 일정을 관리하세요',
-                visual: <FeatureVideo src="/demo/표시개수.mp4" />
-            },
-            {
                 subTitle: '놓치지 않게 미리',
                 title: '일정 알림',
                 description: '일정 시작 몇 분 전에 알림을 받을지 직접 정할 수 있어요\n중요한 일정을 놓치지 않도록 도와줘요',
-                visual: <NotificationDescription />,
-                isNew: true
+                visual: <NotificationDescription />
             },
             {
                 subTitle: '취향대로 꾸미기',
-                title: '색상 팔레트 변경',
+                title: '팔레트 바꾸기',
                 description: '파스텔, 비비드, 톤다운 등 다양한 팔레트 중에 고를 수 있어요\n캘린더 전체 색감을 취향에 맞게 바꿔보세요',
-                visual: <FeatureVideo src="/demo/컬러팔레트.mp4" />,
-                isNew: true
+                visual: <FeatureVideo src="/demo/컬러팔레트.mp4" />
             },
             {
                 subTitle: '색상마다 의미를 담아',
                 title: '색상 이름 지정',
                 description: '각 색상에 업무, 개인, 약속처럼 원하는 이름을 붙일 수 있어요\n어떤 색이 무슨 일정인지 헷갈리지 않게 관리하세요',
-                visual: <FeatureVideo src="/demo/색상이름.mp4" />,
-                isNew: true
+                visual: <FeatureVideo src="/demo/색상이름.mp4" />
             },
             {
                 subTitle: '한 번만 설정하면 끝',

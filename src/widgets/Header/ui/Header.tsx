@@ -4,7 +4,7 @@ import { Logo } from '@/entities/logo'
 import { DownloadButtonHeader } from '@/features/download'
 import Link from 'next/link'
 import { posthog } from '@/shared/lib/posthog'
-import { MessageSquare, Compass, History, Menu, X } from 'lucide-react'
+import { MessageSquare, Compass, Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 
 export function Header() {
@@ -38,14 +38,6 @@ export function Header() {
                     >
                         <Compass className="h-4 w-4 transition-transform group-hover:-rotate-12" />
                         <span className="text-sm font-medium">기능소개</span>
-                    </Link>
-                    <Link
-                        href="/updates"
-                        onClick={() => posthog.capture('updates_link_click', { location: 'header' })}
-                        className="group flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-white transition-all duration-300 hover:scale-105 hover:bg-white/10 active:scale-95"
-                    >
-                        <History className="h-4 w-4 transition-transform group-hover:-rotate-12" />
-                        <span className="text-sm font-medium">패치노트</span>
                     </Link>
                     <Link
                         href="/bug-report"
@@ -114,17 +106,6 @@ export function Header() {
                             >
                                 <Compass className="h-4 w-4" />
                                 <span className="text-sm font-medium">기능소개</span>
-                            </Link>
-                            <Link
-                                href="/updates"
-                                onClick={() => {
-                                    posthog.capture('updates_link_click', { location: 'header' })
-                                    setMobileMenuOpen(false)
-                                }}
-                                className="flex items-center gap-3 rounded-xl px-4 py-3 text-white transition-colors hover:bg-white/10"
-                            >
-                                <History className="h-4 w-4" />
-                                <span className="text-sm font-medium">패치노트</span>
                             </Link>
                             <Link
                                 href="/bug-report"
