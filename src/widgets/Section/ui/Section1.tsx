@@ -19,9 +19,24 @@ import {
     Calendar,
     AlarmClock,
     AlarmClockOff,
-    ArrowRight
+    ArrowRight,
+    LayoutGrid,
+    Search,
+    Folder,
+    Globe,
+    Mail,
+    CalendarDays,
+    Wifi,
+    Volume2,
+    BatteryFull,
+    ChevronUp,
+    Trash2,
+    HardDrive,
+    FileText,
+    Image as ImageIcon,
+    Music,
+    Gamepad2
 } from 'lucide-react'
-import { DesktopIcons } from '@/entities/icon'
 import { HighlightText } from '@/shared/ui/HighlightText'
 import { cn } from '@/shared/lib/utils'
 
@@ -132,12 +147,12 @@ const useCalendarDemo = (isInView: boolean) => {
     const pointerPos = useMemo(() => {
         const positions: Record<number, { x: number; y: number }> = {
             0: { x: 0, y: 0 },
-            1: { x: -110, y: -95 },
+            1: { x: -110, y: -83 },
             2: { x: -6, y: 50 },
-            3: { x: -138, y: -168 },
-            4: { x: 100, y: -63 },
-            5: { x: 42, y: 111 },
-            6: { x: 146, y: 202 }
+            3: { x: -130, y: -170 },
+            4: { x: 96, y: -65 },
+            5: { x: 38, y: 110 },
+            6: { x: 138, y: 203 }
         }
         return positions[step] || { x: 350, y: 250 }
     }, [step])
@@ -160,6 +175,73 @@ const FooterEventRow = ({ color, title, date, time }: { color: number; title: st
         <span className="truncate font-medium">{title}</span>
         <span className="text-xs whitespace-nowrap text-zinc-500 tabular-nums">{date}</span>
         <span className="text-right text-xs whitespace-nowrap text-zinc-500 tabular-nums">{time}</span>
+    </div>
+)
+
+// 바탕화면 배경: 랜딩 밤하늘과 같은 색에 별 몇 개
+const WALLPAPER: React.CSSProperties = {
+    backgroundImage: [
+        'radial-gradient(2px 2px at 12% 18%, #fff 50%, transparent)',
+        'radial-gradient(1.5px 1.5px at 28% 42%, #fff 50%, transparent)',
+        'radial-gradient(2px 2px at 46% 12%, #fff 50%, transparent)',
+        'radial-gradient(1.5px 1.5px at 33% 64%, #fff 50%, transparent)',
+        'radial-gradient(1.5px 1.5px at 8% 78%, #fff 50%, transparent)',
+        'radial-gradient(1.5px 1.5px at 22% 88%, #fff 50%, transparent)',
+        'radial-gradient(ellipse 60% 40% at 25% 100%, rgba(255,214,190,0.25), transparent)',
+        'linear-gradient(to bottom, #1A1F3D, #5A5475 60%, #8E7C8A)'
+    ].join(',')
+}
+
+const SHORTCUTS = [
+    { icon: Trash2, label: '휴지통' },
+    { icon: HardDrive, label: '내 PC' },
+    { icon: Folder, label: '문서' },
+    { icon: Globe, label: '인터넷' },
+    { icon: Settings, label: '설정' },
+    { icon: FileText, label: 'Project.txt' },
+    { icon: ImageIcon, label: 'photo.png' },
+    { icon: Music, label: 'song.mp3' },
+    { icon: Mail, label: 'Mail' },
+    { icon: Gamepad2, label: 'Game' }
+]
+
+const DesktopShortcuts = () => (
+    <div className="absolute top-6 left-5 hidden grid-flow-col grid-rows-5 gap-x-4 gap-y-6 sm:grid">
+        {SHORTCUTS.map(({ icon: Icon, label }) => (
+            <div key={label} className="flex w-20 flex-col items-center gap-1.5 text-white/85">
+                <Icon size={32} strokeWidth={1.5} className="drop-shadow-lg" />
+                <span className="text-center text-xs leading-tight font-medium drop-shadow">{label}</span>
+            </div>
+        ))}
+    </div>
+)
+
+const Taskbar = () => (
+    <div className="absolute inset-x-0 bottom-0 z-30 flex h-14 items-center justify-between border-t border-white/10 bg-[#202030]/80 px-4 text-white backdrop-blur-xl">
+        <div className="w-48" />
+        <div className="flex items-center gap-1.5">
+            {[LayoutGrid, Search, Folder, Globe, Mail].map((Icon, i) => (
+                <div key={i} className="flex h-11 w-11 items-center justify-center text-white/80">
+                    <Icon size={22} strokeWidth={1.5} />
+                </div>
+            ))}
+            <div className="relative flex h-11 w-11 items-center justify-center rounded-md bg-white/10">
+                <CalendarDays size={22} strokeWidth={1.5} className="text-[#a4bdfc]" />
+                <span className="absolute bottom-0.5 h-0.5 w-4 rounded-full bg-[#a4bdfc]" />
+            </div>
+        </div>
+        <div className="flex w-48 items-center justify-end gap-4 text-white/85">
+            <ChevronUp size={16} />
+            <div className="flex items-center gap-2.5">
+                <Wifi size={16} />
+                <Volume2 size={16} />
+                <BatteryFull size={16} />
+            </div>
+            <div className="flex flex-col items-end text-xs leading-tight tabular-nums">
+                <span>오후 3:42</span>
+                <span>2026-01-16</span>
+            </div>
+        </div>
     </div>
 )
 
@@ -189,109 +271,124 @@ export const Section1 = () => {
                 </motion.p>
             </header>
 
-            <DesktopIcons />
-            <div className="relative z-10 flex items-center justify-center [zoom:0.4] sm:[zoom:0.9]">
-                <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="z-10 w-[900px]">
-                    <div className="relative flex w-full flex-col rounded-xl bg-[#f9fafb] text-[#111827] shadow-xl">
-                        <CalendarHeader />
-                        <CalendarGrid />
+            {/* 바탕화면 한 장: 1500x844(16:9) 기준으로 그리고 화면 폭에 맞춰 zoom. 모바일은 아이콘 영역을 빼고 위젯 쪽만 */}
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="relative z-10 [zoom:0.43] min-[640px]:[zoom:0.4] min-[768px]:[zoom:0.48] min-[1024px]:[zoom:0.6] min-[1280px]:[zoom:0.66] min-[1400px]:[zoom:0.7]"
+            >
+                <div
+                    className="relative h-[844px] w-[820px] overflow-hidden rounded-3xl shadow-[0_40px_120px_rgba(0,0,0,0.5)] ring-1 ring-white/15 sm:w-[1500px]"
+                    style={WALLPAPER}
+                >
+                    <DesktopShortcuts />
+                    <div className="absolute top-6 right-6 flex items-center justify-center [zoom:0.85]">
+                        <div className="w-[900px]">
+                            <div className="relative flex w-full flex-col rounded-xl bg-[#f9fafb] text-[#111827] shadow-xl">
+                                <CalendarHeader />
+                                <CalendarGrid />
 
-                        {/* 실제 앱의 sonner 토스트(top-center, 창 위에서 84px) */}
+                                {/* 실제 앱의 sonner 토스트(top-center, 창 위에서 84px) */}
+                                <AnimatePresence>
+                                    {showToast && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -16 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -16 }}
+                                            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                            className="absolute inset-x-0 top-21 z-50 mx-auto flex w-fit items-center gap-2 rounded-full border border-[#ebedf0] bg-[#f9fafb] px-4 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
+                                        >
+                                            <Check className="h-4 w-4 text-emerald-600" />
+                                            <span className="text-[15px] tracking-wider">일정을 추가했어요</span>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
+                                <footer className="grid h-48 grid-cols-3 overflow-hidden rounded-b-xl border-t border-[#ebedf0]">
+                                    <FooterColumn title="오늘 일정" emptyMessage="오늘의 일정이 없습니다" />
+                                    <FooterColumn title="다가오는 일정">
+                                        <FooterEventRow color={10} title="병원가서 진료받기" date="1/23" time="08:00" />
+                                        <FooterEventRow color={6} title="농구 대회 결승!" date="1/27" time="08:00" />
+                                    </FooterColumn>
+                                    <FooterColumn
+                                        title={
+                                            <span className="-ml-2 inline-flex h-7 items-center gap-1.5 px-2">
+                                                <span className="size-2.5 shrink-0 rounded-full" style={{ backgroundColor: EVENT_COLORS[10] }} />
+                                                색상별 일정
+                                                <ChevronDown size={16} className="text-[#a8adb5]" />
+                                            </span>
+                                        }
+                                    >
+                                        <FooterEventRow color={10} title="병원가서 진료받기" date="1/23" time="08:00" />
+                                    </FooterColumn>
+                                </footer>
+
+                                <div className="absolute inset-x-0 bottom-48 flex translate-y-1/2 justify-center">
+                                    <div className="flex h-5 items-center gap-0.5 rounded-full border border-[#ebedf0] bg-[#f9fafb] px-2.5 text-[11px] font-semibold">
+                                        <ChevronDown size={12} />
+                                        접기
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <AnimatePresence>
-                            {showToast && (
+                            {isInView && (
                                 <motion.div
-                                    initial={{ opacity: 0, y: -16 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -16 }}
-                                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                                    className="absolute inset-x-0 top-21 z-50 mx-auto flex w-fit items-center gap-2 rounded-full border border-[#ebedf0] bg-[#f9fafb] px-4 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
+                                    key="cursor-wrapper"
+                                    animate={{
+                                        opacity: step === 0 ? 0 : 1,
+                                        x: pointerPos.x,
+                                        y: pointerPos.y
+                                    }}
+                                    className="pointer-events-none absolute top-1/2 left-1/2 z-[100]"
+                                    transition={{
+                                        x: { type: 'spring', stiffness: 150, damping: 25 },
+                                        y: { type: 'spring', stiffness: 150, damping: 25 },
+                                        opacity: { duration: 0.3 }
+                                    }}
                                 >
-                                    <Check className="h-4 w-4 text-emerald-600" />
-                                    <span className="text-[15px] tracking-wider">일정을 추가했어요</span>
+                                    <motion.div
+                                        key={step}
+                                        initial={{ scale: 1 }}
+                                        animate={{ scale: [1, 0.75, 1] }}
+                                        transition={{
+                                            duration: 0.4,
+                                            times: [0, 0.5, 1],
+                                            delay: 0.5
+                                        }}
+                                    >
+                                        <MousePointer2 size={32} fill="#3B82F6" className="text-white drop-shadow-lg" />
+                                    </motion.div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
 
-                        <footer className="grid h-48 grid-cols-3 overflow-hidden rounded-b-xl border-t border-[#ebedf0]">
-                            <FooterColumn title="오늘 일정" emptyMessage="오늘의 일정이 없습니다" />
-                            <FooterColumn title="다가오는 일정">
-                                <FooterEventRow color={10} title="병원가서 진료받기" date="1/23" time="08:00" />
-                                <FooterEventRow color={6} title="농구 대회 결승!" date="1/27" time="08:00" />
-                            </FooterColumn>
-                            <FooterColumn
-                                title={
-                                    <span className="-ml-2 inline-flex h-7 items-center gap-1.5 px-2">
-                                        <span className="size-2.5 shrink-0 rounded-full" style={{ backgroundColor: EVENT_COLORS[10] }} />
-                                        색상별 일정
-                                        <ChevronDown size={16} className="text-[#a8adb5]" />
-                                    </span>
-                                }
-                            >
-                                <FooterEventRow color={10} title="병원가서 진료받기" date="1/23" time="08:00" />
-                            </FooterColumn>
-                        </footer>
-
-                        <div className="absolute inset-x-0 bottom-48 flex translate-y-1/2 justify-center">
-                            <div className="flex h-5 items-center gap-0.5 rounded-full border border-[#ebedf0] bg-[#f9fafb] px-2.5 text-[11px] font-semibold">
-                                <ChevronDown size={12} />
-                                접기
-                            </div>
-                        </div>
+                        {/* Popups */}
+                        <AnimatePresence mode="wait">
+                            {isInView && (showList || showForm) && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="absolute z-40 grid w-100 gap-2 rounded-lg bg-[#f9fafb] p-5 text-[#111827] shadow-lg"
+                                >
+                                    <X className="absolute top-4 right-4 size-5 text-neutral-400" />
+                                    <div className="mb-1 flex items-baseline gap-2 pr-8">
+                                        <span className="text-lg font-semibold">1월 13일</span>
+                                        <span className="text-xs text-[#a8adb5]">D+3</span>
+                                    </div>
+                                    {showForm ? <AddEventForm step={step} title={title} activeColor={activeColor} /> : <EventListPopup />}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
-                </motion.div>
-
-                <AnimatePresence>
-                    {isInView && (
-                        <motion.div
-                            key="cursor-wrapper"
-                            animate={{
-                                opacity: step === 0 ? 0 : 1,
-                                x: pointerPos.x,
-                                y: pointerPos.y
-                            }}
-                            className="pointer-events-none absolute top-1/2 left-1/2 z-[100]"
-                            transition={{
-                                x: { type: 'spring', stiffness: 150, damping: 25 },
-                                y: { type: 'spring', stiffness: 150, damping: 25 },
-                                opacity: { duration: 0.3 }
-                            }}
-                        >
-                            <motion.div
-                                key={step}
-                                initial={{ scale: 1 }}
-                                animate={{ scale: [1, 0.75, 1] }}
-                                transition={{
-                                    duration: 0.4,
-                                    times: [0, 0.5, 1],
-                                    delay: 0.5
-                                }}
-                            >
-                                <MousePointer2 size={32} fill="#3B82F6" className="text-white drop-shadow-lg" />
-                            </motion.div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-
-                {/* Popups */}
-                <AnimatePresence mode="wait">
-                    {isInView && (showList || showForm) && (
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute z-40 grid w-106 gap-2 rounded-lg bg-[#f9fafb] p-6 text-[#111827] shadow-lg"
-                        >
-                            <X className="absolute top-4 right-4 size-5 text-neutral-400" />
-                            <div className="mb-1 flex items-baseline gap-2 pr-8">
-                                <span className="text-lg font-semibold">1월 13일</span>
-                                <span className="text-xs text-[#a8adb5]">D+3</span>
-                            </div>
-                            {showForm ? <AddEventForm step={step} title={title} activeColor={activeColor} /> : <EventListPopup />}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
+                    <Taskbar />
+                </div>
+            </motion.div>
         </section>
     )
 }
@@ -330,7 +427,7 @@ const CalendarGrid = () => (
             ))}
             <div className="text-blue-400">토</div>
         </div>
-        <div className="grid h-[552px] grid-rows-6">
+        <div className="grid h-[480px] grid-rows-6">
             {WEEKS.map((week, w) => (
                 <div key={w} className="grid grid-cols-7 border-t border-[#ebedf0] first:border-t-0">
                     {week.map(({ date, isCurrentMonth, isSunday }) => {
@@ -506,7 +603,7 @@ const AddEventForm = ({ step, title, activeColor }: { step: number; title: strin
             <div className="flex items-start">
                 <span className="w-10 shrink-0 pt-1 text-sm font-medium text-[#a8adb5]">색상</span>
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <div className="flex flex-wrap gap-0.5">
+                    <div className="flex flex-wrap">
                         {EVENT_COLORS.map((color) => (
                             <div
                                 key={color}
