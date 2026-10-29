@@ -1,166 +1,93 @@
 'use client'
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, MotionValue } from 'motion/react'
-import { CustomizationDescription, ScheduleDescription, ShortcutDescription } from '@/entities/decription'
+import Link from 'next/link'
+import { motion, useScroll, useTransform } from 'motion/react'
+import { ArrowRight } from 'lucide-react'
+import { FeaturePiece, type PieceKey } from './FeaturePiece'
 
 interface Feature {
-    id: number
-    subTitle: string
     title: string
     description: string
-    visual: React.ReactNode
+    k: PieceKey
 }
 const features: Feature[] = [
-    {
-        id: 1,
-        subTitle: '바쁜 하루도 흐트러지지 않게',
-        title: '간편한 일정 등록',
-        description: '복잡한 과정 없이, 쉽게 일정을 등록하세요\n일정을 놓치지 않도록 도와줍니다',
-        visual: <ScheduleDescription />
-    },
-    {
-        id: 2,
-        subTitle: '빠르게, 편하게',
-        title: '단축키 지원',
-        description: '마우스에 손을 뻗을 필요 없이,\n단축키로 빠르게 새 일정을 만들어보세요',
-        visual: <ShortcutDescription />
-    },
-    {
-        id: 3,
-        subTitle: '원하는대로 자유롭게 설정',
-        title: '다크모드 & 커스터마이징',
-        description: '눈이 편안한 다크모드부터,\n투명도와 위치 조절까지 내 스타일대로 설정하세요',
-        visual: <CustomizationDescription />
-    }
+    { title: '일정 추가', description: '날짜를 클릭하고 제목, 시간, 색상만 정하면 끝', k: 'add' },
+    { title: '드래그로 옮기기', description: '일정을 끌어서 원하는 날짜로 바로 옮겨요', k: 'drag' },
+    { title: '일정 완료', description: '끝낸 일정은 체크 한 번으로 완료 표시', k: 'done' },
+    { title: '실행 취소', description: '완료, 삭제, 이동한 직후엔 바로 되돌릴 수 있어요', k: 'undo' },
+    { title: '요약 패널', description: '오늘 일정과 다가오는 일정을 모아서 보여줘요', k: 'summary' },
+    { title: '색상 필터', description: '업무, 개인, 약속 등 원하는 색만 골라 봐요', k: 'filter' },
+    { title: '미니뷰', description: '캘린더를 작게 줄여 바탕화면 한쪽에 둘 수 있어요', k: 'mini' },
+    { title: '투명도 조절', description: '배경화면이 비치는 정도를 직접 조절해요', k: 'opacity' },
+    { title: '다크모드', description: '어두운 환경에서도 눈의 피로를 줄여줘요', k: 'dark' },
+    { title: '표시할 캘린더', description: '공휴일처럼 구독 중인 캘린더도 함께 볼 수 있어요', k: 'calendars' }
 ]
+
+function FeatureCard({ feature }: { feature: Feature }) {
+    return (
+        <article className="flex w-[80vw] shrink-0 snap-center flex-col gap-4 rounded-3xl bg-white/10 p-4 shadow-xl sm:w-[420px] lg:w-[min(480px,55vh)]">
+            <FeaturePiece k={feature.k} />
+            <div className="px-2 pb-2">
+                <h3 className="text-2xl font-bold tracking-tight text-white">{feature.title}</h3>
+                <p className="mt-2 text-base break-keep text-gray-300">{feature.description}</p>
+            </div>
+        </article>
+    )
+}
+
+function AllFeaturesCard() {
+    return (
+        <Link
+            href="/docs"
+            className="group hover:border-brand/60 focus-visible:border-brand/60 flex w-[80vw] shrink-0 snap-center flex-col items-center justify-center gap-4 rounded-3xl border border-dashed border-white/20 p-8 text-center transition-colors duration-300 outline-none hover:border-solid hover:bg-white/5 focus-visible:border-solid focus-visible:bg-white/5 sm:w-[320px]"
+        >
+            <span className="text-2xl font-bold text-white">모든 기능 보기</span>
+            <span className="text-sm text-gray-400 transition-colors duration-300 group-hover:text-gray-300">알림, 팔레트, 자동 실행까지</span>
+            <span className="text-brand group-hover:bg-brand group-focus-visible:bg-brand mt-2 flex size-12 items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:text-[#111827] group-focus-visible:text-[#111827]">
+                <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </span>
+        </Link>
+    )
+}
+
+const heading = (
+    <div className="px-6 lg:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
+        <span className="text-brand text-base font-semibold">기능 둘러보기</span>
+        <h2 className="mt-2 text-3xl font-bold tracking-tight break-keep text-white sm:text-5xl">바탕화면에서 바로, 이렇게 써요</h2>
+    </div>
+)
 
 export function Section2() {
     const containerRef = useRef<HTMLDivElement>(null)
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ['start start', 'end end']
-    })
+    const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] })
+    const x = useTransform(scrollYProgress, (v) => `calc(${-v * 100}% + ${v * 100}vw)`)
 
     return (
         <>
-            {/* 모바일: 단순 세로 스택 */}
-            <section className="space-y-24 px-6 py-24 lg:hidden">
-                {features.map((feature, index) => (
-                    <motion.div
-                        key={feature.id}
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7, delay: 0.1 * index }}
-                        className="flex flex-col gap-8"
-                    >
-                        <div>
-                            <span className="text-brand text-sm font-semibold">{feature.subTitle}</span>
-                            <h2 className="mt-2 text-3xl font-bold tracking-tight text-white">{feature.title}</h2>
-                            <p className="mt-4 text-base leading-7 whitespace-pre-line text-gray-400">{feature.description}</p>
-                        </div>
-                        <div className="relative flex h-72 w-full items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-xl">
-                            {feature.visual}
-                        </div>
-                    </motion.div>
-                ))}
+            <section className="py-24 lg:hidden">
+                {heading}
+                <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 [scrollbar-width:none]">
+                    {features.map((feature) => (
+                        <FeatureCard key={feature.title} feature={feature} />
+                    ))}
+                    <AllFeaturesCard />
+                </div>
             </section>
 
-            {/* 데스크톱: 스티키 스크롤 애니메이션 */}
-            <section ref={containerRef} className="relative hidden h-[300vh] lg:block">
-                <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-                    <div className="mx-auto grid h-3/4 w-full max-w-7xl grid-cols-2 gap-8 px-6">
-                        <div className="relative">
-                            {features.map((feature, index) => (
-                                <FeatureText key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
-                            ))}
-                        </div>
-                        <div className="relative flex items-center justify-center">
-                            <motion.div
-                                className="absolute flex aspect-square h-full w-full items-center justify-center p-6"
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                <div className="bg-glass relative h-full w-full rounded-3xl border border-white/10 shadow-xl" />
-                            </motion.div>
-
-                            {features.map((feature, index) => (
-                                <FeatureVisual key={feature.id} feature={feature} scrollYProgress={scrollYProgress} index={index} total={features.length} />
-                            ))}
-                        </div>
+            <section ref={containerRef} className="relative hidden h-[500vh] lg:block">
+                <div className="sticky top-0 flex h-screen flex-col justify-center gap-12 overflow-hidden">
+                    {heading}
+                    <motion.div style={{ x }} className="flex w-max gap-8 px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] will-change-transform">
+                        {features.map((feature) => (
+                            <FeatureCard key={feature.title} feature={feature} />
+                        ))}
+                        <AllFeaturesCard />
+                    </motion.div>
+                    <div className="mx-auto h-1 w-48 overflow-hidden rounded-full bg-white/10">
+                        <motion.div style={{ scaleX: scrollYProgress }} className="bg-brand h-full origin-left" />
                     </div>
                 </div>
             </section>
         </>
-    )
-}
-
-function FeatureText({ feature, scrollYProgress, index, total }: { feature: Feature; scrollYProgress: MotionValue<number>; index: number; total: number }) {
-    const start = index / total
-    const end = (index + 1) / total
-
-    const isFirst = index === 0
-    const isLast = index === total - 1
-
-    const scrollOpacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
-    const scrollY = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 50, 0, 0, isLast ? 0 : -100])
-
-    const initialOpacity = isFirst ? { opacity: 0, y: 30 } : false
-    const whileInView = isFirst ? { opacity: 1, y: 0 } : {}
-    const transition = isFirst ? { duration: 0.8 } : {}
-    const viewport = isFirst ? { once: true } : {}
-
-    return (
-        <motion.div className="absolute inset-0 flex flex-col justify-center p-8" style={{ opacity: scrollOpacity, y: scrollY }}>
-            <div className="lg:max-w-lg">
-                <motion.span
-                    className="pointer-events-none absolute top-1/4 left-4 -translate-y-1/2 text-[12rem] font-black text-white/[0.03] select-none"
-                    initial={initialOpacity}
-                    whileInView={whileInView}
-                    transition={transition}
-                    viewport={viewport}
-                >
-                    {feature.id}
-                </motion.span>
-                <motion.h1 className="text-brand text-base leading-7 font-semibold" initial={initialOpacity} whileInView={whileInView} transition={transition} viewport={viewport}>
-                    {feature.subTitle}
-                </motion.h1>
-                <motion.p
-                    className="mt-2 text-3xl font-bold tracking-tight whitespace-pre-line text-white sm:text-5xl"
-                    initial={initialOpacity}
-                    whileInView={whileInView}
-                    transition={{ ...transition, delay: 0.2 }}
-                    viewport={viewport}
-                >
-                    {feature.title}
-                </motion.p>
-                <motion.p
-                    className="mt-6 text-lg leading-8 whitespace-pre-line text-gray-400"
-                    initial={initialOpacity}
-                    whileInView={whileInView}
-                    transition={{ ...transition, delay: 0.4 }}
-                    viewport={viewport}
-                >
-                    {feature.description}
-                </motion.p>
-            </div>
-        </motion.div>
-    )
-}
-function FeatureVisual({ feature, scrollYProgress, index, total }: { feature: Feature; scrollYProgress: MotionValue<number>; index: number; total: number }) {
-    const start = index / total
-    const end = (index + 1) / total
-    const isFirst = index === 0
-    const isLast = index === total - 1
-
-    const opacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0])
-    const y = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [isFirst ? 0 : 20, 0, 0, isLast ? 0 : -20])
-
-    return (
-        <motion.div className="pointer-events-none absolute z-50 flex aspect-square h-full w-full max-w-md items-center justify-center" style={{ opacity, y }}>
-            {feature.visual}
-        </motion.div>
     )
 }
