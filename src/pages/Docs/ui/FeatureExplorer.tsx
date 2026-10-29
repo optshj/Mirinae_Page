@@ -61,7 +61,6 @@ export const FeatureExplorer = ({ categories }: { categories: Category[] }) => {
                 ))}
             </nav>
 
-            {/* Tabs (mobile) - 카테고리별 그룹 */}
             <div className="mb-8 space-y-4 lg:hidden">
                 {categories.map((category, ci) => (
                     <div key={category.title}>
