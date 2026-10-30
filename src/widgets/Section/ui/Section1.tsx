@@ -206,7 +206,7 @@ const SHORTCUTS = [
 ]
 
 const DesktopShortcuts = () => (
-    <div className="absolute top-6 left-5 hidden grid-flow-col grid-rows-5 gap-x-4 gap-y-6 sm:grid">
+    <div className="absolute top-6 left-5 grid grid-flow-col grid-rows-5 gap-x-4 gap-y-6">
         {SHORTCUTS.map(({ icon: Icon, label }) => (
             <div key={label} className="flex w-20 flex-col items-center gap-1.5 text-white/85">
                 <Icon size={32} strokeWidth={1.5} className="drop-shadow-lg" />
@@ -348,8 +348,8 @@ export const Section1 = () => {
 
     const { scrollYProgress: pinnedProgress } = useScroll({ target: stageRef, offset: ['start start', 'end end'] })
     const { scrollYProgress: freeProgress } = useScroll({ target: stageRef, offset: ['start end', 'center center'] })
-    // 고정 구간 320vh(스크롤 220vh) 중 연출은 앞 150vh에 끝내고(진행도 1), 남은 70vh는 해제 뒤 데모를 보는 여유
-    const progress = useTransform(() => (sticky ? Math.min(pinnedProgress.get() * (220 / 150), 1) : freeProgress.get()))
+    // 고정 구간 360vh(스크롤 260vh): 앞 40vh는 머리말을 보여주며 머물고, 다음 150vh에 연출(진행도 0→1), 남은 70vh는 해제 뒤 데모를 보는 여유
+    const progress = useTransform(() => (sticky ? clamp01((pinnedProgress.get() * 260 - 40) / 150) : freeProgress.get()))
     const zoomT = useTransform(progress, (v) => easeInOutCubic(clamp01(v / ZOOM_END)))
 
     // 고정 구간: 머리말은 밤하늘 위에 떠 있다가 줌아웃이 시작되면 위로 빠진다
@@ -377,7 +377,8 @@ export const Section1 = () => {
 
     // 진입 배율: 화면(1500x844)이 고정된 뷰포트를 모서리까지 꽉 덮는 값. 창 크기가 바뀌면 다시 잰다
     const cover = useMotionValue(1.6)
-    const scale = useTransform(() => (reduceMotion ? 1 : sticky ? cover.get() + (1 - cover.get()) * zoomT.get() : 1.2 - 0.2 * zoomT.get()))
+    // 모바일(고정 아님)은 크기 변화 없이 화면이 켜지고 잠금만 풀린다
+    const scale = useTransform(() => (sticky && !reduceMotion ? cover.get() + (1 - cover.get()) * zoomT.get() : 1))
     useEffect(() => {
         if (!sticky) return
         const measure = () => {
@@ -449,32 +450,32 @@ export const Section1 = () => {
                 </div>
             )}
 
-            {/* 노트북 연출 구간: sm 이상은 320vh 동안 고정. 화면이 뷰포트를 덮은 채(배경이 비어 Main의 밤하늘이 그대로 이어짐) 시작해
+            {/* 노트북 연출 구간: sm 이상은 360vh 동안 고정. 화면이 뷰포트를 덮은 채(배경이 비어 Main의 밤하늘이 그대로 이어짐) 시작해
                 줌아웃 → 노트북 모양 → 잠금화면 → 해제 → 일정 추가 데모. 끝나면 일반 스크롤로 Section2 */}
-            <div ref={stageRef} className={cn('pointer-events-none relative w-full', sticky ? 'h-[320vh] overflow-clip' : 'overflow-x-clip')}>
+            <div ref={stageRef} className={cn('pointer-events-none relative w-full', sticky ? 'h-[360vh] overflow-clip' : 'overflow-x-clip')}>
                 <div ref={stickyRef} className={cn('flex w-full items-center justify-center', sticky && 'sticky top-0 h-screen pt-16')}>
                     {sticky && (
                         <motion.div className="absolute inset-0 z-20 flex items-center justify-center px-4" style={{ opacity: headingOpacity, y: headingY }}>
                             <SectionHeading lineRef={lineRef} drawn={drawn} />
                         </motion.div>
                     )}
-                    {/* 바탕화면 한 장: 1500x844(16:9) 기준으로 그리고 화면 폭에 맞춰 zoom. 모바일은 아이콘 영역을 빼고 위젯 쪽만 */}
+                    {/* 바탕화면 한 장: 1500x844(16:9) 기준으로 그리고 화면 폭에 맞춰 zoom. 모바일은 1000x625(16:10)로 줄여 같은 노트북 비율 유지 */}
                     <motion.div
                         ref={deviceRef}
                         style={{ scale, willChange: zoomWillChange }}
-                        className="relative z-10 origin-[50%_47.65%] [zoom:0.43] min-[640px]:[zoom:0.4] min-[768px]:[zoom:0.48] min-[1024px]:[zoom:0.6] min-[1280px]:[zoom:0.66] min-[1400px]:[zoom:0.7]"
+                        className="relative z-10 origin-[50%_47.65%] [zoom:0.34] min-[640px]:[zoom:0.4] min-[768px]:[zoom:0.48] min-[1024px]:[zoom:0.6] min-[1280px]:[zoom:0.66] min-[1400px]:[zoom:0.7]"
                     >
                         <div>
                             <div className="relative rounded-[40px] p-6 shadow-[0_40px_120px_rgba(0,0,0,0.5)] ring-1 ring-white/15">
                                 <i className="absolute top-2.5 left-1/2 size-2 -translate-x-1/2 rounded-full bg-white/20" />
-                                <div ref={screenRef} className="relative h-[844px] w-[820px] overflow-hidden rounded-2xl shadow-[0_0_0_24px_#0c0e1a] sm:w-[1500px]">
+                                <div ref={screenRef} className="relative h-[625px] w-[1000px] overflow-hidden rounded-2xl shadow-[0_0_0_24px_#0c0e1a] sm:h-[844px] sm:w-[1500px]">
                                     <motion.div className="absolute inset-0" style={{ ...WALLPAPER, opacity: wall }} />
                                     {/* 바탕화면 내용은 잠금화면이 완전히 덮은 뒤에 켠다(차오르는 동안 비치지 않도록) */}
                                     <div className="absolute inset-0">
                                         <motion.div style={{ opacity: contentOpacity }}>
                                             <DesktopShortcuts />
                                         </motion.div>
-                                        <div className="absolute top-6 right-6 flex items-center justify-center [zoom:0.85]">
+                                        <div className="absolute top-6 right-6 flex items-center justify-center [zoom:0.72] sm:[zoom:0.85]">
                                             <i ref={anchorRef} className="absolute top-1/2 left-1/2" />
                                             <motion.div className="w-[900px]" style={{ opacity: contentOpacity }}>
                                                 <div className="relative flex w-full flex-col rounded-xl bg-[#f9fafb] text-[#111827] shadow-xl">
