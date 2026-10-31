@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useConstellation } from '../model/constellation'
+import { setSkyStars } from '../model/sky'
 
 // 별자리 좌표(vw, vh). 앞쪽 별들이 순서대로 이 자리로 모이고, 같은 순서로 선이 이어진다
 const CONSTELLATION = [
@@ -37,14 +38,17 @@ export const StarsBackground = ({ numStars = 80, numShootingStars = 10 }) => {
     const reduce = useReducedMotion()
 
     useEffect(() => {
-        const generatedStars = Array.from({ length: numStars }).map((_, index) => ({
-            id: `star-${index}`,
-            left: `${Math.random() * 100}vw`,
-            top: `${Math.random() * 100}vh`,
-            size: `${1 + Math.random() * 1.5}px`,
-            animationDuration: `${3 + Math.random() * 7}s`
-        }))
-        setStars(generatedStars)
+        const sky = Array.from({ length: numStars }, () => ({ fx: Math.random(), fy: Math.random(), size: 1 + Math.random() * 1.5 }))
+        setSkyStars(sky)
+        setStars(
+            sky.map((s, index) => ({
+                id: `star-${index}`,
+                left: `${s.fx * 100}vw`,
+                top: `${s.fy * 100}vh`,
+                size: `${s.size}px`,
+                animationDuration: `${3 + Math.random() * 7}s`
+            }))
+        )
     }, [numStars])
 
     // 별동별 생성 로직

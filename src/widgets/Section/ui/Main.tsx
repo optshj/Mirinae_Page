@@ -2,7 +2,7 @@
 import { motion, MotionConfig } from 'motion/react'
 import { DownloadButton } from '@/features/download'
 import { ChevronDown } from 'lucide-react'
-import { StarsBackground } from '@/entities/background'
+import { ConstellationCursor, StarsBackground } from '@/entities/background'
 import { HighlightText } from '@/shared/ui/HighlightText'
 
 const easeOutExpo = [0.22, 1, 0.36, 1] as const
@@ -13,6 +13,7 @@ export function Main() {
             <div className="absolute inset-0 h-screen">
                 <StarsBackground />
             </div>
+            <ConstellationCursor />
 
             <MotionConfig reducedMotion="user">
                 <motion.section className="relative flex w-full items-center justify-center" initial="hidden" animate="show">
