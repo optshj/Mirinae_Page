@@ -38,7 +38,12 @@ export const StarsBackground = ({ numStars = 80, numShootingStars = 10 }) => {
     const reduce = useReducedMotion()
 
     useEffect(() => {
-        const sky = Array.from({ length: numStars }, () => ({ fx: Math.random(), fy: Math.random(), size: 1 + Math.random() * 1.5 }))
+        const sky = Array.from({ length: numStars }, (_, i) => ({
+            fx: Math.random(),
+            fy: Math.random(),
+            size: 1 + Math.random() * 1.5,
+            locked: i < CONSTELLATION.length
+        }))
         setSkyStars(sky)
         setStars(
             sky.map((s, index) => ({
@@ -95,6 +100,7 @@ export const StarsBackground = ({ numStars = 80, numShootingStars = 10 }) => {
                 return (
                     <div
                         key={star.id}
+                        data-sky={i}
                         className="animate-twinkle absolute rounded-full bg-white"
                         style={{
                             top: star.top,

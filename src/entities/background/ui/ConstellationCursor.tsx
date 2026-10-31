@@ -23,7 +23,10 @@ const place = (el: HTMLElement, x1: number, y1: number, x2: number, y2: number) 
     const dy = y2 - y1
     el.style.transform = `translate3d(${x1}px,${y1}px,0) rotate(${Math.atan2(dy, dx)}rad) scaleX(${Math.hypot(dx, dy)})`
 }
-const skyPoints = () => getSkyStars().map((s) => ({ x: s.fx * innerWidth + s.size / 2, y: s.fy * innerHeight + s.size / 2 }))
+const skyPoints = () =>
+    getSkyStars()
+        .filter((s) => !s.taken)
+        .map((s) => ({ x: s.fx * innerWidth + s.size / 2, y: s.fy * innerHeight + s.size / 2 }))
 
 const LINE = 'absolute top-0 left-0 -mt-[0.5px] h-px w-px origin-[0_50%] bg-[rgb(214_224_255)] opacity-0'
 
