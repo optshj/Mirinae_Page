@@ -197,7 +197,7 @@ export function Section4() {
                     </h3>
 
                     <motion.p style={sub} className="mt-6 max-w-2xl text-lg leading-8 break-keep text-zinc-400">
-                        복잡한 설정 없이 설치만으로 완성되는 캘린더
+                        브라우저도, 앱도 열 필요 없이 바로 확인하세요
                     </motion.p>
 
                     <motion.div style={cta} className="mt-12">
