@@ -1,4 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
+import { useConstellation } from '../model/constellation'
+
+// 별자리 좌표(vw, vh). 앞쪽 별들이 순서대로 이 자리로 모이고, 같은 순서로 선이 이어진다
+const CONSTELLATION = [
+    [20, 36],
+    [31, 24],
+    [40, 32],
+    [50, 16],
+    [61, 30],
+    [70, 22],
+    [80, 35]
+] as const
+const LINE = `M ${CONSTELLATION.map(([x, y]) => `${x} ${y}`).join(' L ')}`
+const GATHER = 1.4
+const ease = [0.22, 1, 0.36, 1] as const
 
 interface StarProps {
     id: string
@@ -17,6 +33,8 @@ interface ShootingStarProps {
 export const StarsBackground = ({ numStars = 80, numShootingStars = 10 }) => {
     const [stars, setStars] = useState<StarProps[]>([])
     const [shootingStars, setShootingStars] = useState<ShootingStarProps[]>([])
+    const formed = useConstellation()
+    const reduce = useReducedMotion()
 
     useEffect(() => {
         const generatedStars = Array.from({ length: numStars }).map((_, index) => ({
@@ -56,19 +74,49 @@ export const StarsBackground = ({ numStars = 80, numShootingStars = 10 }) => {
     }, [numShootingStars])
     return (
         <div className="fixed top-0 left-0 -z-10 h-screen w-full overflow-hidden bg-black bg-gradient-to-b from-[#1A1F3D] via-[#5A5475] to-[#8E7C8A]">
-            {stars.map((star) => (
-                <div
-                    key={star.id}
-                    className="animate-twinkle absolute rounded-full bg-white"
-                    style={{
-                        top: star.top,
-                        left: star.left,
-                        width: star.size,
-                        height: star.size,
-                        animationDuration: star.animationDuration
-                    }}
+            {stars.map((star, i) => {
+                const target = CONSTELLATION[i]
+                if (target)
+                    return (
+                        // 모이는 동안엔 반짝임(transform 애니메이션)을 꺼야 motion의 scale이 먹는다
+                        <motion.div
+                            key={star.id}
+                            className={`absolute rounded-full bg-white ${formed ? 'shadow-[0_0_8px_2px_rgba(255,255,255,0.6)]' : 'animate-twinkle'}`}
+                            style={{ width: star.size, height: star.size, animationDuration: star.animationDuration }}
+                            initial={false}
+                            animate={formed ? { left: `${target[0]}vw`, top: `${target[1]}vh`, scale: 2.2 } : { left: star.left, top: star.top, scale: 1 }}
+                            transition={reduce ? { duration: 0 } : { duration: formed ? GATHER : 0.8, delay: formed ? i * 0.06 : 0, ease }}
+                        />
+                    )
+                return (
+                    <div
+                        key={star.id}
+                        className="animate-twinkle absolute rounded-full bg-white"
+                        style={{
+                            top: star.top,
+                            left: star.left,
+                            width: star.size,
+                            height: star.size,
+                            animationDuration: star.animationDuration
+                        }}
+                    />
+                )
+            })}
+
+            <svg aria-hidden viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
+                <motion.path
+                    d={LINE}
+                    fill="none"
+                    stroke="white"
+                    strokeOpacity={0.45}
+                    strokeWidth={1}
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                    initial={false}
+                    animate={{ pathLength: formed ? 1 : 0, opacity: formed ? 1 : 0 }}
+                    transition={reduce ? { duration: 0 } : formed ? { delay: GATHER, duration: 1.6, ease: 'easeInOut' } : { duration: 0.3 }}
                 />
-            ))}
+            </svg>
 
             {shootingStars.map((star) => (
                 <div
