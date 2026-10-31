@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { SmoothScroll } from './SmoothScroll'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -107,6 +108,7 @@ export default function RootLayout({
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
                 <Analytics />
                 <SpeedInsights />
+                <SmoothScroll />
                 {children}
             </body>
         </html>
