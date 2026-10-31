@@ -1,9 +1,15 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { cn } from '@/shared/lib/utils'
 
-export function Footer() {
+export function Footer({ className }: { className?: string }) {
     return (
-        <footer className="from-background-primary border-t border-white/5 bg-gradient-to-b to-[#2a2a3a] px-6 py-12 text-gray-300">
+        <footer
+            className={cn(
+                'from-background-primary border-t border-white/5 bg-gradient-to-b to-[#2a2a3a] px-6 py-12 text-gray-300',
+                className,
+            )}
+        >
             <div className="mx-auto max-w-5xl">
                 <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
                     {/* Brand Section */}

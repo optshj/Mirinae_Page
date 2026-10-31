@@ -13,8 +13,8 @@ export function HomePage() {
                 <Section3 />
                 <Section4 />
             </main>
-            {/* Section4 수면과 같은 반투명 물색. 둘 다 같은 고정 배경 위라 이음매가 맞는다 */}
-            <Footer className="border-t-0 bg-[#1c1e3a]/60 bg-none" />
+            {/* Section4 가까운 능선과 같은 색이라 능선이 그대로 푸터로 이어진다 */}
+            <Footer className="border-t-0 bg-[#16182f] bg-none" />
         </>
     )
 }
