@@ -74,7 +74,7 @@ export function Section2() {
                 </div>
             </section>
 
-            <section ref={containerRef} className="relative hidden h-[500vh] lg:block">
+            <section ref={containerRef} className="relative hidden h-[300vh] lg:block">
                 <div className="sticky top-0 flex h-screen flex-col justify-center gap-12 overflow-hidden">
                     {heading}
                     <motion.div style={{ x }} className="flex w-max gap-8 px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] will-change-transform">

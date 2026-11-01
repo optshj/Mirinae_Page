@@ -4,9 +4,9 @@ export function Logo() {
     return (
         <div className="flex items-center gap-2" itemScope itemType="https://schema.org/Organization">
             <Image src="/icon.svg" alt="미리내 로고" width={24} height={24} />
-            <h1 className="font-semibold text-white" itemProp="name">
+            <span className="font-semibold text-white" itemProp="name">
                 미리내
-            </h1>
+            </span>
         </div>
     )
 }

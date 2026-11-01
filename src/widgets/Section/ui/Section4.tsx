@@ -1,6 +1,17 @@
 'use client'
 
-import { easeInOut, easeOut, motion, useMotionValue, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import {
+    animate,
+    easeInOut,
+    easeOut,
+    motion,
+    useMotionValue,
+    useMotionValueEvent,
+    useReducedMotion,
+    useScroll,
+    useTransform,
+    type MotionValue
+} from 'motion/react'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 import { DownloadButton } from '@/features/download'
@@ -12,6 +23,8 @@ const STAR_AREA = 7000 // 별 하나가 차지하는 화면 면적(px²). 클수
 const DAWN_START = 0.4 // 새벽빛이 오기 시작하는 진행도. 작을수록 일찍, 길게 밝아진다
 const END = 1 // 회전·새벽·가까운 능선이 함께 끝나는 진행도. 1 = 고정이 풀려 섹션이 위로 넘어가는 순간
 const SETTLE = [0, 0.15] // 이 구간에서 화면 가운데 있던 아이콘이 글자와 함께 제자리로 올라간다
+const TEXT_END = 0.18 // 글자·버튼·글 뒤 판이 다 나오는 진행도
+const TEXT_DURATION = 1.8 // 터치 기기에서 글자가 다 나오기까지 걸리는 시간(초)
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
 // 아이콘이 아직 제자리로 덜 올라간 비율(1 → 0)
@@ -63,19 +76,34 @@ export function Section4() {
 
     const tileOpacity = useTransform(enter, [0.35, 0.9], [0, 1], { ease: easeOut })
     const tileScale = useTransform(tileOpacity, [0, 1], [0.55, 1])
+    // 글자 진행도. 터치 기기는 휙 넘기면 글자 구간을 한순간에 지나가 한꺼번에 튀어나오므로,
+    // 고정이 시작되면 스크롤 대신 시간으로 TEXT_END까지 흘려 순서대로 나오게 한다. 그 외엔 스크롤 진행도 그대로
+    const timedText = useRef(false)
+    const textClock = useMotionValue(0)
+    useEffect(() => {
+        timedText.current = !reduceMotion && matchMedia('(pointer: coarse)').matches
+    }, [reduceMotion])
+    useMotionValueEvent(progress, 'change', (p) => {
+        if (timedText.current && p > 0 && textClock.get() === 0) animate(textClock, TEXT_END, { duration: TEXT_DURATION, ease: 'linear' })
+    })
+    const text = useTransform(() => {
+        const t = textClock.get()
+        const p = progress.get()
+        return timedText.current ? t : p
+    })
     // 글 뒤 어두운 판은 글이 나오기 시작한 뒤에 천천히 깔린다
-    const scrimOpacity = useTransform(progress, [0, 0.18], [0, 1])
+    const scrimOpacity = useTransform(text, [0, TEXT_END], [0, 1])
     // 새벽은 장노출처럼 일찍부터 아주 천천히 밝아지다가 끝에서 빨라지고, 빛이 지평선에서 위로 번진다
     const dawn = useTransform(progress, [DAWN_START, END], [0, 1], { ease: easeInOut })
     // 글자가 아직 안 보일 땐 아이콘이 위로 쏠려 보이지 않게, 아이콘을 내용 묶음의 가운데로 내려 둔다
     const shift = useMotionValue(0)
     const contentY = useTransform(() => shift.get() * unsettled(progress.get()))
     const dawnY = useTransform(dawn, [0, 1], ['35%', '0%'])
-    const line1 = useReveal(progress, 0)
-    const line2 = useReveal(progress, 0.035)
-    const highlight = useTransform(progress, [0.07, 0.13], ['0%', '100%'], { ease: easeOut })
-    const sub = useReveal(progress, 0.07)
-    const cta = useReveal(progress, 0.1)
+    const line1 = useReveal(text, 0)
+    const line2 = useReveal(text, 0.035)
+    const highlight = useTransform(text, [0.07, 0.13], ['0%', '100%'], { ease: easeOut })
+    const sub = useReveal(text, 0.07)
+    const cta = useReveal(text, 0.1)
 
     useEffect(() => {
         const stage = stageRef.current!
@@ -181,7 +209,7 @@ export function Section4() {
     }, [progress, shift])
 
     return (
-        <section ref={sectionRef} className={`relative ${reduceMotion ? '' : 'h-[260vh]'}`}>
+        <section ref={sectionRef} className={`relative ${reduceMotion ? '' : 'h-[200vh] sm:h-[260vh]'}`}>
             <div ref={stageRef} className={`${reduceMotion ? 'relative min-h-dvh' : 'sticky top-0 h-dvh'} grid place-items-center overflow-hidden pb-[10vh] sm:pb-[16vh]`}>
                 <motion.div
                     aria-hidden
@@ -199,7 +227,7 @@ export function Section4() {
                         <Image src="/icon.svg" alt="App Icon" width={60} height={60} className="mb-8 shadow-2xl drop-shadow-lg" />
                     </motion.div>
 
-                    <h3 className="mt-4 text-3xl font-bold tracking-tight break-keep text-white sm:text-5xl">
+                    <h2 className="mt-4 text-3xl font-bold tracking-tight break-keep text-white sm:text-5xl">
                         <motion.span style={line1} className="inline-block">
                             바탕화면 속 일정 관리
                         </motion.span>
@@ -208,7 +236,7 @@ export function Section4() {
                             지금 바로 시작하세요
                             <motion.span style={{ width: highlight }} className="bg-brand/70 absolute bottom-1 left-0 -z-10 h-6" />
                         </motion.span>
-                    </h3>
+                    </h2>
 
                     <motion.p style={sub} className="mt-6 max-w-2xl text-lg leading-8 break-keep text-zinc-400">
                         브라우저도, 앱도 열 필요 없이 바로 확인하세요

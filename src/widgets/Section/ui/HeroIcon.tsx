@@ -5,8 +5,10 @@ import { useReducedMotion } from 'motion/react'
 import { getSkyStars } from '@/entities/background'
 
 // 히어로 아이콘: 배경 별 9개가 아이콘 자리로 모여(초점) 숨 쉬듯 한 번 모였다 펴지며 아이콘이 된다(숨)
+// 아래 시각은 연출 시간 기준이고, 실제로는 SPEED배 빠르게 흐른다
 // 0.4~2.8초: 별 9개가 직선으로 칸 자리까지 이동, 그동안 배경이 살짝 어두워졌다 돌아온다
 // 2.7~3.8초: 빛점이 칸으로 굳고 타일이 차오르며, 아이콘 전체가 0.93배로 들이쉬었다 1배로 내쉰다
+const SPEED = 1.35 // 클수록 빨리 모인다. 1.35 = 아이콘 완성까지 약 2.8초
 
 // 아이콘 구조(public/icon.svg): 칸 중심이 타일 중심에서 ±0.1875, 칸 크기 0.094
 const OFF = 0.1875
@@ -25,7 +27,8 @@ const CELL_COL = [
 ]
 const RING = [0, 1, 2, 5, 8, 7, 6, 3] // 가운데(4)를 뺀 칸
 const MORPH = 2.7 // 변신 시작(초)
-export const HERO_TEXT_AT = 3.3 // 히어로 글자가 올라오기 시작하는 시각(초)
+// 히어로 글자가 올라오기 시작하는 시각(초). 아이콘 완성을 기다리지 않고 별이 모이는 동안 함께 올라온다(메시지를 먼저 읽게)
+export const HERO_TEXT_AT = 0.6
 
 type Box = { cx: number; cy: number; s: number }
 
@@ -145,7 +148,7 @@ export function HeroIcon({ iconRef }: { iconRef: RefObject<HTMLDivElement | null
                 raf = requestAnimationFrame(frame)
                 return
             }
-            const t = reduce ? 99 : (now - t0) / 1000
+            const t = reduce ? 99 : ((now - t0) / 1000) * SPEED
             lastT = t
             const cr = canvas.getBoundingClientRect()
             if (W !== cr.width || H !== cr.height) {
