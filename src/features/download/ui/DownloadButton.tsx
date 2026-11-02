@@ -28,7 +28,7 @@ export function DownloadButton() {
                     Windows용 다운로드
                 </a>
             </DialogTrigger>
-            {canInstall ? <DownloadDescription /> : <PCOnlyDescription />}
+            <PCOnlyDescription />
         </Dialog>
     )
 }

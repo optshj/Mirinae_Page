@@ -1,12 +1,14 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'motion/react'
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/shared/ui/dialog'
-import { Check, Copy, Monitor } from 'lucide-react'
+import { DialogClose, DialogContent, DialogDescription, DialogTitle } from '@/shared/ui/dialog'
+import { Check, Copy } from 'lucide-react'
 import { posthog } from '@/shared/lib/posthog'
 
 const SITE_URL = 'mirinae.today'
 
+// 폰에서는 아래에서 올라오는 시트(복사 버튼이 엄지 닿는 자리), sm 이상(맥 등 데스크톱)에서는 가운데 창
 export function PCOnlyDescription() {
     const [copied, setCopied] = useState(false)
 
@@ -19,28 +21,33 @@ export function PCOnlyDescription() {
     }
 
     return (
-        <DialogContent className="bg-glass rounded-2xl border-none py-12 text-white">
-            <DialogHeader className="flex flex-col items-center">
-                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
-                    <Monitor className="h-8 w-8 text-blue-300" />
+        <DialogContent
+            showCloseButton={false}
+            className="bg-glass top-auto bottom-0 left-0 max-w-none translate-x-0 translate-y-0 gap-5 rounded-t-3xl rounded-b-none border-none px-6 pt-3 pb-[calc(2.25rem+env(safe-area-inset-bottom))] text-white max-sm:data-[state=closed]:slide-out-to-bottom max-sm:data-[state=open]:slide-in-from-bottom sm:top-[50%] sm:bottom-auto sm:left-[50%] sm:max-w-md sm:translate-x-[-50%] sm:translate-y-[-50%] sm:rounded-2xl sm:pt-8 sm:pb-6"
+        >
+            <div aria-hidden className="mx-auto mb-2 h-1 w-10 rounded-full bg-white/30 sm:hidden" />
+
+            <div className="flex items-center gap-3.5">
+                <Image src="/icon.svg" alt="" width={52} height={52} className="rounded-[13px]" />
+                <div className="text-left">
+                    <p className="text-[13px] font-semibold text-slate-300">미리내 · Windows 10·11</p>
+                    <DialogTitle className="mt-0.5 text-[21px] font-bold tracking-tight text-white">PC에서 설치하는 앱이에요</DialogTitle>
                 </div>
-                <DialogTitle className="text-center text-2xl font-bold tracking-tight text-white">Windows PC에서 다운로드해주세요</DialogTitle>
-                <DialogDescription className="text-center text-slate-300">
-                    미리내는 현재 Windows 10 이상에서만 실행돼요.
-                    <br />
-                    아래 주소를 복사해서 Windows PC로 옮겨 접속해주세요.
-                </DialogDescription>
-            </DialogHeader>
+            </div>
+
+            <DialogDescription className="text-left text-[15px] leading-relaxed text-slate-300">
+                PC 브라우저에서 아래 주소로 들어와 받아 주세요.
+            </DialogDescription>
 
             <motion.button
                 onClick={handleCopy}
                 whileTap={{ scale: 0.96 }}
                 animate={copied ? { scale: [1, 1.03, 1] } : { scale: 1 }}
                 transition={{ duration: 0.25 }}
-                className="group bg-glass mt-2 flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-white/10"
+                className="bg-glass flex w-full items-center justify-between gap-3 rounded-xl px-[18px] py-4 text-left transition-colors hover:bg-white/10"
             >
-                <span className="truncate font-mono text-sm text-white">{SITE_URL}</span>
-                <span className="relative flex h-4 shrink-0 items-center gap-1.5 overflow-hidden text-xs font-medium text-blue-300">
+                <span className="truncate text-lg font-extrabold tracking-tight text-white">{SITE_URL}</span>
+                <span className="relative flex h-4 shrink-0 items-center overflow-hidden text-[13px] font-medium text-blue-300">
                     <AnimatePresence mode="wait" initial={false}>
                         {copied ? (
                             <motion.span
@@ -64,12 +71,14 @@ export function PCOnlyDescription() {
                                 className="flex items-center gap-1.5"
                             >
                                 <Copy className="h-3.5 w-3.5" />
-                                복사하기
+                                주소 복사
                             </motion.span>
                         )}
                     </AnimatePresence>
                 </span>
             </motion.button>
+
+            <DialogClose className="w-full py-2.5 text-[15px] font-semibold text-slate-300 transition-colors hover:text-white">닫기</DialogClose>
         </DialogContent>
     )
 }
