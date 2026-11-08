@@ -39,7 +39,7 @@ export function Main() {
                                     }
                                 }}
                             >
-                                당신의 하루를 빛낼 캘린더, <br className="sm:hidden" />
+                                바탕화면 캘린더, <br className="sm:hidden" />
                                 <HighlightText delay={at + 0.6}>미리내</HighlightText>
                             </motion.h1>
                         </div>

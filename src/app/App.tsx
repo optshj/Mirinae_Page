@@ -6,9 +6,9 @@ import './globals.css'
 
 export const metadata: Metadata = {
     applicationName: '미리내',
-    title: '미리내 | 당신의 하루를 별처럼 빛나게',
+    title: '미리내 - 바탕화면 캘린더 위젯',
     description:
-        '미리내는 데스크톱 캘린더 위젯입니다. 설치 후 바탕화면에서 바로 일정을 확인하고 관리할 수 있습니다. 사용자는 캘린더를 이용해 유연한 일정관리를 할 수 있습니다. 구글 캘린더와 연동하여 일정이 자동으로 업데이트됩니다. 미리내와 함께 당신의 하루를 별처럼 빛나게 만들어보세요.',
+        '윈도우 바탕화면에서 바로 보는 캘린더 위젯. 구글 캘린더와 자동 동기화되고, 설치만 하면 끝. 무료로 다운로드하세요.',
     keywords: [
         '미리내',
         '캘린더',
@@ -96,6 +96,19 @@ const organizationJsonLd = {
     logo: 'https://www.mirinae.today/icon.svg'
 }
 
+const softwareJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: '미리내',
+    alternateName: ['Mirinae', '미리내 캘린더'],
+    description: '윈도우 바탕화면에서 바로 보는 캘린더 위젯. 구글 캘린더와 자동 동기화됩니다.',
+    url: 'https://www.mirinae.today/',
+    image: 'https://www.mirinae.today/ogImage.webp',
+    operatingSystem: 'Windows',
+    applicationCategory: 'ProductivityApplication',
+    offers: { '@type': 'Offer', price: 0, priceCurrency: 'KRW' }
+}
+
 export default function RootLayout({
     children
 }: Readonly<{
@@ -106,6 +119,7 @@ export default function RootLayout({
             <body className={`antialiased`}>
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
                 <Analytics />
                 <SpeedInsights />
                 <SmoothScroll />
