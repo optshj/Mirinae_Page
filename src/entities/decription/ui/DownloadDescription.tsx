@@ -1,4 +1,4 @@
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/shared/ui/dialog'
+import { DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/shared/ui/dialog'
 import { MousePointer2, ShieldCheck, X } from 'lucide-react'
 
 /**
@@ -58,7 +58,11 @@ function StepDot({ children, className }: { children: React.ReactNode; className
 
 export function DownloadDescription() {
     return (
-        <DialogContent className="bg-glass custom-scrollbar max-h-[88dvh] overflow-y-auto rounded-2xl border-none py-8 text-white">
+        <DialogContent showCloseButton={false} className="bg-glass custom-scrollbar max-h-[88dvh] overflow-y-auto rounded-2xl border-none py-8 text-white">
+            <DialogClose className="absolute top-3 right-3 cursor-pointer rounded-md p-1 text-white/70 transition-colors hover:bg-white/10 hover:text-white">
+                <X className="size-6" />
+                <span className="sr-only">닫기</span>
+            </DialogClose>
             <DialogHeader className="flex flex-col gap-2">
                 <DialogTitle className="text-xl font-bold tracking-tight text-white sm:text-2xl">다운로드 중이에요!</DialogTitle>
                 <DialogDescription className="text-base leading-6 text-slate-300">
