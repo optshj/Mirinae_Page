@@ -14,6 +14,7 @@ if (typeof window !== 'undefined' && POSTHOG_KEY) {
         api_host: 'https://us.i.posthog.com',
         defaults: '2025-11-30',
         capture_performance: { web_vitals: true },
+        capture_exceptions: true,
         ...(handoffId && { bootstrap: { distinctID: handoffId } })
     })
     // Electron 앱과 프로젝트를 공유하므로 surface로 구분
