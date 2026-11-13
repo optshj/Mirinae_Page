@@ -6,37 +6,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
     applicationName: '미리내',
-    title: '미리내 - 바탕화면 캘린더 위젯',
-    description:
-        '윈도우 바탕화면에서 바로 보는 캘린더 위젯. 구글 캘린더와 자동 동기화되고, 설치만 하면 끝. 무료로 다운로드하세요.',
-    keywords: [
-        '미리내',
-        '캘린더',
-        '일정 관리',
-        '할 일 목록',
-        '생산성',
-        '시간 관리',
-        '리마인더',
-        '목표 설정',
-        '집중력 향상',
-        '구글캘린더',
-        '바탕화면',
-        '바탕화면 캘린더',
-        '바탕화면 위젯',
-        '데스크톱 위젯',
-        '윈도우 위젯',
-        'mirinae',
-        'calendar',
-        'widget',
-        'desktop',
-        'desktop widget',
-        'productivity',
-        'schedule',
-        'task',
-        'todo',
-        'reminder',
-        'time management'
-    ],
+    title: '미리내 - 윈도우 바탕화면 캘린더 위젯',
+    description: '윈도우 바탕화면에 달력을 띄워두고 일정을 바로 확인하세요. 구글 캘린더와 자동 동기화되는 무료 바탕화면 캘린더 위젯.',
     alternates: {
         canonical: 'https://www.mirinae.today/'
     },
@@ -50,7 +21,7 @@ export const metadata: Metadata = {
         images: [
             {
                 url: 'https://www.mirinae.today/ogImage.webp',
-                alt: '미리내 | 당신의 하루를 별처럼 빛나게',
+                alt: '미리내 - 윈도우 바탕화면 캘린더 위젯',
                 width: 1200,
                 height: 630
             }
@@ -58,7 +29,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: '미리내 | 당신의 하루를 별처럼 빛나게',
+        title: '미리내 - 윈도우 바탕화면 캘린더 위젯',
         description: '당신의 하루를 별처럼 빛나게, 미리내와 함께 하세요.',
         images: ['https://www.mirinae.today/ogImage.webp']
     },
@@ -101,7 +72,7 @@ const softwareJsonLd = {
     '@type': 'SoftwareApplication',
     name: '미리내',
     alternateName: ['Mirinae', '미리내 캘린더'],
-    description: '윈도우 바탕화면에서 바로 보는 캘린더 위젯. 구글 캘린더와 자동 동기화됩니다.',
+    description: '윈도우 바탕화면에서 바로 보는 달력·캘린더 위젯. 구글 캘린더와 자동 동기화됩니다.',
     url: 'https://www.mirinae.today/',
     image: 'https://www.mirinae.today/ogImage.webp',
     operatingSystem: 'Windows',

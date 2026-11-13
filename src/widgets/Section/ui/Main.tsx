@@ -11,7 +11,6 @@ const easeOutExpo = [0.22, 1, 0.36, 1] as const
 
 export function Main() {
     const iconRef = useRef<HTMLDivElement>(null)
-    // 글자는 아이콘이 완성될 즈음 올라온다. 모션 줄이기면 바로
     const at = useReducedMotion() ? 0 : HERO_TEXT_AT
     return (
         <section className="relative overflow-hidden">
@@ -55,7 +54,7 @@ export function Main() {
                                 }
                             }}
                         >
-                            심플하고 아름다운 데스크톱 캘린더 위젯
+                            심플한 윈도우 바탕화면 캘린더 위젯
                             <br />
                             하루의 일정을 바탕화면에서 관리하세요
                         </motion.h2>
