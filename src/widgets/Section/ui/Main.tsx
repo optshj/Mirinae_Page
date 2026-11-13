@@ -23,13 +23,12 @@ export function Main() {
             <MotionConfig reducedMotion="user">
                 <motion.section className="relative flex w-full items-center justify-center" initial="hidden" animate="show">
                     <div className="flex h-screen w-full flex-col items-center justify-center px-4 text-center">
-                        {/* 별 9개가 모여 아이콘이 되는 자리. 그림은 HeroIcon이 캔버스에 그린다 */}
                         <div ref={iconRef} aria-hidden className="mb-8 size-[72px] sm:size-24" />
                         <div className="flex flex-col items-center gap-4 md:gap-6">
                             <motion.h1
                                 className="text-3xl font-semibold tracking-tighter whitespace-nowrap text-white sm:text-5xl"
                                 variants={{
-                                    hidden: { y: 30, opacity: 0, filter: 'blur(10px)' },
+                                    hidden: { y: 30, opacity: 0.01, filter: 'blur(10px)' },
                                     show: {
                                         y: 0,
                                         opacity: 1,
@@ -46,7 +45,7 @@ export function Main() {
                         <motion.h2
                             className="mt-6 max-w-[500px] text-lg tracking-tight text-white/60 md:text-xl"
                             variants={{
-                                hidden: { y: 20, opacity: 0 },
+                                hidden: { y: 20, opacity: 0.01 },
                                 show: {
                                     y: 0,
                                     opacity: 1,
